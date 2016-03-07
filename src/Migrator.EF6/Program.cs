@@ -34,7 +34,7 @@ namespace Migrator.EF6
 							update.OnExecute(
 								() =>
 								{
-									new Executor().UpdateDatabase(migrationName.Value);
+									CreateExecutor().UpdateDatabase(migrationName.Value);
 									return 0;
 								});
 						});
@@ -44,6 +44,18 @@ namespace Migrator.EF6
 				migration =>
 				{
 					migration.Description = "Commands to manage your migrations";
+					migration.Command(
+						"enable",
+						enable =>
+						{
+							enable.Description = "Enable migrations";
+							enable.OnExecute(
+								() =>
+								{
+									CreateExecutor().EnableMigrations();
+									return 0;
+								});
+						});
 					migration.Command(
 						"add",
 						add =>
@@ -60,7 +72,7 @@ namespace Migrator.EF6
 										return 1;
 									}
 
-									new Executor().AddMigration(name.Value);
+									CreateExecutor().AddMigration(name.Value);
 									return 0;
 								});
 						});
@@ -79,6 +91,8 @@ namespace Migrator.EF6
 
 			return app.Execute(args);
 		}
+
+		private static Executor CreateExecutor() => new Executor();
 
 		public class Executor
 		{
@@ -101,6 +115,26 @@ namespace Migrator.EF6
 				_rootNamespace = _targetLibrary.Name;
 				_startupAssembly = Assembly.Load(new AssemblyName(_targetName));
 				_types = _startupAssembly.GetTypes();
+			}
+
+			private string MigrationsDir => Path.Combine(_projectDir, "Migrations");
+
+			private string Combine(params string[] paths) => Path.Combine(paths);
+
+			public void EnableMigrations()
+			{
+				var ns = $"{_rootNamespace}.Migrations";
+				var path = Combine(MigrationsDir, "Configuration.cs");
+				File.WriteAllText(path, @"using System.Data.Entity.Migrations;
+using " + _rootNamespace + @".Models;
+
+namespace " + ns + @"
+{
+	public class Configuration : DbMigrationsConfiguration<ApplicationDbContext>
+	{
+	}
+}
+");
 			}
 
 			public void AddMigration(string name)
