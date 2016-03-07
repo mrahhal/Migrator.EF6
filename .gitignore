@@ -1,0 +1,11 @@
+*.suo
+*.user
+*.lock.json
+
+.vs/
+[Dd]ebug/
+[Rr]elease/
+x64/
+[Bb]in/
+[Oo]bj/
+artifacts/

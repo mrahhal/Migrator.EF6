@@ -1,0 +1,33 @@
+﻿{
+  "version": "1.0.0-*",
+  "description": "Migrator.EF6 Console Application",
+  "authors": [ "Mohammad Rahhal" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+
+  "compilationOptions": {
+    "emitEntryPoint": true
+  },
+
+  "dependencies": {
+    "EntityFramework": "6.1.3",
+    "Microsoft.Extensions.CommandLineUtils.Sources": {
+      "version": "1.0.0-rc1-final",
+      "type": "build"
+    },
+    "Microsoft.Extensions.PlatformAbstractions": "1.0.0-rc1-final"
+  },
+
+  "commands": {
+    "Migrator.EF6": "Migrator.EF6"
+  },
+
+  "frameworks": {
+    "dnx451": {
+      "frameworkAssemblies": {
+        "System.Windows.Forms": "4.0.0.0"
+      }
+    }
+  }
+}
