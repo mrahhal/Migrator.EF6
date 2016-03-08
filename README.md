@@ -21,7 +21,6 @@ Steps needed (nothing hard, just a lot of inital steps that you'll have to do on
     ```c#
     services.AddScoped<ApplicationDbContext>();
     ```
-- For your db context, make sure you write a default ctor that calls `base("your connection string")` (this ctor will only be called by the migrator so you can just hard wire your dev connection string for now).
 - Replace all `Microsoft.AspNet.Identity.EntityFramework` usings with `MR.AspNet.Identity.EntityFramework6`.
 - Remove the Migrations folder that EF7 generated.
 - Finally:
