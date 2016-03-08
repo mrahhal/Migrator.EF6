@@ -12,22 +12,21 @@ Steps needed (nothing hard, just a lot of inital steps that you'll have to do on
 
 - Inside `project.json`:
     - Remove `dnxcore50` from the target `frameworks`.
-    - Remove everything `EF7` and ad `Migrator.EF6` + `EF6` to your `dependencies`.
+    - Remove everything `EF7` and add `Migrator.EF6` + `EF6` to your `dependencies`.
     - `"ef": "EntityFramework.Commands"` -> `"ef": "Migrator.EF6"` in the `commands` section.
 - Inside `Startup.cs`:
     - Remove the line of code that starts with `services.AddEntityFramework` completely (this belong to EF7). Also remove `serviceScope.ServiceProvider.GetService<ApplicationDbContext>
     ().Database.Migrate()` if it exists.
-    - For your db context, make sure you write a default ctor that calls `base("your connection string")` (this ctor will only be called by the migrator so you can just hard wire your dev connection string for now).
     - Simply add your db context to services:
     ```c#
     services.AddScoped(p =>
         new ApplicationDbContext(Configuration["Data:DefaultConnection:ConnectionString"]));
     ```
-- You should also remove anything
+- For your db context, make sure you write a default ctor that calls `base("your connection string")` (this ctor will only be called by the migrator so you can just hard wire your dev connection string for now).
 - Replace all `Microsoft.AspNet.Identity.EntityFramework` usings with `MR.AspNet.Identity.EntityFramework6`.
 - Finally:
-    ```c#
-    dnx ef migrations enable
+    ```
+    dnx ef migrations enable # You might have to edit the db context's name if there are errors here, so do that before going on.
     dnx ef migrations add InitialCreate
     dnx ef database update
     ```
