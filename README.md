@@ -19,33 +19,29 @@ Steps needed (nothing hard, just a lot of inital steps that you'll have to do on
     ().Database.Migrate()` if it exists.
     - Simply add your db context to services:
     ```c#
-    services.AddScoped(p =>
-        new ApplicationDbContext(Configuration["Data:DefaultConnection:ConnectionString"]));
+    services.AddScoped<ApplicationDbContext>();
     ```
 - For your db context, make sure you write a default ctor that calls `base("your connection string")` (this ctor will only be called by the migrator so you can just hard wire your dev connection string for now).
 - Replace all `Microsoft.AspNet.Identity.EntityFramework` usings with `MR.AspNet.Identity.EntityFramework6`.
 - Remove the Migrations folder that EF7 generated.
 - Finally:
-    
+
     ```
     dnx ef migrations enable
     dnx ef migrations add InitialCreate
     dnx ef database update
     ```
-    
+
 You might have to edit the db context's name after enabling migrations if there are errors, so do that before going on.
 
 As a final note, make sure your db context looks like this:
 ```c#
 public class ApplicationDbContext : DbContext // Or IdentityDbContext<ApplicationUser> if you're using Identity
 {
-    public ApplicationDbContext() : base("Server=(localdb)\\mssqllocaldb;Database=aspnet5-WebApplication1-84bb2ccf-6f5b-4d01-b5ea-cbf91fb3a9a2;Trusted_Connection=True;MultipleActiveResultSets=true")
-    {
-    }
+    public static string ConnectionString { get; set; } = "Server=(localdb)\\mssqllocaldb;Database=aspnet5-Ulfg-8443284d-add8-41f4-acd8-96cae03e401d;Trusted_Connection=True;MultipleActiveResultSets=true";
 
-    public ApplicationDbContext(string nameOrConnectionString) : base(nameOrConnectionString)
+    public AppDbContext() : base(ConnectionString)
     {
-        Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, WebApplication1.Migrations.Configuration>());
     }
 
     protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -54,6 +50,15 @@ public class ApplicationDbContext : DbContext // Or IdentityDbContext<Applicatio
     }
 }
 ```
+
+And in `Startup.cs`, in `Configure`:
+
+```c#
+Database.SetInitializer(new MigrateDatabaseToLatestVersion<AppDbContext, Ulfg.Migrations.Configuration>());
+AppDbContext.ConnectionString = Configuration["Data:DefaultConnection:ConnectionString"];
+```
+
+This is really important for various reasons.
 
 ## If you're working with Identity 3.0 RC1
 
