@@ -26,10 +26,11 @@ Steps needed (nothing hard, just a lot of inital steps that you'll have to do on
 - Replace all `Microsoft.AspNet.Identity.EntityFramework` usings with `MR.AspNet.Identity.EntityFramework6`.
 - Finally:
     ```
-    dnx ef migrations enable # You might have to edit the db context's name if there are errors here, so do that before going on.
+    dnx ef migrations enable
     dnx ef migrations add InitialCreate
     dnx ef database update
     ```
+You might have to edit the db context's name after enabling migrations if there are errors, so do that before going on.
 
 As a final note, make sure your db context looks like this:
 ```c#
