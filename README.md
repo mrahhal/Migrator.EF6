@@ -38,11 +38,11 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 {
     public ApplicationDbContext() : base("Server=(localdb)\\mssqllocaldb;Database=aspnet5-WebApplication1-84bb2ccf-6f5b-4d01-b5ea-cbf91fb3a9a2;Trusted_Connection=True;MultipleActiveResultSets=true")
     {
-        Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, WebApplication1.Migrations.Configuration>());
     }
 
     public ApplicationDbContext(string nameOrConnectionString) : base(nameOrConnectionString)
     {
+        Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, WebApplication1.Migrations.Configuration>());
     }
 
     protected override void OnModelCreating(DbModelBuilder modelBuilder)
