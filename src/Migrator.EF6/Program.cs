@@ -18,11 +18,15 @@ namespace Migrator.EF6
 				Name = "dnx ef",
 				FullName = "Entity Framework 6 Commands"
 			};
+			app.HelpOption("-?|-h|--help");
+			app.OnExecute(() => app.ShowHelp());
 			app.Command(
 				"database",
 				database =>
 				{
 					database.Description = "Commands to manage your database";
+					database.HelpOption("-?|-h|--help");
+					database.OnExecute(() => database.ShowHelp());
 					database.Command(
 						"update",
 						update =>
@@ -35,7 +39,6 @@ namespace Migrator.EF6
 								() =>
 								{
 									CreateExecutor().UpdateDatabase(migrationName.Value);
-									return 0;
 								});
 						});
 				});
@@ -44,6 +47,8 @@ namespace Migrator.EF6
 				migration =>
 				{
 					migration.Description = "Commands to manage your migrations";
+					migration.HelpOption("-?|-h|--help");
+					migration.OnExecute(() => migration.ShowHelp());
 					migration.Command(
 						"enable",
 						enable =>
@@ -53,7 +58,6 @@ namespace Migrator.EF6
 								() =>
 								{
 									CreateExecutor().EnableMigrations();
-									return 0;
 								});
 						});
 					migration.Command(
@@ -61,6 +65,8 @@ namespace Migrator.EF6
 						add =>
 						{
 							add.Description = "Add a new migration";
+							add.HelpOption("-?|-h|--help");
+							add.OnExecute(() => add.ShowHelp());
 							var name = add.Argument(
 								"[name]",
 								"The name of the migration");
@@ -81,10 +87,12 @@ namespace Migrator.EF6
 					   list =>
 					   {
 						   list.Description = "List the migrations";
+						   list.HelpOption("-?|-h|--help");
+						   list.OnExecute(() => list.ShowHelp());
 						   list.OnExecute(
 							   () =>
 							   {
-								   return 0;
+								   CreateExecutor().ListMigrations();
 							   });
 					   });
 				});
@@ -115,6 +123,7 @@ namespace Migrator.EF6
 				_rootNamespace = _targetLibrary.Name;
 				_startupAssembly = Assembly.Load(new AssemblyName(_targetName));
 				_types = _startupAssembly.GetTypes();
+				Directory.CreateDirectory(MigrationsDir);
 			}
 
 			private string MigrationsDir => Path.Combine(_projectDir, "Migrations");
@@ -145,11 +154,8 @@ namespace " + ns + @"
 				var scaffolder = new MigrationScaffolder(config);
 				var migration = scaffolder.Scaffold(name);
 
-				var dir = Path.Combine(_projectDir, "Migrations");
-				Directory.CreateDirectory(dir);
-
 				// Write the user code file.
-				File.WriteAllText(Path.Combine(dir, migration.MigrationId + ".cs"), migration.UserCode);
+				File.WriteAllText(Combine(MigrationsDir, migration.MigrationId + ".cs"), migration.UserCode);
 
 				// Write needed resource values directly inside the designer code file.
 				// Apparently, aspnet5 and resource files don't play well (or more specifically,
@@ -160,7 +166,7 @@ namespace " + ns + @"
 					.Replace("private readonly ResourceManager Resources = new ResourceManager(typeof(InitialCreate));", "");
 
 				// Write the designer code file.
-				File.WriteAllText(Path.Combine(dir, migration.MigrationId + ".Designer.cs"), designerCode);
+				File.WriteAllText(Path.Combine(MigrationsDir, migration.MigrationId + ".Designer.cs"), designerCode);
 			}
 
 			public void UpdateDatabase(string targetMigration)
@@ -178,6 +184,28 @@ namespace " + ns + @"
 				var config = Activator.CreateInstance(configType) as DbMigrationsConfiguration;
 				return config;
 			}
+
+			public void ListMigrations()
+			{
+				var config = FindDbMigrationsConfiguration();
+				var migrator = new DbMigrator(config);
+				foreach (var migration in migrator.GetDatabaseMigrations())
+				{
+					Console.WriteLine(migration);
+				}
+			}
+		}
+	}
+
+	internal static partial class Extensions
+	{
+		public static void OnExecute(this CommandLineApplication @this, Action action)
+		{
+			@this.OnExecute(() =>
+			{
+				action();
+				return 0;
+			});
 		}
 	}
 }
