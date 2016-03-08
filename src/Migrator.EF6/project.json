@@ -24,10 +24,6 @@
   },
 
   "frameworks": {
-    "dnx451": {
-      "frameworkAssemblies": {
-        "System.Windows.Forms": "4.0.0.0"
-      }
-    }
+    "net451": { }
   }
 }
