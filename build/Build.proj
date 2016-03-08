@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build;Test;Package;PrintVersion" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup>
+		<Major>1</Major>
+		<Minor>0</Minor>
+		<Patch>0</Patch>
+		<Quality></Quality> <!-- the quality should be 7 characters long max (imposed by nuget) -->
+
+		<Version>$(Major).$(Minor).$(Patch)</Version>
+		<QualityWithDash Condition="'$(Quality)' != ''">-$(Quality)</QualityWithDash>
+		<InformationalVersion>$(Version)$(QualityWithDash)</InformationalVersion>
+
+		<BuildType Condition="'$(BuildType)' == ''">Dev</BuildType>
+		<BuildType Condition="'$(APPVEYOR_REPO_TAG)' == 'true'">Release</BuildType>
+
+		<RootDir>$(MSBuildProjectDirectory)/../</RootDir>
+		<SolutionFile>$(RootDir)Migrator.EF6.sln</SolutionFile>
+		<PackageOutputDir>$(RootDir)artifacts/packages/</PackageOutputDir>
+	</PropertyGroup>
+	<ItemGroup>
+		<Assemblies Include="Migrator.EF6" />
+		<!--<TestAssemblies Include="Migrator.EF6.Tests" />-->
+	</ItemGroup>
+	<Import Project="Build.tasks" />
+
+	<Target Name="GenerateVersionInfo" BeforeTargets="Build">
+		<Time Format="HHmmyyyyMMdd">
+			<Output TaskParameter="FormattedTime" PropertyName="Date" />
+		</Time>
+		<PropertyGroup>
+			<InfoVersion Condition="'$(BuildType)' == 'Release'">$(InformationalVersion)</InfoVersion>
+			<InfoVersion Condition="'$(BuildType)' != 'Release'">$(InformationalVersion)-$(Date)</InfoVersion>
+			<Find>"version": ".+"</Find>
+			<Replace>"version": "$(InfoVersion)"</Replace>
+		</PropertyGroup>
+		<RegexTransform Files="@(Assemblies->'$(RootDir)src\%(Identity)\project.json')"
+										Find="$(Find)"
+										Replace="$(Replace)" />
+	</Target>
+
+	<Target Name="ResetVersions" AfterTargets="Build">
+		<PropertyGroup>
+			<Find>"version": ".+"</Find>
+			<Replace>"version": "1.0.0-*"</Replace>
+		</PropertyGroup>
+		<RegexTransform Files="@(Assemblies->'$(RootDir)src\%(Identity)\project.json')"
+										Find="$(Find)"
+										Replace="$(Replace)" />
+	</Target>
+
+	<Target Name="Build" DependsOnTargets="RestorePackages">
+		<MSBuild Projects="$(SolutionFile)" Targets="Rebuild" Properties="Configuration=Release;NoWarn=CS1591,CS1574" ToolsVersion="14.0" />
+	</Target>
+
+	<Target Name="RestorePackages" DependsOnTargets="Clean">
+		<Exec
+			WorkingDirectory="$(RootDir)"
+			Command="dnu restore --quiet --parallel" />
+	</Target>
+
+	<Target Name="Clean">
+		<Exec
+			WorkingDirectory="$(RootDir)"
+			Command="rmdir artifacts /s /q" ContinueOnError="true" />
+	</Target>
+
+	<Target Name="Test" DependsOnTargets="Build">
+		<!--<Exec
+			WorkingDirectory="$(RootDir)/test/%(TestAssemblies.Identity)/"
+			Command="dnx test" />-->
+	</Target>
+
+	<Target Name="Package" DependsOnTargets="Build;Test">
+		<MakeDir Directories="$(RootDir)artifacts/packages" />
+	</Target>
+
+	<Target Name="CopyPackages" AfterTargets="Package">
+		<ItemGroup>
+			<Packages Include="$(RootDir)artifacts/bin/%(Assemblies.Identity)/Release/*.nupkg" />
+		</ItemGroup>
+		<Copy SourceFiles="@(Packages)" DestinationFolder="$(PackageOutputDir)" />
+	</Target>
+
+	<Target Name="PrintVersion">
+		<Message Importance="High" Text="Built version: $(InfoVersion)" />
+	</Target>
+</Project>

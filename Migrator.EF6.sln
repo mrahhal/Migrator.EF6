@@ -7,7 +7,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2BC6C968-62B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{68E0FEEF-69D5-42D7-A7AE-0ECF6DE7F8A5}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		appveyor.yml = appveyor.yml
+		build\Build.proj = build\Build.proj
 		global.json = global.json
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Migrator.EF6", "src\Migrator.EF6\Migrator.EF6.xproj", "{FCBB50C2-5DDB-4B3B-AC67-9DB287243A0F}"

@@ -1,0 +1,25 @@
+version: '{build}'
+os: Visual Studio 2015
+install:
+- cmd: >-
+    set PATH=C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH%
+
+    nuget sources add -Name aspnetmaster -Source https://www.myget.org/F/aspnetmaster/api/v2/
+
+    nuget sources add -Name aspnetvnext -Source https://www.myget.org/F/aspnetvnext/api/v2/
+
+    dnvm install 1.0.0-rc1-update1
+build:
+  project: build/Build.proj
+  verbosity: normal
+test: off
+artifacts:
+- path: artifacts/packages/*.nupkg
+deploy:
+  provider: NuGet
+  on:
+    appveyor_repo_tag: true
+  api_key:
+    secure: PWCeOQ12fgAhPiBjgkBAqHbvaPQArarsO2sI+8KCeXjBjE+AHaMIMW8b7efmDzQ6
+  skip_symbols: true
+  artifact: /artifacts\/packages\/.+\.nupkg/

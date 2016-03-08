@@ -1,8 +1,8 @@
 ﻿{
   "version": "1.0.0-*",
-  "description": "Migrator.EF6 Console Application",
+  "description": "DNX command line tool to enable EF6 migrations in an Asp.Net Core app",
   "authors": [ "Mohammad Rahhal" ],
-  "tags": [ "" ],
+  "tags": [ "aspnetcore", "aspnet5", "ef6", "migrations", "dnx" ],
   "projectUrl": "",
   "licenseUrl": "",
 

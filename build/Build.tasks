@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<UsingTask
+		TaskName="RegexTransform"
+		TaskFactory="CodeTaskFactory"
+		AssemblyFile="C:\Windows\Microsoft.NET\Framework\v4.0.30319\Microsoft.Build.Tasks.v4.0.dll">
+		<ParameterGroup>
+			<Files ParameterType="Microsoft.Build.Framework.ITaskItem[]" Required="true" />
+			<Find Required="true" />
+			<Replace Required="true" />
+		</ParameterGroup>
+		<Task>
+			<Using Namespace="System" />
+			<Using Namespace="System.Text.RegularExpressions" />
+			<Code Type="Fragment" Language="cs">
+				<![CDATA[
+				var regex = new Regex(Find);
+
+				foreach (var file in Files) {
+					var path = file.GetMetadata("FullPath");
+					var contents = File.ReadAllText(path);
+					var newContents = regex.Replace(
+						contents,
+						Replace
+					);
+					File.WriteAllText(path, newContents);
+					Log.LogMessage("Transformed file: {0}", path);
+				}
+				]]>
+			</Code>
+		</Task>
+	</UsingTask>
+
+	<UsingTask
+		TaskName="RegexFind"
+		TaskFactory="CodeTaskFactory"
+		AssemblyFile="C:\Windows\Microsoft.NET\Framework\v4.0.30319\Microsoft.Build.Tasks.v4.0.dll">
+		<ParameterGroup>
+			<FilePath ParameterType="Microsoft.Build.Framework.ITaskItem" Required="true" />
+			<Find Required="true" />
+			<Value Output="true" />
+		</ParameterGroup>
+		<Task>
+			<Using Namespace="System" />
+			<Using Namespace="System.Text.RegularExpressions" />
+			<Code Type="Fragment" Language="cs">
+				<![CDATA[
+				var regex = new Regex(Find);
+
+				var path = FilePath.GetMetadata("FullPath");
+				var contents = File.ReadAllText(path);
+				Value = regex.Match(contents).Captures[0].Value;
+				]]>
+			</Code>
+		</Task>
+	</UsingTask>
+
+	<UsingTask
+		TaskName="AssemblyInfo"
+		TaskFactory="CodeTaskFactory"
+		AssemblyFile="C:\Windows\Microsoft.NET\Framework\v4.0.30319\Microsoft.Build.Tasks.v4.0.dll">
+		<ParameterGroup>
+			<OutputFile Required="true" />
+			<AssemblyProduct />
+			<AssemblyCompany />
+			<AssemblyCopyright />
+			<AssemblyTrademark />
+			<AssemblyVersion />
+			<AssemblyFileVersion />
+			<AssemblyInformationalVersion />
+		</ParameterGroup>
+		<Task>
+			<Using Namespace="System" />
+			<Using Namespace="System.Text" />
+			<Using Namespace="System.IO" />
+			<Code Type="Fragment" Language="cs">
+				<![CDATA[
+				var sb = new StringBuilder();
+				sb
+					.AppendLine("using System.Reflection;")
+					.AppendLine("using System.Runtime.InteropServices;")
+					.AppendLine();
+
+				if (AssemblyProduct != null)
+				{
+					sb
+						.Append("[assembly: AssemblyProduct(\"")
+						.Append(AssemblyProduct)
+						.AppendLine("\")]");
+				}
+
+				if (AssemblyCompany != null)
+				{
+					sb
+						.Append("[assembly: AssemblyCompany(\"")
+						.Append(AssemblyCompany)
+						.AppendLine("\")]");
+				}
+
+				if (AssemblyCopyright != null)
+				{
+					sb
+						.Append("[assembly: AssemblyCopyright(\"")
+						.Append(AssemblyCopyright)
+						.AppendLine("\")]");
+				}
+
+				if (AssemblyTrademark != null)
+				{
+					sb
+						.Append("[assembly: AssemblyTrademark(\"")
+						.Append(AssemblyTrademark)
+						.AppendLine("\")]");
+				}
+
+				if (AssemblyVersion != null)
+				{
+					sb
+						.Append("[assembly: AssemblyVersion(\"")
+						.Append(AssemblyVersion)
+						.AppendLine("\")]");
+				}
+
+				if (AssemblyFileVersion != null)
+				{
+					sb
+						.Append("[assembly: AssemblyFileVersion(\"")
+						.Append(AssemblyFileVersion)
+						.AppendLine("\")]");
+				}
+
+				if (AssemblyInformationalVersion != null)
+				{
+					sb
+						.Append("[assembly: AssemblyInformationalVersion(\"")
+						.Append(AssemblyInformationalVersion)
+						.AppendLine("\")]");
+				}
+
+				File.WriteAllText(OutputFile, sb.ToString());
+				]]>
+			</Code>
+		</Task>
+	</UsingTask>
+
+	<UsingTask
+		TaskName="Time"
+		TaskFactory="CodeTaskFactory"
+		AssemblyFile="C:\Windows\Microsoft.NET\Framework\v4.0.30319\Microsoft.Build.Tasks.v4.0.dll">
+		<ParameterGroup>
+			<Format Required="true" />
+			<FormattedTime Output="true" />
+		</ParameterGroup>
+		<Task>
+			<Using Namespace="System" />
+			<Code Type="Fragment" Language="cs">
+				<![CDATA[
+				FormattedTime = DateTime.UtcNow.ToString(Format);
+				]]>
+			</Code>
+		</Task>
+	</UsingTask>
+</Project>
