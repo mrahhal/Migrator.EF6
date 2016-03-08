@@ -35,7 +35,7 @@ You might have to edit the db context's name after enabling migrations if there 
 
 As a final note, make sure your db context looks like this:
 ```c#
-public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+public class ApplicationDbContext : DbContext // Or IdentityDbContext<ApplicationUser> if you're using Identity
 {
     public ApplicationDbContext() : base("Server=(localdb)\\mssqllocaldb;Database=aspnet5-WebApplication1-84bb2ccf-6f5b-4d01-b5ea-cbf91fb3a9a2;Trusted_Connection=True;MultipleActiveResultSets=true")
     {
