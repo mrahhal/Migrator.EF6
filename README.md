@@ -26,11 +26,13 @@ Steps needed (nothing hard, just a lot of inital steps that you'll have to do on
 - Replace all `Microsoft.AspNet.Identity.EntityFramework` usings with `MR.AspNet.Identity.EntityFramework6`.
 - Remove the Migrations folder that EF7 generated.
 - Finally:
+    
     ```
     dnx ef migrations enable
     dnx ef migrations add InitialCreate
     dnx ef database update
     ```
+    
 You might have to edit the db context's name after enabling migrations if there are errors, so do that before going on.
 
 As a final note, make sure your db context looks like this:
