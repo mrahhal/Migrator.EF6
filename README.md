@@ -13,6 +13,7 @@ Steps needed (nothing hard, just a lot of inital steps that you'll have to do on
 - Inside `project.json`:
     - Remove `dnxcore50` from the target `frameworks`.
     - Remove everything `EF7` and ad `Migrator.EF6` + `EF6` to your `dependencies`.
+    - `"ef": "EntityFramework.Commands"` -> `"ef": "Migrator.EF6"` in the `commands` section.
 - Inside `Startup.cs`:
     - Remove the line of code that starts with `services.AddEntityFramework` completely (this belong to EF7). Also remove `serviceScope.ServiceProvider.GetService<ApplicationDbContext>
     ().Database.Migrate()` if it exists.
@@ -53,4 +54,4 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 
 ## If you're working with Identity 3.0 RC1
 
-Check out [MR.AspNet.Identity.EntityFramework6](https://github.com/mrahhal/MR.AspNet.Identity.EntityFramework6)
+Check out [MR.AspNet.Identity.EntityFramework6](https://github.com/mrahhal/MR.AspNet.Identity.EntityFramework6).
