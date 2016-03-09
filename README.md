@@ -13,7 +13,14 @@ Steps needed (nothing hard, just a lot of inital steps that you'll have to do on
 - Inside `project.json`:
     - Remove `dnxcore50` from the target `frameworks`.
     - Remove everything `EF7` and add `Migrator.EF6` + `EF6` to your `dependencies`.
-    - `"ef": "EntityFramework.Commands"` -> `"ef": "Migrator.EF6"` in the `commands` section.
+    In your dependencies section:
+    ```diff
+    - "EntityFramework.Commands": "7.0.0-rc1-final",
+    - "EntityFramework.MicrosoftSqlServer": "7.0.0-rc1-final",
+    + "EntityFramework": "6.1.3",
+    + "Migrator.EF6": "1.1.0",
+    ```
+    - `"ef": "EntityFramework.Commands"` → `"ef": "Migrator.EF6"` in the `commands` section.
 - Inside `Startup.cs`:
     - Remove the line of code that starts with `services.AddEntityFramework` completely (this belong to EF7). Also remove `serviceScope.ServiceProvider.GetService<ApplicationDbContext>().Database.Migrate()` if it exists.
     ```diff
