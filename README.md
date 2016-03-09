@@ -15,8 +15,11 @@ Steps needed (nothing hard, just a lot of inital steps that you'll have to do on
     - Remove everything `EF7` and add `Migrator.EF6` + `EF6` to your `dependencies`.
     - `"ef": "EntityFramework.Commands"` -> `"ef": "Migrator.EF6"` in the `commands` section.
 - Inside `Startup.cs`:
-    - Remove the line of code that starts with `services.AddEntityFramework` completely (this belong to EF7). Also remove `serviceScope.ServiceProvider.GetService<ApplicationDbContext>
-    ().Database.Migrate()` if it exists.
+    - Remove the line of code that starts with `services.AddEntityFramework` completely (this belong to EF7). Also remove `serviceScope.ServiceProvider.GetService<ApplicationDbContext>().Database.Migrate()` if it exists.
+    ```diff
+    - services.AddEntityFramework()...
+    - serviceScope.ServiceProvider.GetService<ApplicationDbContext>().Database.Migrate()
+    ```
     - Simply add your db context to services:
     ```c#
     services.AddScoped<ApplicationDbContext>();
@@ -37,7 +40,7 @@ As a final note, make sure your db context looks like this:
 ```c#
 public class ApplicationDbContext : DbContext // Or IdentityDbContext<ApplicationUser> if you're using Identity
 {
-    public static string ConnectionString { get; set; } = "Server=(localdb)\\mssqllocaldb;Database=aspnet5-Ulfg-8443284d-add8-41f4-acd8-96cae03e401d;Trusted_Connection=True;MultipleActiveResultSets=true";
+    public static string ConnectionString { get; set; } = "Server=(localdb)\\mssqllocaldb;Database=aspnet5-Web1-8443284d-add8-41f4-acd8-96cae03e401d;Trusted_Connection=True;MultipleActiveResultSets=true";
 
     public AppDbContext() : base(ConnectionString)
     {
@@ -53,8 +56,8 @@ public class ApplicationDbContext : DbContext // Or IdentityDbContext<Applicatio
 And in `Startup.cs`, in `Configure`:
 
 ```c#
-Database.SetInitializer(new MigrateDatabaseToLatestVersion<AppDbContext, Ulfg.Migrations.Configuration>());
-AppDbContext.ConnectionString = Configuration["Data:DefaultConnection:ConnectionString"];
+Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, Web1.Migrations.Configuration>());
+ApplicationDbContext.ConnectionString = Configuration["Data:DefaultConnection:ConnectionString"];
 ```
 
 This is really important for the following reasons (not really necessary to read):
