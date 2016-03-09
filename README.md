@@ -60,6 +60,15 @@ AppDbContext.ConnectionString = Configuration["Data:DefaultConnection:Connection
 This is really important for the following reasons (not really necessary to read):
 EF6 migrations implementation can read the connection string from `web.config` and that's why in an Asp.Net < 5 app we were able to just specify the connection's name and EF6 would fetch that. In EF7, migrations know about dependency injection and can instantiate a `DbContext` correctly, EF6 just activates the default ctor so we have to provide the connection string there.
 
+## More commands
+These commands do not exist in the normal migrator:
+
+#### `database truncate`:
+Truncates all tables in the database. This is basically 'database update 0'.
+
+#### `database recreate`:
+Truncates all tables then updates the database to the latest migration. This is basically a drop then update. Really helpful in development if you find yourself always dropping the database from SQL Server Object Explorer and then reapplying migrations. 
+
 ## If you're working with Identity 3.0 RC1
 
 Check out [MR.AspNet.Identity.EntityFramework6](https://github.com/mrahhal/MR.AspNet.Identity.EntityFramework6). It enables you to use Identity 3.0 with EF6 (by using an EF6 provider for Identity instead of the EF7 one).
