@@ -31,7 +31,7 @@ Steps needed (nothing hard, just a lot of inital steps that you'll have to do on
     ```c#
     services.AddScoped<ApplicationDbContext>();
     ```
-- Replace all `Microsoft.AspNet.Identity.EntityFramework` usings with `MR.AspNet.Identity.EntityFramework6`.
+- Replace all `Microsoft.AspNet.Identity.EntityFramework` usings with `MR.AspNet.Identity.EntityFramework6` if you're using Identity 3.0 (check out the section below).
 - Remove the Migrations folder that EF7 generated.
 - Finally:
 
