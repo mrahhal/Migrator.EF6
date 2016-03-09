@@ -61,4 +61,10 @@ This is really important for various reasons.
 
 ## If you're working with Identity 3.0 RC1
 
-Check out [MR.AspNet.Identity.EntityFramework6](https://github.com/mrahhal/MR.AspNet.Identity.EntityFramework6).
+Check out [MR.AspNet.Identity.EntityFramework6](https://github.com/mrahhal/MR.AspNet.Identity.EntityFramework6). It enables you to use Identity 3.0 with EF6 (by using an EF6 provider for Identity instead of the EF7 one).
+
+## Samples
+Samples are in the `samples/` directory. Watch out for `MNOTE:` occurrences for notes.
+
+#### [`WithIdentity`](samples/WithIdentity)
+A sample using `Migrator.EF6` and [`MR.AspNet.Identity.EntityFramework6`](https://github.com/mrahhal/MR.AspNet.Identity.EntityFramework6) to enable EF6 + migrations + Identity 3.0 in your Asp.Net Core app.
