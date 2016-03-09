@@ -57,7 +57,8 @@ Database.SetInitializer(new MigrateDatabaseToLatestVersion<AppDbContext, Ulfg.Mi
 AppDbContext.ConnectionString = Configuration["Data:DefaultConnection:ConnectionString"];
 ```
 
-This is really important for various reasons.
+This is really important for the following reasons (not really necessary to read):
+EF6 migrations implementation can read the connection string from `web.config` and that's why in an Asp.Net < 5 app we were able to just specify the connection's name and EF6 would fetch that. In EF7, migrations know about dependency injection and can instantiate a `DbContext` correctly, EF6 just activates the default ctor so we have to provide the connection string there.
 
 ## If you're working with Identity 3.0 RC1
 
