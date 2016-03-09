@@ -41,6 +41,31 @@ namespace Migrator.EF6
 									CreateExecutor().UpdateDatabase(migrationName.Value);
 								});
 						});
+					database.Command(
+						"truncate",
+						truncate =>
+						{
+							truncate.Description = "Truncates all tables in the database. This is basically 'database update 0'";
+							truncate.OnExecute(
+								() =>
+								{
+									CreateExecutor().UpdateDatabase("0");
+								});
+						});
+					database.Command(
+						"recreate",
+						recreate =>
+						{
+							recreate.Description = "Truncates all tables then updates the database to the latest migration";
+							recreate.OnExecute(
+								() =>
+								{
+									Console.WriteLine("Truncating all tables...");
+									CreateExecutor().UpdateDatabase("0");
+									Console.WriteLine("Updating to latest migration...");
+									CreateExecutor().UpdateDatabase(null);
+								});
+						});
 				});
 			app.Command(
 				"migrations",
