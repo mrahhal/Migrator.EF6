@@ -8,6 +8,11 @@ DNX command line tool to enable EF6 migrations in an Asp.Net Core app.
 
 ## Getting EF6 migrations to work
 
+**Note:** make sure you have the following nuget feed configured if dependencies are not being resolved:
+```
+https://www.myget.org/F/aspnetmaster/api/v3/index.json
+```
+
 Steps needed (nothing hard, just a lot of inital steps that you'll have to do one time):
 
 - Inside `project.json`:
