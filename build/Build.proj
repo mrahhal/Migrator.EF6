@@ -24,12 +24,12 @@
 	<Import Project="Build.tasks" />
 
 	<Target Name="GenerateVersionInfo" BeforeTargets="Build">
-		<Time Format="HHmmyyyyMMdd">
+		<Time Format="ddMMyyyyhhmm">
 			<Output TaskParameter="FormattedTime" PropertyName="Date" />
 		</Time>
 		<PropertyGroup>
 			<InfoVersion Condition="'$(BuildType)' == 'Release'">$(InformationalVersion)</InfoVersion>
-			<InfoVersion Condition="'$(BuildType)' != 'Release'">$(InformationalVersion)-$(Date)</InfoVersion>
+			<InfoVersion Condition="'$(BuildType)' != 'Release'">$(InformationalVersion)-d$(Date)</InfoVersion>
 			<Find>"version": ".+"</Find>
 			<Replace>"version": "$(InfoVersion)"</Replace>
 		</PropertyGroup>
