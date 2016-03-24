@@ -13,6 +13,8 @@ DNX command line tool to enable EF6 migrations in an Asp.Net Core app.
 https://www.myget.org/F/aspnetmaster/api/v3/index.json
 ```
 
+In visual studio you can go to `Tools → Options` and then `NuGet Package Manager → Package Sources` to configure feeds.
+
 Steps needed (nothing hard, just a lot of inital steps that you'll have to do one time):
 
 - Inside `project.json`:
