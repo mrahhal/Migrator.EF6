@@ -95,6 +95,10 @@ namespace Migrator.EF6
 							var name = add.Argument(
 								"[name]",
 								"The name of the migration");
+							var ignoreChanges = add.Option(
+								"--ignore-changes",
+								"Ignore changes and start with an empty migration",
+								CommandOptionType.NoValue);
 							add.OnExecute(
 								() =>
 								{
@@ -103,7 +107,7 @@ namespace Migrator.EF6
 										return 1;
 									}
 
-									CreateExecutor().AddMigration(name.Value);
+									CreateExecutor().AddMigration(name.Value, ignoreChanges.HasValue());
 									return 0;
 								});
 						});
@@ -171,13 +175,13 @@ namespace " + ns + @"
 ");
 			}
 
-			public void AddMigration(string name)
+			public void AddMigration(string name, bool ignoreChanges)
 			{
 				var config = FindDbMigrationsConfiguration();
 
 				// Scaffold migration.
 				var scaffolder = new MigrationScaffolder(config);
-				var migration = scaffolder.Scaffold(name);
+				var migration = scaffolder.Scaffold(name, ignoreChanges);
 
 				// Write the user code file.
 				File.WriteAllText(Combine(MigrationsDir, migration.MigrationId + ".cs"), migration.UserCode);
