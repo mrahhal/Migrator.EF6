@@ -2,7 +2,7 @@
 <Project DefaultTargets="Build;Test;Package;PrintVersion" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<PropertyGroup>
 		<Major>1</Major>
-		<Minor>1</Minor>
+		<Minor>2</Minor>
 		<Patch>0</Patch>
 		<Quality></Quality> <!-- the quality should be 7 characters long max (imposed by nuget) -->
 
