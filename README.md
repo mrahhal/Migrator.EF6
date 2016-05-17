@@ -4,6 +4,8 @@
 [![NuGet version](https://badge.fury.io/nu/Migrator.EF6.svg)](https://www.nuget.org/packages/Migrator.EF6)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
+### Will support RC2 soon!
+
 DNX command line tool to enable EF6 migrations in an Asp.Net Core app.
 
 ## Getting EF6 migrations to work
