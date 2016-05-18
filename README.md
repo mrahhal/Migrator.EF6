@@ -58,7 +58,7 @@ public class ApplicationDbContext : DbContext // Or IdentityDbContext<Applicatio
 {
     public static string ConnectionString { get; set; } = "Server=(localdb)\\mssqllocaldb;Database=aspnet5-Web1-8443284d-add8-41f4-acd8-96cae03e401d;Trusted_Connection=True;MultipleActiveResultSets=true";
 
-    public AppDbContext() : base(ConnectionString)
+    public ApplicationDbContext() : base(ConnectionString)
     {
     }
 
