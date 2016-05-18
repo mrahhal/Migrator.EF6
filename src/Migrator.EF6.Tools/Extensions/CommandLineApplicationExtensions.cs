@@ -6,12 +6,12 @@ namespace Migrator.EF6.Tools.Extensions
 	public static class CommandLineApplicationExtensions
 	{
 		public static void OnExecute(this CommandLineApplication command, Action invoke)
-				=> command.OnExecute(
-					() =>
-					{
-						invoke();
-						return 0;
-					});
+			=> command.OnExecute(
+				() =>
+				{
+					invoke();
+					return 0;
+				});
 
 		public static CommandOption Option(this CommandLineApplication command, string template, string description)
 			=> command.Option(
@@ -26,9 +26,6 @@ namespace Migrator.EF6.Tools.Extensions
 
 		public static CommandOption VerboseOption(this CommandLineApplication command)
 			=> command.Option("-v|--verbose", "Enable verbose output");
-
-		public static CommandOption JsonOption(this CommandLineApplication command)
-			=> command.Option("--json", "Use json output");
 
 		public static CommandOption VersionOption(
 			this CommandLineApplication command,

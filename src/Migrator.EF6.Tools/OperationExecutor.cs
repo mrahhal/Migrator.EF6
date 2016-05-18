@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Microsoft.DotNet.ProjectModel;
-using Microsoft.Extensions.CommandLineUtils;
 
 namespace Migrator.EF6.Tools
 {
@@ -100,13 +99,6 @@ namespace " + ns + @"
 				Console.WriteLine(migration);
 			}
 		}
-
-		//public void UpdateDatabase(string migration)
-		//{
-		//}
-
-		//public void DropDatabase(string context, Func<object, object, bool> confirmCheck)
-		//	=> _contextOperations.Value.DropDatabase(contextName, confirmCheck);
 	}
 }
 
