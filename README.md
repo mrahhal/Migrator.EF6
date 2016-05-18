@@ -60,6 +60,8 @@ Steps needed (nothing hard, just a lot of inital steps that you'll have to do on
 
 You might have to edit the db context's name after enabling migrations if there are errors, so do that before going on.
 
+Make sure to build your project before `dotnet ef6 ...`.
+
 As a final note, make sure your db context looks like this:
 ```c#
 public class ApplicationDbContext : DbContext // Or IdentityDbContext<ApplicationUser> if you're using Identity
