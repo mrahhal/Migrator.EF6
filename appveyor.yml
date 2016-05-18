@@ -1,12 +1,7 @@
 version: '{build}'
 os: Visual Studio 2015
 install:
-- cmd: >-
-    set PATH=C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH%
-
-    nuget sources add -Name aspnetmaster -Source https://www.myget.org/F/aspnetmaster/api/v3/index.json
-
-    dnvm install 1.0.0-rc1-update1
+  - ps: invoke-expression -Command .\ci-install.ps1
 build:
   project: build/Build.proj
   verbosity: normal
