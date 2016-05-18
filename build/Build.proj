@@ -18,7 +18,7 @@
 		<PackageOutputDir>$(RootDir)artifacts/packages/</PackageOutputDir>
 	</PropertyGroup>
 	<ItemGroup>
-		<Assemblies Include="Migrator.EF6" />
+		<Assemblies Include="Migrator.EF6.Tools" />
 	</ItemGroup>
 	<Import Project="Build.tasks" />
 
@@ -29,8 +29,10 @@
 		<PropertyGroup>
 			<InfoVersion Condition="'$(BuildType)' == 'Release'">$(InformationalVersion)</InfoVersion>
 			<InfoVersion Condition="'$(BuildType)' != 'Release'">$(InformationalVersion)-d$(Date)</InfoVersion>
-			<Find>"version": ".+"</Find>
-			<Replace>"version": "$(InfoVersion)"</Replace>
+			<Find>{
+  "version": ".+"</Find>
+			<Replace>{
+  "version": "$(InfoVersion)"</Replace>
 		</PropertyGroup>
 		<RegexTransform Files="@(Assemblies->'$(RootDir)src\%(Identity)\project.json')"
 										Find="$(Find)"
@@ -39,8 +41,10 @@
 
 	<Target Name="ResetVersions" AfterTargets="Package">
 		<PropertyGroup>
-			<Find>"version": ".+"</Find>
-			<Replace>"version": "1.0.0-*"</Replace>
+			<Find>{
+  "version": ".+"</Find>
+			<Replace>{
+  "version": "1.0.0-*"</Replace>
 		</PropertyGroup>
 		<RegexTransform Files="@(Assemblies->'$(RootDir)src\%(Identity)\project.json')"
 										Find="$(Find)"
@@ -56,7 +60,7 @@
 	<Target Name="RestorePackages" DependsOnTargets="Clean">
 		<Exec
 			WorkingDirectory="$(RootDir)"
-			Command="dnu restore --quiet --parallel" />
+			Command="dotnet restore --quiet" />
 	</Target>
 
 	<Target Name="Clean">
