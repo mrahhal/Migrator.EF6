@@ -53,14 +53,14 @@ Steps needed (nothing hard, just a lot of inital steps that you'll have to do on
 - Finally:
 
     ```
-    dotnet ef6 migrations enable
-    dotnet ef6 migrations add InitialCreate
-    dotnet ef6 database update
+    dotnet ef migrations enable
+    dotnet ef migrations add InitialCreate
+    dotnet ef database update
     ```
 
 You might have to edit the db context's name after enabling migrations if there are errors, so do that before going on.
 
-Make sure to build your project before `dotnet ef6 ...`.
+Make sure to build your project before `dotnet ef ...`.
 
 As a final note, make sure your db context looks like this:
 ```c#

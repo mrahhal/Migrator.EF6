@@ -1,0 +1,9 @@
+using System.Data.Entity.Migrations;
+using _RootNamespace_.Models;
+
+namespace _RootNamespace_.Migrations
+{
+	public class Configuration : DbMigrationsConfiguration<ApplicationDbContext>
+	{
+	}
+}

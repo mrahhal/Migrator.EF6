@@ -11,7 +11,10 @@
 
   "buildOptions": {
     "emitEntryPoint": true,
-    "outputName": "dotnet-ef6"
+    "outputName": "dotnet-ef",
+    "embed": [
+      "ConfigurationTemplate.txt"
+    ]
   },
 
   "dependencies": {

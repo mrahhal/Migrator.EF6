@@ -37,18 +37,20 @@ namespace Migrator.EF6.Tools
 
 		public void EnableMigrations()
 		{
-			var ns = $"{_rootNamespace}.Migrations";
 			var path = Combine(MigrationsDir, "Configuration.cs");
-			File.WriteAllText(path, @"using System.Data.Entity.Migrations;
-using " + _rootNamespace + @".Models;
 
-namespace " + ns + @"
-{
-	public class Configuration : DbMigrationsConfiguration<ApplicationDbContext>
-	{
-	}
-}
-");
+			var assembly = Assembly.GetExecutingAssembly();
+			var fileContent = default(string);
+
+			using (var resourceStream = assembly.GetManifestResourceStream("Migrator.EF6.Tools.ConfigurationTemplate.txt"))
+			using (var reader = new StreamReader(resourceStream))
+			{
+				fileContent = reader.ReadToEnd();
+			}
+
+			// Write Configuration.cs file.
+			fileContent = fileContent.Replace("_RootNamespace_", _rootNamespace);
+			File.WriteAllText(path, fileContent);
 		}
 
 		public void AddMigration(string name, bool ignoreChanges)
@@ -63,7 +65,7 @@ namespace " + ns + @"
 			File.WriteAllText(Combine(MigrationsDir, migration.MigrationId + ".cs"), migration.UserCode);
 
 			// Write needed resource values directly inside the designer code file.
-			// Apparently, aspnet5 and resource files don't play well (or more specifically,
+			// Apparently, aspnet and resource files don't play well (or more specifically,
 			// the way ef6 migration generator is interacting with the resources system)
 			var targetValue = migration.Resources["Target"];
 			var designerCode = migration.DesignerCode
