@@ -160,4 +160,22 @@
 			</Code>
 		</Task>
 	</UsingTask>
+
+	<UsingTask
+		TaskName="CreateStamp"
+		TaskFactory="CodeTaskFactory"
+		AssemblyFile="C:\Windows\Microsoft.NET\Framework\v4.0.30319\Microsoft.Build.Tasks.v4.0.dll">
+		<ParameterGroup>
+			<Stamp Output="true" />
+		</ParameterGroup>
+		<Task>
+			<Using Namespace="System" />
+			<Code Type="Fragment" Language="cs">
+				<![CDATA[
+				var seconds = (long)(DateTime.UtcNow - new DateTime(2016, 1, 1)).TotalSeconds;
+				Stamp = seconds.ToString("x").PadLeft(9, (char)'0');
+				]]>
+			</Code>
+		</Task>
+	</UsingTask>
 </Project>

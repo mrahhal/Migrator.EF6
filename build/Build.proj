@@ -4,7 +4,7 @@
 		<Major>1</Major>
 		<Minor>0</Minor>
 		<Patch>0</Patch>
-		<Quality>rc2</Quality> <!-- the quality should be 7 characters long max (imposed by nuget) -->
+		<Quality>rc2</Quality>
 
 		<Version>$(Major).$(Minor).$(Patch)</Version>
 		<QualityWithDash Condition="'$(Quality)' != ''">-$(Quality)</QualityWithDash>
@@ -23,12 +23,12 @@
 	<Import Project="Build.tasks" />
 
 	<Target Name="GenerateVersionInfo" BeforeTargets="Build">
-		<Time Format="ddMMyyyyhhmm">
-			<Output TaskParameter="FormattedTime" PropertyName="Date" />
-		</Time>
+		<CreateStamp>
+			<Output TaskParameter="Stamp" PropertyName="Stamp" />
+		</CreateStamp>
 		<PropertyGroup>
 			<InfoVersion Condition="'$(BuildType)' == 'Release'">$(InformationalVersion)</InfoVersion>
-			<InfoVersion Condition="'$(BuildType)' != 'Release'">$(InformationalVersion)-d$(Date)</InfoVersion>
+			<InfoVersion Condition="'$(BuildType)' != 'Release'">$(InformationalVersion)-$(Stamp)</InfoVersion>
 			<Find>{
   "version": ".+"</Find>
 			<Replace>{
