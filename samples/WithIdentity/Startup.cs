@@ -1,7 +1,6 @@
 ﻿using System.Data.Entity;
-using Microsoft.AspNet.Builder;
-using Microsoft.AspNet.Hosting;
-using Microsoft.Data.Entity;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -27,7 +26,7 @@ namespace WithIdentity
 				builder.AddUserSecrets();
 
 				// This will push telemetry data through Application Insights pipeline faster, allowing you to view results immediately.
-				builder.AddApplicationInsightsSettings(developerMode: true);
+				//builder.AddApplicationInsightsSettings(developerMode: true);
 			}
 
 			builder.AddEnvironmentVariables();
@@ -47,7 +46,7 @@ namespace WithIdentity
 		public void ConfigureServices(IServiceCollection services)
 		{
 			// Add framework services.
-			services.AddApplicationInsightsTelemetry(Configuration);
+			//services.AddApplicationInsightsTelemetry(Configuration);
 
 			// MNOTE: Remove this.
 			//services.AddEntityFramework()
@@ -75,13 +74,13 @@ namespace WithIdentity
 			loggerFactory.AddConsole(Configuration.GetSection("Logging"));
 			loggerFactory.AddDebug();
 
-			app.UseApplicationInsightsRequestTelemetry();
+			//app.UseApplicationInsightsRequestTelemetry();
 
 			if (env.IsDevelopment())
 			{
 				app.UseBrowserLink();
 				app.UseDeveloperExceptionPage();
-				app.UseDatabaseErrorPage();
+				//app.UseDatabaseErrorPage();
 			}
 			else
 			{
@@ -101,9 +100,9 @@ namespace WithIdentity
 				//catch { }
 			}
 
-			app.UseIISPlatformHandler(options => options.AuthenticationDescriptions.Clear());
+			//app.UseIISPlatformHandler(options => options.AuthenticationDescriptions.Clear());
 
-			app.UseApplicationInsightsExceptionTelemetry();
+			//app.UseApplicationInsightsExceptionTelemetry();
 
 			app.UseStaticFiles();
 
@@ -118,8 +117,5 @@ namespace WithIdentity
 					template: "{controller=Home}/{action=Index}/{id?}");
 			});
 		}
-
-		// Entry point for the application.
-		public static void Main(string[] args) => WebApplication.Run<Startup>(args);
 	}
 }
