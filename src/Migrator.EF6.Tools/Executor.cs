@@ -83,15 +83,6 @@ namespace Migrator.EF6.Tools
 			migrator.Update(targetMigration);
 		}
 
-		private DbMigrationsConfiguration FindDbMigrationsConfiguration()
-		{
-			var configType = _types
-				.Where(t => typeof(DbMigrationsConfiguration).IsAssignableFrom(t))
-				.FirstOrDefault();
-			var config = Activator.CreateInstance(configType) as DbMigrationsConfiguration;
-			return config;
-		}
-
 		public void ListMigrations()
 		{
 			var config = FindDbMigrationsConfiguration();
@@ -100,6 +91,15 @@ namespace Migrator.EF6.Tools
 			{
 				Console.WriteLine(migration);
 			}
+		}
+
+		private DbMigrationsConfiguration FindDbMigrationsConfiguration()
+		{
+			var configType = _types
+				.Where(t => typeof(DbMigrationsConfiguration).IsAssignableFrom(t))
+				.FirstOrDefault();
+			var config = Activator.CreateInstance(configType) as DbMigrationsConfiguration;
+			return config;
 		}
 	}
 }

@@ -15,7 +15,7 @@ Steps needed (nothing hard, just a lot of inital steps that you'll have to do on
 
 - Inside `project.json`:
     - Remove `dnxcore50` from the target `frameworks`.
-    - Remove everything `EF7` and add `Migrator.EF6` + `EF6` to your `dependencies`.
+    - Remove everything `EF Core` and add `Migrator.EF6.Tools` + `EF6` to your `dependencies`.
     In your `dependencies` section:
     ```diff
     - "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "1.0.0-rc2-final",
