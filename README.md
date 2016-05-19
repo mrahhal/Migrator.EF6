@@ -105,5 +105,8 @@ Check out [MR.AspNet.Identity.EntityFramework6](https://github.com/mrahhal/MR.As
 ## Samples
 Samples are in the `samples/` directory. Watch out for `MNOTE:` occurrences for notes.
 
+#### [`BasicConsoleApp`](samples/BasicConsoleApp)
+A basic sample that shows how to add `Migrator.EF6.Tools` to your `project.json`.
+
 #### [`WithIdentity`](samples/WithIdentity)
 A sample using `Migrator.EF6` and [`MR.AspNet.Identity.EntityFramework6`](https://github.com/mrahhal/MR.AspNet.Identity.EntityFramework6) to enable EF6 + migrations + Identity 3.0 in your Asp.Net Core app.
