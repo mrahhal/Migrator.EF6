@@ -51,10 +51,30 @@ namespace Migrator.EF6.Tools
 				return;
 			}
 
-			var dispatchCommand = Command.CreateDotNet(
+			// Let's build the project first.
+			var buildCommand = BuildCommandFactory.Create(
 				projectFile.ProjectFilePath,
+				"Debug",
+				framework,
+				null,
+				null);
+			var buildExitCode = buildCommand
+				.ForwardStdErr()
+				.ForwardStdOut()
+				.Execute()
+				.ExitCode;
+			if (buildExitCode != 0)
+			{
+				throw new Exception($"Building {projectFile.Name} failed...");
+			}
+
+			var dispatchCommand = DotnetToolDispatcher.CreateDispatchCommand(
 				args,
-				framework);
+				framework,
+				"Debug",
+				outputPath: null,
+				buildBasePath: null,
+				projectDirectory: projectFile.ProjectDirectory);
 
 			using (var errorWriter = new StringWriter())
 			{
