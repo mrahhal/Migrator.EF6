@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Microsoft.DotNet.Cli.Utils;
 using Microsoft.DotNet.ProjectModel;
 using Microsoft.Extensions.Internal;
 using NuGet.Frameworks;
@@ -50,13 +51,10 @@ namespace Migrator.EF6.Tools
 				return;
 			}
 
-			var dispatchCommand = DotnetToolDispatcher.CreateDispatchCommand(
+			var dispatchCommand = Command.CreateDotNet(
+				projectFile.ProjectFilePath,
 				args,
-				framework,
-				"Debug",
-				outputPath: null,
-				buildBasePath: null,
-				projectDirectory: projectFile.ProjectDirectory);
+				framework);
 
 			using (var errorWriter = new StringWriter())
 			{
