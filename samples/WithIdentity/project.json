@@ -30,8 +30,9 @@
       "type": "build"
     },
     "Migrator.EF6.Tools": {
-      "version": "*",
-      "imports": "build"
+      "version": "1.0.0-rc2-2",
+      "target": "package",
+      "type": "build"
     },
     "MR.AspNet.Identity.EntityFramework6": "1.3.1"
   },
@@ -57,7 +58,7 @@
       ]
     },
     "Migrator.EF6.Tools": {
-      "version": "*",
+      "version": "1.0.0-rc2-2",
       "imports": "portable-net45+win8+dnxcore50"
     }
   },
