@@ -1,7 +1,5 @@
 version: '{build}'
 os: Visual Studio 2015
-install:
-  - ps: invoke-expression -Command .\ci-install.ps1
 build:
   project: build/Build.proj
   verbosity: normal
