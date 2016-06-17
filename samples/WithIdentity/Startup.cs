@@ -14,8 +14,6 @@ namespace WithIdentity
 	{
 		public Startup(IHostingEnvironment env)
 		{
-			// Set up configuration sources.
-
 			var builder = new ConfigurationBuilder()
 				.SetBasePath(env.ContentRootPath)
 				.AddJsonFile("appsettings.json")
@@ -23,11 +21,7 @@ namespace WithIdentity
 
 			if (env.IsDevelopment())
 			{
-				// For more details on using the user secret store see http://go.microsoft.com/fwlink/?LinkID=532709
 				builder.AddUserSecrets();
-
-				// This will push telemetry data through Application Insights pipeline faster, allowing you to view results immediately.
-				//builder.AddApplicationInsightsSettings(developerMode: true);
 			}
 
 			builder.AddEnvironmentVariables();
@@ -43,12 +37,8 @@ namespace WithIdentity
 
 		public IConfigurationRoot Configuration { get; set; }
 
-		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			// Add framework services.
-			//services.AddApplicationInsightsTelemetry(Configuration);
-
 			// MNOTE: Remove this.
 			//services.AddEntityFramework()
 			//	.AddSqlServer()
@@ -64,23 +54,20 @@ namespace WithIdentity
 
 			services.AddMvc();
 
-			// Add application services.
 			services.AddTransient<IEmailSender, AuthMessageSender>();
 			services.AddTransient<ISmsSender, AuthMessageSender>();
 		}
 
-		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
 		{
 			loggerFactory.AddConsole(Configuration.GetSection("Logging"));
 			loggerFactory.AddDebug();
 
-			//app.UseApplicationInsightsRequestTelemetry();
-
 			if (env.IsDevelopment())
 			{
 				app.UseBrowserLink();
 				app.UseDeveloperExceptionPage();
+				// MNOTE: Remove this.
 				//app.UseDatabaseErrorPage();
 			}
 			else
@@ -101,15 +88,8 @@ namespace WithIdentity
 				//catch { }
 			}
 
-			//app.UseIISPlatformHandler(options => options.AuthenticationDescriptions.Clear());
-
-			//app.UseApplicationInsightsExceptionTelemetry();
-
 			app.UseStaticFiles();
-
 			app.UseIdentity();
-
-			// To configure external authentication please see http://go.microsoft.com/fwlink/?LinkID=532715
 
 			app.UseMvc(routes =>
 			{
