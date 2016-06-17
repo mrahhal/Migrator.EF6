@@ -7,7 +7,7 @@ namespace WithIdentity.Models
 	{
 		// MNOTE: This hard coded string will only be used when calling the migrator tool (so only in development).
 		public static string ConnectionString { get; set; } =
-			"Server=(localdb)\\mssqllocaldb;Database=aspnet5-WithIdentity-8167e428-d8a7-4cae-931f-6899730e0ae8;Trusted_Connection=True;MultipleActiveResultSets=true";
+			"Server=(localdb)\\mssqllocaldb;Database=Migrator.EF6-WithIdentity;Trusted_Connection=True;MultipleActiveResultSets=true";
 
 		public ApplicationDbContext() : base(ConnectionString)
 		{
