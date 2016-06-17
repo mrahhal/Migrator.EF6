@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace BasicConsoleApp.Models
@@ -8,6 +9,8 @@ namespace BasicConsoleApp.Models
 
 		[Required]
 		public string Title { get; set; }
+
+		public DateTimeOffset Created { get; set; }
 
 		public int BlogId { get; set; }
 		public Blog Blog { get; set; }
