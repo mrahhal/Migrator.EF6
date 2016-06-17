@@ -31,8 +31,8 @@ Steps needed (nothing hard, just a lot of inital steps that you'll have to do on
     - },
     + "EntityFramework": "6.1.3",
     + "Migrator.EF6.Tools": {
-    +   version: "1.0.0-rc2-3",
-    +   "imports": "build"
+    +   "version": "1.0.0-rc2-3",
+    +   "type": "build"
     + },
     ```
 
