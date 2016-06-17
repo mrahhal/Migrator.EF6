@@ -119,6 +119,8 @@ A sample using `Migrator.EF6` and [`MR.AspNet.Identity.EntityFramework6`](https:
 The `1.0.0-rc2*` releases align with .NET Core RC2.
 
 #### `1.0.0-rc2-3`
+- Added support for the following commands:
+  - `migrations script`: Generate a SQL script from migrations.
 
 #### `1.0.0-rc2-2`
 - Fixed: calling the tool required building the project before invocations. Now the tool automatically builds the target project so that it's always up to date. [#11](https://github.com/mrahhal/Migrator.EF6/issues/11)

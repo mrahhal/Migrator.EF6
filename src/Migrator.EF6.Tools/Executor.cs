@@ -3,6 +3,7 @@
 using System;
 using System.Data.Entity.Migrations;
 using System.Data.Entity.Migrations.Design;
+using System.Data.Entity.Migrations.Infrastructure;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -74,6 +75,16 @@ namespace Migrator.EF6.Tools
 
 			// Write the designer code file.
 			File.WriteAllText(Path.Combine(MigrationsDir, migration.MigrationId + ".Designer.cs"), designerCode);
+		}
+
+		public void ScriptMigration(string from, string to, string output)
+		{
+			var config = FindDbMigrationsConfiguration();
+			var migrator = new DbMigrator(config);
+			var scriptingDecorator = new MigratorScriptingDecorator(migrator);
+			var script = scriptingDecorator.ScriptUpdate(from ?? "0", to);
+			File.WriteAllText(output, script);
+			Console.WriteLine($"Scripted migration as SQL to file '{output}'.");
 		}
 
 		public void UpdateDatabase(string targetMigration)
