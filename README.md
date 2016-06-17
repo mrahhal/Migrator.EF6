@@ -13,6 +13,8 @@ Checkout the [dnx](https://github.com/mrahhal/Migrator.EF6/tree/dnx) tree versio
 
 **It's important to note** that the only required steps to get EF6 migrations to work are the ones concerning the addition of `Migrator.EF6.Tools` to your `project.json`. All other steps are there to help you get rid of EF Core from the default template.
 
+You can read the release notes at the end of this file.
+
 Steps needed (nothing hard, just a lot of inital steps that you'll have to do one time):
 
 - Inside `project.json`:
@@ -112,3 +114,14 @@ A basic sample that shows how to add `Migrator.EF6.Tools` to your `project.json`
 
 #### [`WithIdentity`](samples/WithIdentity)
 A sample using `Migrator.EF6` and [`MR.AspNet.Identity.EntityFramework6`](https://github.com/mrahhal/MR.AspNet.Identity.EntityFramework6) to enable EF6 + migrations + Identity 3.0 in your Asp.Net Core app.
+
+## Release notes
+The `1.0.0-rc2*` releases align with .NET Core RC2.
+
+#### `1.0.0-rc2-3`
+
+#### `1.0.0-rc2-2`
+- Fixed: calling the tool required building the project before invocations. Now the tool automatically builds the target project so that it's always up to date. [#11](https://github.com/mrahhal/Migrator.EF6/issues/11)
+
+#### `1.0.0-rc2`
+- Initial release supporting .NET Core RC2.
