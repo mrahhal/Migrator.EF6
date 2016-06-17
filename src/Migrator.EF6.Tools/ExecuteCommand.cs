@@ -22,11 +22,7 @@ namespace Migrator.EF6.Tools
 			app.Command("database", c => DatabaseCommand.Configure(c));
 			app.Command("migrations", c => MigrationsCommand.Configure(c));
 
-			app.OnExecute(
-				() =>
-				{
-					app.ShowHelp();
-				});
+			app.OnExecute(() => app.ShowHelp());
 
 			return app;
 		}

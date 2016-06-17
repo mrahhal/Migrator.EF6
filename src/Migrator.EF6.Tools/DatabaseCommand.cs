@@ -18,9 +18,12 @@ namespace Migrator.EF6.Tools
 				update =>
 				{
 					update.Description = "Updates the database to a specified migration";
+					update.HelpOption();
+
 					var migrationName = update.Argument(
 						"[migration]",
 						"The target migration. If '0', all migrations will be reverted. If omitted, all pending migrations will be applied");
+
 					update.OnExecute(() =>
 					{
 						new Executor().UpdateDatabase(migrationName.Value);
@@ -32,6 +35,8 @@ namespace Migrator.EF6.Tools
 				truncate =>
 				{
 					truncate.Description = "Truncates all tables in the database. This is basically 'database update 0'";
+					truncate.HelpOption();
+
 					truncate.OnExecute(() =>
 					{
 						new Executor().UpdateDatabase("0");
@@ -43,6 +48,8 @@ namespace Migrator.EF6.Tools
 				recreate =>
 				{
 					recreate.Description = "Truncates all tables then updates the database to the latest migration";
+					recreate.HelpOption();
+
 					recreate.OnExecute(() =>
 					{
 						Console.WriteLine("Truncating all tables...");

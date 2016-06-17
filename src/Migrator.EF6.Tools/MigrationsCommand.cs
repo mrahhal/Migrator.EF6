@@ -17,6 +17,8 @@ namespace Migrator.EF6.Tools
 				enable =>
 				{
 					enable.Description = "Enable migrations";
+					enable.HelpOption();
+
 					enable.OnExecute(() =>
 					{
 						new Executor().EnableMigrations();
@@ -29,14 +31,16 @@ namespace Migrator.EF6.Tools
 				{
 					add.Description = "Add a new migration";
 					add.HelpOption();
-					add.OnExecute(() => add.ShowHelp());
+
 					var name = add.Argument(
 						"[name]",
 						"The name of the migration");
+
 					var ignoreChanges = add.Option(
 						"--ignore-changes",
 						"Ignore changes and start with an empty migration",
 						CommandOptionType.NoValue);
+
 					add.OnExecute(() =>
 					{
 						if (string.IsNullOrEmpty(name.Value))
@@ -54,8 +58,8 @@ namespace Migrator.EF6.Tools
 			   list =>
 			   {
 				   list.Description = "List the migrations";
-				   list.HelpOption("-?|-h|--help");
-				   list.OnExecute(() => list.ShowHelp());
+				   list.HelpOption();
+
 				   list.OnExecute(() =>
 				   {
 					   new Executor().ListMigrations();
