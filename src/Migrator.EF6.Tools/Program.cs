@@ -66,6 +66,7 @@ namespace Migrator.EF6.Tools
 			{
 				throw new Exception($"Building {projectFile.Name} failed...");
 			}
+			Console.WriteLine();
 
 			var dispatchCommand = DotnetToolDispatcher.CreateDispatchCommand(
 				args,
