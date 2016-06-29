@@ -22,16 +22,16 @@ Steps needed (nothing hard, just a lot of inital steps that you'll have to do on
     - Remove everything `EF Core` and add `Migrator.EF6.Tools` + `EF6` to your `dependencies`.
     In your `dependencies` section:
     ```diff
-    - "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "1.0.0-rc2-final",
-    - "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "1.0.0-rc2-final",
-    - "Microsoft.EntityFrameworkCore.SqlServer": "1.0.0-rc2-final",
+    - "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "1.0.0",
+    - "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "1.0.0",
+    - "Microsoft.EntityFrameworkCore.SqlServer": "1.0.0",
     - "Microsoft.EntityFrameworkCore.Tools": {
-    -   "version": "1.0.0-preview1-final",
+    -   "version": "1.0.0-preview2-final",
     -   "type": "build"
     - },
     + "EntityFramework": "6.1.3",
     + "Migrator.EF6.Tools": {
-    +   "version": "1.0.0-rc2-3",
+    +   "version": "1.0.0",
     +   "type": "build"
     + },
     ```
@@ -42,7 +42,7 @@ Steps needed (nothing hard, just a lot of inital steps that you'll have to do on
     -    ...
     - }
     + "Migrator.EF6.Tools": {
-    +   "version": "1.0.0-rc2-3",
+    +   "version": "1.0.0",
     +   "imports": "portable-net45+win8+dnxcore50"
     + }
     ```
@@ -116,7 +116,13 @@ A basic sample that shows how to add `Migrator.EF6.Tools` to your `project.json`
 A sample using `Migrator.EF6` and [`MR.AspNet.Identity.EntityFramework6`](https://github.com/mrahhal/MR.AspNet.Identity.EntityFramework6) to enable EF6 + migrations + Identity 3.0 in your Asp.Net Core app.
 
 ## Release notes
-The `1.0.0-rc2*` releases align with .NET Core RC2.
+
+The `1.0.*` releases align with .NET Core `1.0.0`.
+
+#### `1.0.0`
+- Initial release supporting .NET Core `1.0.0`.
+
+The `1.0.0-rc2*` releases align with .NET Core `RC2`.
 
 #### `1.0.0-rc2-3`
 - Added support for the following commands:
