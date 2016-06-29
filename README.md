@@ -115,6 +115,9 @@ A basic sample that shows how to add `Migrator.EF6.Tools` to your `project.json`
 #### [`WithIdentity`](samples/WithIdentity)
 A sample using `Migrator.EF6` and [`MR.AspNet.Identity.EntityFramework6`](https://github.com/mrahhal/MR.AspNet.Identity.EntityFramework6) to enable EF6 + migrations + Identity 3.0 in your Asp.Net Core app.
 
+## Note about versioning
+I'm aware that I should have aligned the version of `Migrator.EF6.Tools` to the dotnet tooling instead of aligning it to the runtime release cycle (I kinda did that without thinking about the whole thing). But, what's done is done and I doubt that the tooling will change that much from now on so all is good for now.
+
 ## Release notes
 
 The `1.0.*` releases align with .NET Core `1.0.0`.
