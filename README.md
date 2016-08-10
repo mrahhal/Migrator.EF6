@@ -120,6 +120,10 @@ I'm aware that I should have aligned the version of `Migrator.EF6.Tools` to the 
 
 The `1.0.*` releases align with .NET Core `1.0.0`.
 
+#### `1.0.1`
+- Add an output directory options for migrations. [#24](https://github.com/mrahhal/Migrator.EF6/issues/24)
+- `migrations enable` now automatically finds the app's DbContex type name to use in the "Configuration.cs" generated file.
+
 #### `1.0.0`
 - Initial release supporting .NET Core `1.0.0`.
 
