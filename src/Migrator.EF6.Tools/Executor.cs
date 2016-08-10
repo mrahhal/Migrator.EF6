@@ -1,6 +1,7 @@
 #if NET451
 
 using System;
+using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Data.Entity.Migrations.Design;
 using System.Data.Entity.Migrations.Infrastructure;
@@ -41,6 +42,7 @@ namespace Migrator.EF6.Tools
 			var migrationsDir = GetMigrationsDir(outputDir);
 			Directory.CreateDirectory(migrationsDir);
 			var path = Combine(migrationsDir, "Configuration.cs");
+			var appDbContextTypeName = FindAppDbContextTypeName();
 
 			var assembly = Assembly.GetExecutingAssembly();
 			var fileContent = default(string);
@@ -53,7 +55,20 @@ namespace Migrator.EF6.Tools
 
 			// Write Configuration.cs file.
 			fileContent = fileContent.Replace("_RootNamespace_", _rootNamespace);
+
+			if (appDbContextTypeName != null)
+			{
+				fileContent = fileContent.Replace("ApplicationDbContext", appDbContextTypeName);
+			}
+
 			File.WriteAllText(path, fileContent);
+		}
+
+		private string FindAppDbContextTypeName()
+		{
+			var allDbContextTypes = _types.Where(t => typeof(DbContext).IsAssignableFrom(t));
+			var dbContextType = allDbContextTypes.FirstOrDefault();
+			return dbContextType?.Name;
 		}
 
 		public void AddMigration(string name, string outputDir, bool ignoreChanges)

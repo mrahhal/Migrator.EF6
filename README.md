@@ -62,9 +62,7 @@ Steps needed (nothing hard, just a lot of inital steps that you'll have to do on
     dotnet ef database update
     ```
 
-You might have to edit the db context's name after enabling migrations if there are errors, so do that before going on.
-
-**Important:** if something goes wrong between commands make sure to build your project first with `dotnet build`.
+The tool will automatically build your project but if something goes wrong make sure to build manually with `dotnet build`.
 
 As a final note, make sure your db context looks like this:
 ```c#
