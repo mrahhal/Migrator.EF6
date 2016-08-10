@@ -9,6 +9,8 @@
 		<Version>$(Major).$(Minor).$(Patch)</Version>
 		<QualityWithDash Condition="'$(Quality)' != ''">-$(Quality)</QualityWithDash>
 		<InformationalVersion>$(Version)$(QualityWithDash)</InformationalVersion>
+		<DevPre>dev-</DevPre>
+		<DevPre Condition="'$(CI)' == 'true'">ci-</DevPre>
 
 		<BuildType Condition="'$(BuildType)' == ''">Dev</BuildType>
 		<BuildType Condition="'$(APPVEYOR_REPO_TAG)' == 'true'">Release</BuildType>
@@ -28,7 +30,7 @@
 		</CreateStamp>
 		<PropertyGroup>
 			<InfoVersion Condition="'$(BuildType)' == 'Release'">$(InformationalVersion)</InfoVersion>
-			<InfoVersion Condition="'$(BuildType)' != 'Release'">$(InformationalVersion)-$(Stamp)</InfoVersion>
+			<InfoVersion Condition="'$(BuildType)' != 'Release'">$(InformationalVersion)-$(DevPre)$(Stamp)</InfoVersion>
 			<Find>{
   "version": ".+"</Find>
 			<Replace>{

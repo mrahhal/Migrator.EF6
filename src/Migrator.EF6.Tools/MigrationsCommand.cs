@@ -20,9 +20,13 @@ namespace Migrator.EF6.Tools
 					enable.Description = "Enable migrations";
 					enable.HelpOption();
 
+					var outputDir = enable.Option(
+						"-o|--output-dir <path>",
+						"The directory (and sub-namespace) to use. If omitted, \"Migrations\" is used. Relative paths are relative the directory in which the command is executed.");
+
 					enable.OnExecute(() =>
 					{
-						new Executor().EnableMigrations();
+						new Executor().EnableMigrations(outputDir.Value());
 					});
 				});
 
@@ -42,6 +46,10 @@ namespace Migrator.EF6.Tools
 						"Ignore changes and start with an empty migration",
 						CommandOptionType.NoValue);
 
+					var outputDir = add.Option(
+						"-o|--output-dir <path>",
+						"The directory (and sub-namespace) to use. If omitted, \"Migrations\" is used. Relative paths are relative the directory in which the command is executed.");
+
 					add.OnExecute(() =>
 					{
 						if (string.IsNullOrEmpty(name.Value))
@@ -49,7 +57,7 @@ namespace Migrator.EF6.Tools
 							return 1;
 						}
 
-						new Executor().AddMigration(name.Value, ignoreChanges.HasValue());
+						new Executor().AddMigration(name.Value, outputDir.Value(), ignoreChanges.HasValue());
 						return 0;
 					});
 				});

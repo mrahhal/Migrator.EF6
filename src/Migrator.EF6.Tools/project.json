@@ -1,4 +1,4 @@
-﻿{
+{
   "version": "1.0.0-*",
   "description": "A .NetCore CLI tool to enable EF6 migrations in an Asp.Net Core app",
   "authors": [ "Mohammad Rahhal" ],

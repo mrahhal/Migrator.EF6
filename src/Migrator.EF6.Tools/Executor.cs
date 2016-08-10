@@ -29,16 +29,18 @@ namespace Migrator.EF6.Tools
 			_startupAssembly = Assembly.Load(new AssemblyName(_targetName));
 			_rootNamespace = project.Name;
 			_types = _startupAssembly.GetTypes();
-			Directory.CreateDirectory(MigrationsDir);
 		}
 
-		private string MigrationsDir => Path.Combine(_projectDir, "Migrations");
+		private string GetMigrationsDir(string outputDir)
+			=> Path.Combine(_projectDir, outputDir ?? "Migrations");
 
 		private string Combine(params string[] paths) => Path.Combine(paths);
 
-		public void EnableMigrations()
+		public void EnableMigrations(string outputDir)
 		{
-			var path = Combine(MigrationsDir, "Configuration.cs");
+			var migrationsDir = GetMigrationsDir(outputDir);
+			Directory.CreateDirectory(migrationsDir);
+			var path = Combine(migrationsDir, "Configuration.cs");
 
 			var assembly = Assembly.GetExecutingAssembly();
 			var fileContent = default(string);
@@ -54,8 +56,10 @@ namespace Migrator.EF6.Tools
 			File.WriteAllText(path, fileContent);
 		}
 
-		public void AddMigration(string name, bool ignoreChanges)
+		public void AddMigration(string name, string outputDir, bool ignoreChanges)
 		{
+			var migrationsDir = GetMigrationsDir(outputDir);
+			Directory.CreateDirectory(migrationsDir);
 			var config = FindDbMigrationsConfiguration();
 
 			// Scaffold migration.
@@ -63,7 +67,7 @@ namespace Migrator.EF6.Tools
 			var migration = scaffolder.Scaffold(name, ignoreChanges);
 
 			// Write the user code file.
-			File.WriteAllText(Combine(MigrationsDir, migration.MigrationId + ".cs"), migration.UserCode);
+			File.WriteAllText(Combine(migrationsDir, migration.MigrationId + ".cs"), migration.UserCode);
 
 			// Write needed resource values directly inside the designer code file.
 			// Apparently, aspnet and resource files don't play well (or more specifically,
@@ -74,7 +78,7 @@ namespace Migrator.EF6.Tools
 				.Replace("private readonly ResourceManager Resources = new ResourceManager(typeof(InitialCreate));", "");
 
 			// Write the designer code file.
-			File.WriteAllText(Path.Combine(MigrationsDir, migration.MigrationId + ".Designer.cs"), designerCode);
+			File.WriteAllText(Path.Combine(migrationsDir, migration.MigrationId + ".Designer.cs"), designerCode);
 		}
 
 		public void ScriptMigration(string from, string to, string output)
