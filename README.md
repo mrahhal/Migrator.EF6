@@ -25,13 +25,13 @@ Steps needed (nothing hard, just a lot of inital steps that you'll have to do on
     - "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "1.0.0",
     - "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "1.0.0",
     - "Microsoft.EntityFrameworkCore.SqlServer": "1.0.0",
-    - "Microsoft.EntityFrameworkCore.Tools": {
+    - "Microsoft.EntityFrameworkCoMre.Tools": {
     -   "version": "1.0.0-preview2-final",
     -   "type": "build"
     - },
     + "EntityFramework": "6.1.3",
     + "Migrator.EF6.Tools": {
-    +   "version": "1.0.0",
+    +   "version": "1.0.1",
     +   "type": "build"
     + },
     ```
@@ -42,7 +42,7 @@ Steps needed (nothing hard, just a lot of inital steps that you'll have to do on
     -    ...
     - }
     + "Migrator.EF6.Tools": {
-    +   "version": "1.0.0",
+    +   "version": "1.0.1",
     +   "imports": "portable-net45+win8+dnxcore50"
     + }
     ```
