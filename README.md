@@ -11,6 +11,8 @@ Checkout the [dnx](https://github.com/mrahhal/Migrator.EF6/tree/dnx) tree versio
 
 ## Getting EF6 migrations to work
 
+**Make sure to update both entries inside `dependencies` and `tools` to the latest version.**
+
 **It's important to note** that the only required steps to get EF6 migrations to work are the ones concerning the addition of `Migrator.EF6.Tools` to your `project.json`. All other steps are there to help you get rid of EF Core from the default template.
 
 You can read the release notes at the end of this file.
