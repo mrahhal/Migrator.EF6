@@ -24,9 +24,14 @@ namespace Migrator.EF6.Tools
 						"[migration]",
 						"The target migration. If '0', all migrations will be reverted. If omitted, all pending migrations will be applied");
 
+					var force = update.Option(
+						"--force",
+						"Force update, ignoring data loss",
+						CommandOptionType.NoValue);
+
 					update.OnExecute(() =>
 					{
-						new Executor().UpdateDatabase(migrationName.Value);
+						new Executor().UpdateDatabase(migrationName.Value, force.HasValue());
 					});
 				});
 
@@ -39,7 +44,7 @@ namespace Migrator.EF6.Tools
 
 					truncate.OnExecute(() =>
 					{
-						new Executor().UpdateDatabase("0");
+						new Executor().UpdateDatabase("0", true);
 					});
 				});
 
@@ -53,7 +58,7 @@ namespace Migrator.EF6.Tools
 					recreate.OnExecute(() =>
 					{
 						Console.WriteLine("Truncating all tables...");
-						new Executor().UpdateDatabase("0");
+						new Executor().UpdateDatabase("0", true);
 						Console.WriteLine("Updating to latest migration...");
 						new Executor().UpdateDatabase(null);
 					});

@@ -48,7 +48,7 @@ namespace Migrator.EF6.Tools
 
 					var outputDir = add.Option(
 						"-o|--output-dir <path>",
-						"The directory (and sub-namespace) to use. If omitted, \"Migrations\" is used. Relative paths are relative the directory in which the command is executed.");
+						"The directory (and sub-namespace) to use. If omitted, \"Migrations\" is used. Relative paths are relative the directory in which the command is executed");
 
 					add.OnExecute(() =>
 					{

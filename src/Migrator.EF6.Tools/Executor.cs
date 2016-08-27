@@ -106,9 +106,10 @@ namespace Migrator.EF6.Tools
 			Console.WriteLine($"Scripted migration as SQL to file '{output}'.");
 		}
 
-		public void UpdateDatabase(string targetMigration)
+		public void UpdateDatabase(string targetMigration, bool force = false)
 		{
 			var config = FindDbMigrationsConfiguration();
+			config.AutomaticMigrationDataLossAllowed = force;
 			var migrator = new DbMigrator(config);
 			migrator.Update(targetMigration);
 		}
