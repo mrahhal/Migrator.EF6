@@ -122,6 +122,9 @@ I'm aware that I should have aligned the version of `Migrator.EF6.Tools` to the 
 
 The `1.0.*` releases align with .NET Core `1.0.0`.
 
+#### `1.0.2`
+- `database update` now has a `--force` option to ignore possible data loss while updating the database.
+
 #### `1.0.1`
 - Added an output directory option for migrations. [#24](https://github.com/mrahhal/Migrator.EF6/issues/24)
 - `migrations enable` now automatically finds the app's DbContex type name to use in the "Configuration.cs" generated file.
