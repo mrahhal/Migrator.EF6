@@ -26,7 +26,7 @@ namespace Migrator.EF6.Tools
 
 					var force = update.Option(
 						"--force",
-						"Force update, ignoring data loss",
+						"Force update, ignoring possible data loss",
 						CommandOptionType.NoValue);
 
 					update.OnExecute(() =>
