@@ -96,6 +96,9 @@ EF6 migrations implementation can read the connection string from `web.config` a
 ## More commands
 These commands do not exist in the normal migrator:
 
+#### `database update ~[number of migrations to revert]`:
+Reverts a number of migrations. `database update ~` will revert one migration, and `database update ~2` will revert 2 migrations.
+
 #### `database truncate`:
 Truncates all tables in the database. This is basically 'database update 0'.
 
