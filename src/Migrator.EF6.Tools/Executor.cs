@@ -1,6 +1,7 @@
 #if NET451
 
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Data.Entity.Migrations.Design;
@@ -108,20 +109,78 @@ namespace Migrator.EF6.Tools
 
 		public void UpdateDatabase(string targetMigration, bool force = false)
 		{
+			var resolvedMigrationName = ResolveMigrationName(targetMigration);
 			var config = FindDbMigrationsConfiguration();
 			config.AutomaticMigrationDataLossAllowed = force;
+
+			var targetMigrationFriendlyName = resolvedMigrationName ?? "latest";
+			Console.WriteLine($"Target migration: {targetMigrationFriendlyName}");
+
 			var migrator = new DbMigrator(config);
-			migrator.Update(targetMigration);
+			if (resolvedMigrationName == null)
+			{
+				migrator.Update();
+			}
+			else
+			{
+				migrator.Update(resolvedMigrationName);
+			}
+		}
+
+		private string ResolveMigrationName(string targetMigration)
+		{
+			if (string.IsNullOrWhiteSpace(targetMigration))
+			{
+				// If null or empty, just return the same value.
+				return targetMigration;
+			}
+
+			// Otherwise, let's see if it's of the form "~[number of migrations to go back]".
+			if (targetMigration[0] != '~')
+			{
+				// Probably a migration name, so just return it.
+				return targetMigration;
+			}
+
+			// A relative migration name, let's resolve it.
+			var numberString = targetMigration.Substring(1);
+			var number = default(int);
+			if (string.IsNullOrWhiteSpace(numberString))
+			{
+				// i.e "~"
+				number = 1;
+			}
+			else
+			{
+				// i.e "~2"
+				int.TryParse(numberString, out number);
+			}
+
+			// We have a relative migration.
+			var migrations = GetMigrations();
+			if (number >= migrations.Count)
+			{
+				// Go back all the way.
+				return "0";
+			}
+
+			var resolvedTargetMigration = migrations.ElementAt(number);
+			return resolvedTargetMigration;
 		}
 
 		public void ListMigrations()
 		{
-			var config = FindDbMigrationsConfiguration();
-			var migrator = new DbMigrator(config);
-			foreach (var migration in migrator.GetDatabaseMigrations())
+			foreach (var migration in GetMigrations())
 			{
 				Console.WriteLine(migration);
 			}
+		}
+
+		private IReadOnlyCollection<string> GetMigrations()
+		{
+			var config = FindDbMigrationsConfiguration();
+			var migrator = new DbMigrator(config);
+			return migrator.GetDatabaseMigrations().ToList().AsReadOnly();
 		}
 
 		private DbMigrationsConfiguration FindDbMigrationsConfiguration()
