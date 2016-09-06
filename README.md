@@ -123,7 +123,7 @@ I'm aware that I should have aligned the version of `Migrator.EF6.Tools` to the 
 
 ## Release notes
 
-The `1.0.*` releases align with .NET Core `1.0.0`.
+The `1.0.*` releases align with .NET Core tooling `1.0.0-preview2`.
 
 #### `1.0.3`
 - Allow relative database updates to migrations using "~". So `database update ~` will revert one migration, and `database update ~2` will revert 2 migrations.
