@@ -74,9 +74,9 @@ namespace Migrator.EF6.Tools
 
 		public void AddMigration(string name, string outputDir, bool ignoreChanges)
 		{
-			var migrationsDir = GetMigrationsDir(outputDir);
-			Directory.CreateDirectory(migrationsDir);
 			var config = FindDbMigrationsConfiguration();
+			var migrationsDir = GetMigrationsDir(outputDir ?? config.MigrationsDirectory);
+			Directory.CreateDirectory(migrationsDir);
 
 			// Scaffold migration.
 			var scaffolder = new MigrationScaffolder(config);
