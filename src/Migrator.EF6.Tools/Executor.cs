@@ -67,7 +67,11 @@ namespace Migrator.EF6.Tools
 
 		private string FindAppDbContextTypeName()
 		{
-			var allDbContextTypes = _types.Where(t => typeof(DbContext).IsAssignableFrom(t));
+			var allDbContextTypes = _types.Where(
+				t => typeof(DbContext).IsAssignableFrom(t)
+					 && t.GetConstructor(BindingFlags.Instance | BindingFlags.Public, null, Type.EmptyTypes, null) != null
+					 && !t.IsAbstract
+					 && !t.IsGenericType);
 			var dbContextType = allDbContextTypes.FirstOrDefault();
 			return dbContextType?.Name;
 		}
@@ -185,8 +189,11 @@ namespace Migrator.EF6.Tools
 
 		private DbMigrationsConfiguration FindDbMigrationsConfiguration()
 		{
-			var configType = _types
-				.Where(t => typeof(DbMigrationsConfiguration).IsAssignableFrom(t))
+			var configType = _types.Where(
+					t => typeof(DbMigrationsConfiguration).IsAssignableFrom(t)
+						 && t.GetConstructor(BindingFlags.Instance | BindingFlags.Public, null, Type.EmptyTypes, null) != null
+						 && !t.IsAbstract
+						 && !t.IsGenericType)
 				.FirstOrDefault();
 			var config = Activator.CreateInstance(configType) as DbMigrationsConfiguration;
 			return config;
