@@ -34,11 +34,6 @@ namespace Migrator.EF6.Tools
 			_types = _startupAssembly.GetTypes();
 		}
 
-		private string GetMigrationsDir(string outputDir)
-			=> Path.Combine(_projectDir, outputDir ?? "Migrations");
-
-		private string Combine(params string[] paths) => Path.Combine(paths);
-
 		public void EnableMigrations(string outputDir)
 		{
 			var migrationsDir = GetMigrationsDir(outputDir);
@@ -64,14 +59,6 @@ namespace Migrator.EF6.Tools
 			}
 
 			File.WriteAllText(path, fileContent);
-		}
-
-		private string FindAppDbContextTypeName()
-		{
-			var allDbContextTypes = _types.Where(
-				t => typeof(DbContext).IsAssignableFrom(t) && t.IsConstructable());
-			var dbContextType = allDbContextTypes.FirstOrDefault();
-			return dbContextType?.Name;
 		}
 
 		public void AddMigration(string name, string outputDir, bool ignoreChanges)
@@ -129,6 +116,14 @@ namespace Migrator.EF6.Tools
 			}
 		}
 
+		public void ListMigrations()
+		{
+			foreach (var migration in GetMigrations())
+			{
+				Console.WriteLine(migration);
+			}
+		}
+
 		private string ResolveMigrationName(string targetMigration)
 		{
 			if (string.IsNullOrWhiteSpace(targetMigration))
@@ -170,14 +165,6 @@ namespace Migrator.EF6.Tools
 			return resolvedTargetMigration;
 		}
 
-		public void ListMigrations()
-		{
-			foreach (var migration in GetMigrations())
-			{
-				Console.WriteLine(migration);
-			}
-		}
-
 		private IReadOnlyCollection<string> GetMigrations()
 		{
 			var config = FindDbMigrationsConfiguration();
@@ -187,12 +174,27 @@ namespace Migrator.EF6.Tools
 
 		private DbMigrationsConfiguration FindDbMigrationsConfiguration()
 		{
-			var configType = _types.Where(
-					t => typeof(DbMigrationsConfiguration).IsAssignableFrom(t) && t.IsConstructable())
-				.FirstOrDefault();
+			var configType = GetConstructablesOfType<DbMigrationsConfiguration>(_types).FirstOrDefault();
 			var config = Activator.CreateInstance(configType) as DbMigrationsConfiguration;
 			return config;
 		}
+
+		private string FindAppDbContextTypeName()
+		{
+			var dbContextType = GetConstructablesOfType<DbContext>(_types).FirstOrDefault();
+			return dbContextType?.Name;
+		}
+
+		private IEnumerable<Type> GetConstructablesOfType<TType>(IEnumerable<Type> types)
+			where TType : class
+		{
+			return types.Where(t => typeof(TType).IsAssignableFrom(t) && t.IsConstructable());
+		}
+
+		private string GetMigrationsDir(string outputDir)
+			=> Path.Combine(_projectDir, outputDir ?? "Migrations");
+
+		private string Combine(params string[] paths) => Path.Combine(paths);
 	}
 }
 
