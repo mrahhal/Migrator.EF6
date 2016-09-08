@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Microsoft.DotNet.ProjectModel;
+using Migrator.EF6.Tools.Extensions;
 
 namespace Migrator.EF6.Tools
 {
@@ -68,10 +69,7 @@ namespace Migrator.EF6.Tools
 		private string FindAppDbContextTypeName()
 		{
 			var allDbContextTypes = _types.Where(
-				t => typeof(DbContext).IsAssignableFrom(t)
-					 && t.GetConstructor(BindingFlags.Instance | BindingFlags.Public, null, Type.EmptyTypes, null) != null
-					 && !t.IsAbstract
-					 && !t.IsGenericType);
+				t => typeof(DbContext).IsAssignableFrom(t) && t.IsConstructable());
 			var dbContextType = allDbContextTypes.FirstOrDefault();
 			return dbContextType?.Name;
 		}
@@ -190,10 +188,7 @@ namespace Migrator.EF6.Tools
 		private DbMigrationsConfiguration FindDbMigrationsConfiguration()
 		{
 			var configType = _types.Where(
-					t => typeof(DbMigrationsConfiguration).IsAssignableFrom(t)
-						 && t.GetConstructor(BindingFlags.Instance | BindingFlags.Public, null, Type.EmptyTypes, null) != null
-						 && !t.IsAbstract
-						 && !t.IsGenericType)
+					t => typeof(DbMigrationsConfiguration).IsAssignableFrom(t) && t.IsConstructable())
 				.FirstOrDefault();
 			var config = Activator.CreateInstance(configType) as DbMigrationsConfiguration;
 			return config;
