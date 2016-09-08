@@ -33,7 +33,7 @@ Steps needed (nothing hard, just a lot of inital steps that you'll have to do on
     - },
     + "EntityFramework": "6.1.3",
     + "Migrator.EF6.Tools": {
-    +   "version": "1.0.3",
+    +   "version": "1.0.4",
     +   "type": "build"
     + },
     ```
@@ -44,7 +44,7 @@ Steps needed (nothing hard, just a lot of inital steps that you'll have to do on
     -    ...
     - }
     + "Migrator.EF6.Tools": {
-    +   "version": "1.0.3",
+    +   "version": "1.0.4",
     +   "imports": "portable-net45+win8+dnxcore50"
     + }
     ```
@@ -124,6 +124,10 @@ I'm aware that I should have aligned the version of `Migrator.EF6.Tools` to the 
 ## Release notes
 
 The `1.0.*` releases align with .NET Core tooling `1.0.0-preview2`.
+
+#### `1.0.4`
+- Only look for constructable `DbContext`s and `DbMigrationsConfiguration`s. [#25](https://github.com/mrahhal/Migrator.EF6/issues/25)
+- Use `MigrationsDirectory` in `DbMigrationConfiguration` if it's available and no directory is specified. [#26](https://github.com/mrahhal/Migrator.EF6/issues/26)
 
 #### `1.0.3`
 - Allow relative database updates to migrations using "~". So `database update ~` will revert one migration, and `database update ~2` will revert 2 migrations.
