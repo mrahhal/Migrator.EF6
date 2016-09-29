@@ -24,6 +24,10 @@ namespace Migrator.EF6.Tools
 						"[migration]",
 						"The target migration. If '0', all migrations will be reverted. If omitted, all pending migrations will be applied");
 
+					var context = update.Option(
+						"-c|--context <context>",
+						"The DbContext to use. If omitted, the default DbContext is used");
+
 					var force = update.Option(
 						"--force",
 						"Force update, ignoring possible data loss",
@@ -31,7 +35,7 @@ namespace Migrator.EF6.Tools
 
 					update.OnExecute(() =>
 					{
-						new Executor().UpdateDatabase(migrationName.Value, force.HasValue());
+						new Executor().UpdateDatabase(migrationName.Value, context.Value(), force.HasValue());
 					});
 				});
 
@@ -42,9 +46,13 @@ namespace Migrator.EF6.Tools
 					truncate.Description = "Truncates all tables in the database. This is basically 'database update 0'";
 					truncate.HelpOption();
 
+					var context = truncate.Option(
+						"-c|--context <context>",
+						"The DbContext to use. If omitted, the default DbContext is used");
+
 					truncate.OnExecute(() =>
 					{
-						new Executor().UpdateDatabase("0", true);
+						new Executor().UpdateDatabase("0", context.Value(), true);
 					});
 				});
 
@@ -55,12 +63,16 @@ namespace Migrator.EF6.Tools
 					recreate.Description = "Truncates all tables then updates the database to the latest migration";
 					recreate.HelpOption();
 
+					var context = recreate.Option(
+						"-c|--context <context>",
+						"The DbContext to use. If omitted, the default DbContext is used");
+
 					recreate.OnExecute(() =>
 					{
 						Console.WriteLine("Truncating all tables...");
-						new Executor().UpdateDatabase("0", true);
+						new Executor().UpdateDatabase("0", context.Value(), true);
 						Console.WriteLine("Updating to latest migration...");
-						new Executor().UpdateDatabase(null);
+						new Executor().UpdateDatabase(null, context.Value());
 					});
 				});
 

@@ -61,9 +61,9 @@ namespace Migrator.EF6.Tools
 			File.WriteAllText(path, fileContent);
 		}
 
-		public void AddMigration(string name, string outputDir, bool ignoreChanges)
+		public void AddMigration(string name, string context, string outputDir, bool ignoreChanges)
 		{
-			var config = FindDbMigrationsConfiguration();
+			var config = FindDbMigrationsConfiguration(context);
 			var migrationsDir = GetMigrationsDir(outputDir ?? config.MigrationsDirectory);
 			Directory.CreateDirectory(migrationsDir);
 
@@ -86,9 +86,9 @@ namespace Migrator.EF6.Tools
 			File.WriteAllText(Path.Combine(migrationsDir, migration.MigrationId + ".Designer.cs"), designerCode);
 		}
 
-		public void ScriptMigration(string from, string to, string output)
+		public void ScriptMigration(string from, string to, string context, string output)
 		{
-			var config = FindDbMigrationsConfiguration();
+			var config = FindDbMigrationsConfiguration(context);
 			var migrator = new DbMigrator(config);
 			var scriptingDecorator = new MigratorScriptingDecorator(migrator);
 			var script = scriptingDecorator.ScriptUpdate(from ?? "0", to);
@@ -96,10 +96,10 @@ namespace Migrator.EF6.Tools
 			Console.WriteLine($"Scripted migration as SQL to file '{output}'.");
 		}
 
-		public void UpdateDatabase(string targetMigration, bool force = false)
+		public void UpdateDatabase(string targetMigration, string context, bool force = false)
 		{
-			var resolvedMigrationName = ResolveMigrationName(targetMigration);
-			var config = FindDbMigrationsConfiguration();
+			var resolvedMigrationName = ResolveMigrationName(context, targetMigration);
+			var config = FindDbMigrationsConfiguration(context);
 			config.AutomaticMigrationDataLossAllowed = force;
 
 			var targetMigrationFriendlyName = resolvedMigrationName ?? "latest";
@@ -116,15 +116,15 @@ namespace Migrator.EF6.Tools
 			}
 		}
 
-		public void ListMigrations()
+		public void ListMigrations(string context)
 		{
-			foreach (var migration in GetMigrations())
+			foreach (var migration in GetMigrations(context))
 			{
 				Console.WriteLine(migration);
 			}
 		}
 
-		private string ResolveMigrationName(string targetMigration)
+		private string ResolveMigrationName(string context, string targetMigration)
 		{
 			if (string.IsNullOrWhiteSpace(targetMigration))
 			{
@@ -154,7 +154,7 @@ namespace Migrator.EF6.Tools
 			}
 
 			// We have a relative migration.
-			var migrations = GetMigrations();
+			var migrations = GetMigrations(context);
 			if (number >= migrations.Count)
 			{
 				// Go back all the way.
@@ -165,18 +165,46 @@ namespace Migrator.EF6.Tools
 			return resolvedTargetMigration;
 		}
 
-		private IReadOnlyCollection<string> GetMigrations()
+		private IReadOnlyCollection<string> GetMigrations(string context)
 		{
-			var config = FindDbMigrationsConfiguration();
+			var config = FindDbMigrationsConfiguration(context);
 			var migrator = new DbMigrator(config);
 			return migrator.GetDatabaseMigrations().ToList().AsReadOnly();
 		}
 
-		private DbMigrationsConfiguration FindDbMigrationsConfiguration()
+		private List<DbMigrationsConfiguration> FindAllDbMigrationsConfiguration()
 		{
-			var configType = GetConstructablesOfType<DbMigrationsConfiguration>(_types).FirstOrDefault();
-			var config = Activator.CreateInstance(configType) as DbMigrationsConfiguration;
-			return config;
+			var configTypes = GetConstructablesOfType<DbMigrationsConfiguration>(_types).ToList();
+			return configTypes.Select(t => Activator.CreateInstance(t) as DbMigrationsConfiguration)
+				.ToList();
+		}
+
+		private DbMigrationsConfiguration FindDbMigrationsConfiguration(string context)
+		{
+			var configTypes = GetConstructablesOfType<DbMigrationsConfiguration>(_types).ToList();
+			var configType = default(Type);
+
+			if (string.IsNullOrEmpty(context))
+			{
+				if (configTypes.Count == 0)
+				{
+					throw new OperationException("No DbMigrationsConfiguration types found.");
+				}
+				else if (configTypes.Count == 1)
+				{
+					configType = configTypes.First();
+				}
+				else
+				{
+					throw new OperationException("Found multiple contexts, you should specify one using the -c option.");
+				}
+			}
+			else
+			{
+				configType = configTypes
+					.First(t => t.BaseType.GenericTypeArguments[0].Name == context);
+			}
+			return Activator.CreateInstance(configType) as DbMigrationsConfiguration;
 		}
 
 		private string FindAppDbContextTypeName()

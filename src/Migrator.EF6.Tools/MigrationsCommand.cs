@@ -41,14 +41,18 @@ namespace Migrator.EF6.Tools
 						"[name]",
 						"The name of the migration");
 
-					var ignoreChanges = add.Option(
-						"--ignore-changes",
-						"Ignore changes and start with an empty migration",
-						CommandOptionType.NoValue);
+					var context = add.Option(
+						"-c|--context <context>",
+						"The DbContext to use. If omitted, the default DbContext is used");
 
 					var outputDir = add.Option(
 						"-o|--output-dir <path>",
 						"The directory (and sub-namespace) to use. If omitted, \"Migrations\" is used. Relative paths are relative the directory in which the command is executed");
+
+					var ignoreChanges = add.Option(
+						"--ignore-changes",
+						"Ignore changes and start with an empty migration",
+						CommandOptionType.NoValue);
 
 					add.OnExecute(() =>
 					{
@@ -57,7 +61,11 @@ namespace Migrator.EF6.Tools
 							return 1;
 						}
 
-						new Executor().AddMigration(name.Value, outputDir.Value(), ignoreChanges.HasValue());
+						new Executor().AddMigration(
+							name.Value,
+							context.Value(),
+							outputDir.Value(),
+							ignoreChanges.HasValue());
 						return 0;
 					});
 				});
@@ -72,9 +80,14 @@ namespace Migrator.EF6.Tools
 					var from = script.Argument(
 						"[from]",
 						"The starting migration. If omitted, '0' (the initial database) is used");
+
 					var to = script.Argument(
 						"[to]",
 						"The ending migration. If omitted, the last migration is used");
+
+					var context = script.Option(
+						"-c|--context <context>",
+						"The DbContext to use. If omitted, the default DbContext is used");
 
 					var output = script.Option(
 						"-o|--output <file>",
@@ -91,6 +104,7 @@ namespace Migrator.EF6.Tools
 						new Executor().ScriptMigration(
 							from.Value,
 							to.Value,
+							context.Value(),
 							output.Value());
 					});
 				});
@@ -102,9 +116,13 @@ namespace Migrator.EF6.Tools
 				   list.Description = "List the migrations";
 				   list.HelpOption();
 
+				   var context = list.Option(
+					   "-c|--context <context>",
+					   "The DbContext to use. If omitted, the default DbContext is used");
+
 				   list.OnExecute(() =>
 				   {
-					   new Executor().ListMigrations();
+					   new Executor().ListMigrations(context.Value());
 				   });
 			   });
 

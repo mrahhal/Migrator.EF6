@@ -25,6 +25,12 @@ namespace Migrator.EF6.Tools
 					DotnetToolDispatcher.EnsureValidDispatchRecipient(ref args);
 					return Worker.Execute(args);
 				}
+				catch (OperationException ex)
+				{
+					Console.ForegroundColor = ConsoleColor.Red;
+					Console.WriteLine(ex.Message);
+					return 1;
+				}
 				catch (Exception ex)
 				{
 					if (ex is TargetInvocationException)
