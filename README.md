@@ -33,7 +33,7 @@ Steps needed (nothing hard, just a lot of inital steps that you'll have to do on
     - },
     + "EntityFramework": "6.1.3",
     + "Migrator.EF6.Tools": {
-    +   "version": "1.0.4",
+    +   "version": "1.0.5",
     +   "type": "build"
     + },
     ```
@@ -44,7 +44,7 @@ Steps needed (nothing hard, just a lot of inital steps that you'll have to do on
     -    ...
     - }
     + "Migrator.EF6.Tools": {
-    +   "version": "1.0.4",
+    +   "version": "1.0.5",
     +   "imports": "portable-net45+win8+dnxcore50"
     + }
     ```
@@ -124,6 +124,9 @@ I'm aware that I should have aligned the version of `Migrator.EF6.Tools` to the 
 ## Release notes
 
 The `1.0.*` releases align with .NET Core tooling `1.0.0-preview2`.
+
+#### `1.0.5`
+- Support multiple `DbContext`s in the same project by using the `-c` option to specify which one to target. [#27](https://github.com/mrahhal/Migrator.EF6/issues/27)
 
 #### `1.0.4`
 - Only look for constructable `DbContext`s and `DbMigrationsConfiguration`s. [#25](https://github.com/mrahhal/Migrator.EF6/issues/25)
