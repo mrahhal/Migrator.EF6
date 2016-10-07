@@ -79,8 +79,7 @@ namespace Migrator.EF6.Tools
 			// the way ef6 migration generator is interacting with the resources system)
 			var targetValue = migration.Resources["Target"];
 			var designerCode = migration.DesignerCode
-				.Replace("Resources.GetString(\"Target\")", $"\"{targetValue}\"")
-				.Replace("private readonly ResourceManager Resources = new ResourceManager(typeof(InitialCreate));", "");
+				.Replace("Resources.GetString(\"Target\")", $"\"{targetValue}\"");
 
 			// Write the designer code file.
 			File.WriteAllText(Path.Combine(migrationsDir, migration.MigrationId + ".Designer.cs"), designerCode);
