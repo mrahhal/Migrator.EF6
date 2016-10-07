@@ -6,9 +6,14 @@ using Migrator.EF6.Tools.Extensions;
 
 namespace Migrator.EF6.Tools
 {
-	public class MigrationsCommand
+	public class MigrationsCommand : CommandBase
 	{
 		public static void Configure(CommandLineApplication command)
+		{
+			new MigrationsCommand().ConfigureInternal(command);
+		}
+
+		private void ConfigureInternal(CommandLineApplication command)
 		{
 			command.Description = "Commands to manage your migrations";
 			command.HelpOption();
@@ -24,9 +29,11 @@ namespace Migrator.EF6.Tools
 						"-o|--output-dir <path>",
 						"The directory (and sub-namespace) to use. If omitted, \"Migrations\" is used. Relative paths are relative the directory in which the command is executed.");
 
+					var common = Common(enable);
+
 					enable.OnExecute(() =>
 					{
-						new Executor().EnableMigrations(outputDir.Value());
+						common.CreateExecutor().EnableMigrations(outputDir.Value());
 					});
 				});
 
@@ -41,9 +48,8 @@ namespace Migrator.EF6.Tools
 						"[name]",
 						"The name of the migration");
 
-					var context = add.Option(
-						"-c|--context <context>",
-						"The DbContext to use. If omitted, the default DbContext is used");
+					var common = Common(add)
+						.AddContextOption();
 
 					var outputDir = add.Option(
 						"-o|--output-dir <path>",
@@ -61,9 +67,8 @@ namespace Migrator.EF6.Tools
 							return 1;
 						}
 
-						new Executor().AddMigration(
+						common.CreateExecutor().AddMigration(
 							name.Value,
-							context.Value(),
 							outputDir.Value(),
 							ignoreChanges.HasValue());
 						return 0;
@@ -85,9 +90,8 @@ namespace Migrator.EF6.Tools
 						"[to]",
 						"The ending migration. If omitted, the last migration is used");
 
-					var context = script.Option(
-						"-c|--context <context>",
-						"The DbContext to use. If omitted, the default DbContext is used");
+					var common = Common(script)
+						.AddContextOption();
 
 					var output = script.Option(
 						"-o|--output <file>",
@@ -101,10 +105,9 @@ namespace Migrator.EF6.Tools
 							return;
 						}
 
-						new Executor().ScriptMigration(
+						common.CreateExecutor().ScriptMigration(
 							from.Value,
 							to.Value,
-							context.Value(),
 							output.Value());
 					});
 				});
@@ -116,13 +119,12 @@ namespace Migrator.EF6.Tools
 				   list.Description = "List the migrations";
 				   list.HelpOption();
 
-				   var context = list.Option(
-					   "-c|--context <context>",
-					   "The DbContext to use. If omitted, the default DbContext is used");
+				   var common = Common(list)
+						.AddContextOption();
 
 				   list.OnExecute(() =>
 				   {
-					   new Executor().ListMigrations(context.Value());
+					   common.CreateExecutor().ListMigrations();
 				   });
 			   });
 

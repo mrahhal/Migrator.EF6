@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Migrations;
 using System.Data.Entity.Migrations.Design;
 using System.Data.Entity.Migrations.Infrastructure;
@@ -21,12 +22,14 @@ namespace Migrator.EF6.Tools
 		private Assembly _startupAssembly;
 		private string _targetName;
 		private Type[] _types;
+		private string _context;
 
-		public Executor()
+		public Executor(string context)
 		{
 			var projectFile = Path.Combine(Directory.GetCurrentDirectory(), Project.FileName);
 			var project = ProjectReader.GetProject(projectFile);
 
+			_context = context;
 			_targetName = project.Name;
 			_projectDir = project.ProjectDirectory;
 			_startupAssembly = Assembly.Load(new AssemblyName(_targetName));
@@ -61,9 +64,9 @@ namespace Migrator.EF6.Tools
 			File.WriteAllText(path, fileContent);
 		}
 
-		public void AddMigration(string name, string context, string outputDir, bool ignoreChanges)
+		public void AddMigration(string name, string outputDir, bool ignoreChanges)
 		{
-			var config = FindDbMigrationsConfiguration(context);
+			var config = FindDbMigrationsConfiguration();
 			var migrationsDir = GetMigrationsDir(outputDir ?? config.MigrationsDirectory);
 			Directory.CreateDirectory(migrationsDir);
 
@@ -85,9 +88,9 @@ namespace Migrator.EF6.Tools
 			File.WriteAllText(Path.Combine(migrationsDir, migration.MigrationId + ".Designer.cs"), designerCode);
 		}
 
-		public void ScriptMigration(string from, string to, string context, string output)
+		public void ScriptMigration(string from, string to, string output)
 		{
-			var config = FindDbMigrationsConfiguration(context);
+			var config = FindDbMigrationsConfiguration();
 			var migrator = new DbMigrator(config);
 			var scriptingDecorator = new MigratorScriptingDecorator(migrator);
 			var script = scriptingDecorator.ScriptUpdate(from ?? "0", to);
@@ -95,10 +98,10 @@ namespace Migrator.EF6.Tools
 			Console.WriteLine($"Scripted migration as SQL to file '{output}'.");
 		}
 
-		public void UpdateDatabase(string targetMigration, string context, bool force = false)
+		public void UpdateDatabase(string targetMigration, bool force = false)
 		{
-			var resolvedMigrationName = ResolveMigrationName(context, targetMigration);
-			var config = FindDbMigrationsConfiguration(context);
+			var resolvedMigrationName = ResolveMigrationName(targetMigration);
+			var config = FindDbMigrationsConfiguration();
 			config.AutomaticMigrationDataLossAllowed = force;
 
 			var targetMigrationFriendlyName = resolvedMigrationName ?? "latest";
@@ -115,15 +118,15 @@ namespace Migrator.EF6.Tools
 			}
 		}
 
-		public void ListMigrations(string context)
+		public void ListMigrations()
 		{
-			foreach (var migration in GetMigrations(context))
+			foreach (var migration in GetMigrations())
 			{
 				Console.WriteLine(migration);
 			}
 		}
 
-		private string ResolveMigrationName(string context, string targetMigration)
+		private string ResolveMigrationName(string targetMigration)
 		{
 			if (string.IsNullOrWhiteSpace(targetMigration))
 			{
@@ -153,7 +156,7 @@ namespace Migrator.EF6.Tools
 			}
 
 			// We have a relative migration.
-			var migrations = GetMigrations(context);
+			var migrations = GetMigrations();
 			if (number >= migrations.Count)
 			{
 				// Go back all the way.
@@ -164,9 +167,9 @@ namespace Migrator.EF6.Tools
 			return resolvedTargetMigration;
 		}
 
-		private IReadOnlyCollection<string> GetMigrations(string context)
+		private IReadOnlyCollection<string> GetMigrations()
 		{
-			var config = FindDbMigrationsConfiguration(context);
+			var config = FindDbMigrationsConfiguration();
 			var migrator = new DbMigrator(config);
 			return migrator.GetDatabaseMigrations().ToList().AsReadOnly();
 		}
@@ -178,12 +181,12 @@ namespace Migrator.EF6.Tools
 				.ToList();
 		}
 
-		private DbMigrationsConfiguration FindDbMigrationsConfiguration(string context)
+		private DbMigrationsConfiguration FindDbMigrationsConfiguration()
 		{
 			var configTypes = GetConstructablesOfType<DbMigrationsConfiguration>(_types).ToList();
 			var configType = default(Type);
 
-			if (string.IsNullOrEmpty(context))
+			if (string.IsNullOrEmpty(_context))
 			{
 				if (configTypes.Count == 0)
 				{
@@ -201,7 +204,7 @@ namespace Migrator.EF6.Tools
 			else
 			{
 				configType = configTypes
-					.First(t => t.BaseType.GenericTypeArguments[0].Name == context);
+					.First(t => t.BaseType.GenericTypeArguments[0].Name == _context);
 			}
 			return Activator.CreateInstance(configType) as DbMigrationsConfiguration;
 		}
