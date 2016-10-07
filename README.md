@@ -126,7 +126,7 @@ I'm aware that I should have aligned the version of `Migrator.EF6.Tools` to the 
 The `1.0.*` releases align with .NET Core tooling `1.0.0-preview2`.
 
 #### `1.0.6`
-- Support overriding the connection string from the command line through the `-cs` option. This way you won't have to hard code the string inside the `DbContext`.
+- Support overriding the connection string from the command line through the `-cs` option. This way you won't have to hard code the string inside the `DbContext`. [#28](https://github.com/mrahhal/Migrator.EF6/issues/28)
 
 #### `1.0.5`
 - Support multiple `DbContext`s in the same project by using the `-c` option to specify which one to target. [#27](https://github.com/mrahhal/Migrator.EF6/issues/27)
