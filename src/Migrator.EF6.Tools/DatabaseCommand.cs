@@ -30,6 +30,8 @@ namespace Migrator.EF6.Tools
 						"The target migration. If '0', all migrations will be reverted. If omitted, all pending migrations will be applied");
 
 					var common = Common(update)
+						.AddConnectionStringOption()
+						.AddProviderNameOption()
 						.AddContextOption();
 
 					var force = update.Option(
@@ -51,6 +53,8 @@ namespace Migrator.EF6.Tools
 					truncate.HelpOption();
 
 					var common = Common(truncate)
+						.AddConnectionStringOption()
+						.AddProviderNameOption()
 						.AddContextOption();
 
 					truncate.OnExecute(() =>
@@ -67,6 +71,8 @@ namespace Migrator.EF6.Tools
 					recreate.HelpOption();
 
 					var common = Common(recreate)
+						.AddConnectionStringOption()
+						.AddProviderNameOption()
 						.AddContextOption();
 
 					recreate.OnExecute(() =>

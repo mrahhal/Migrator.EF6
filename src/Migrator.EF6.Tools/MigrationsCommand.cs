@@ -49,6 +49,8 @@ namespace Migrator.EF6.Tools
 						"The name of the migration");
 
 					var common = Common(add)
+						.AddConnectionStringOption()
+						.AddProviderNameOption()
 						.AddContextOption();
 
 					var outputDir = add.Option(
@@ -91,6 +93,8 @@ namespace Migrator.EF6.Tools
 						"The ending migration. If omitted, the last migration is used");
 
 					var common = Common(script)
+						.AddConnectionStringOption()
+						.AddProviderNameOption()
 						.AddContextOption();
 
 					var output = script.Option(
@@ -120,6 +124,8 @@ namespace Migrator.EF6.Tools
 				   list.HelpOption();
 
 				   var common = Common(list)
+						.AddConnectionStringOption()
+						.AddProviderNameOption()
 						.AddContextOption();
 
 				   list.OnExecute(() =>

@@ -22,13 +22,17 @@ namespace Migrator.EF6.Tools
 		private Assembly _startupAssembly;
 		private string _targetName;
 		private Type[] _types;
+		private string _connectionString;
+		private string _providerName;
 		private string _context;
 
-		public Executor(string context)
+		public Executor(string connectionString, string providerName, string context)
 		{
 			var projectFile = Path.Combine(Directory.GetCurrentDirectory(), Project.FileName);
 			var project = ProjectReader.GetProject(projectFile);
 
+			_connectionString = connectionString;
+			_providerName = providerName ?? "System.Data.SqlClient";
 			_context = context;
 			_targetName = project.Name;
 			_projectDir = project.ProjectDirectory;
@@ -206,7 +210,13 @@ namespace Migrator.EF6.Tools
 				configType = configTypes
 					.First(t => t.BaseType.GenericTypeArguments[0].Name == _context);
 			}
-			return Activator.CreateInstance(configType) as DbMigrationsConfiguration;
+			var dbMigrationsConfiguration = Activator.CreateInstance(configType) as DbMigrationsConfiguration;
+			if (_connectionString != null)
+			{
+				Console.WriteLine("Using provided connection string as an override.");
+				dbMigrationsConfiguration.TargetDatabase = new DbConnectionInfo(_connectionString, _providerName);
+			}
+			return dbMigrationsConfiguration;
 		}
 
 		private string FindAppDbContextTypeName()

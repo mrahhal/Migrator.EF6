@@ -14,7 +14,25 @@ namespace Migrator.EF6.Tools
 			_command = command;
 		}
 
+		public CommandOption ConnectionString { get; set; }
+		public CommandOption ProviderName { get; set; }
 		public CommandOption Context { get; set; }
+
+		public CommonConfiguration AddConnectionStringOption()
+		{
+			ConnectionString = _command.Option(
+				"-cs|--connection-string <connectionString>",
+				"The connection string to use");
+			return this;
+		}
+
+		public CommonConfiguration AddProviderNameOption()
+		{
+			ProviderName = _command.Option(
+				"-p|--provider <providerName>",
+				"The provider name to use. If omitted, \"System.Data.SqlClient\" will be used");
+			return this;
+		}
 
 		public CommonConfiguration AddContextOption()
 		{
@@ -27,6 +45,8 @@ namespace Migrator.EF6.Tools
 		public Executor CreateExecutor()
 		{
 			return new Executor(
+				ConnectionString?.Value(),
+				ProviderName?.Value(),
 				Context?.Value());
 		}
 	}
