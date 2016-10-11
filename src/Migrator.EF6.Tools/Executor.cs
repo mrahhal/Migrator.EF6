@@ -82,11 +82,18 @@ namespace Migrator.EF6.Tools
 			File.WriteAllText(Combine(migrationsDir, migration.MigrationId + ".cs"), migration.UserCode);
 
 			// Write needed resource values directly inside the designer code file.
-			// Apparently, aspnet and resource files don't play well (or more specifically,
-			// the way ef6 migration generator is interacting with the resources system)
+			// It'll be a pain to ask the users to embed the resources from project.json.
 			var targetValue = migration.Resources["Target"];
 			var designerCode = migration.DesignerCode
 				.Replace("Resources.GetString(\"Target\")", $"\"{targetValue}\"");
+
+			var sourceObject = default(object);
+			if (migration.Resources.TryGetValue("Source", out sourceObject))
+			{
+				var sourceValue = sourceObject as string;
+				designerCode = designerCode
+					.Replace("Resources.GetString(\"Source\")", $"\"{sourceValue}\"");
+			}
 
 			// Write the designer code file.
 			File.WriteAllText(Path.Combine(migrationsDir, migration.MigrationId + ".Designer.cs"), designerCode);
