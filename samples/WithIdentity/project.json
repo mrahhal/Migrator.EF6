@@ -30,7 +30,7 @@
       "type": "build"
     },
     "Migrator.EF6.Tools": {
-      "version": "1.0.6",
+      "version": "1.0.7",
       "target": "package",
       "type": "build"
     },
@@ -58,7 +58,7 @@
       ]
     },
     "Migrator.EF6.Tools": {
-      "version": "1.0.6",
+      "version": "1.0.7",
       "imports": "portable-net45+win8+dnxcore50"
     }
   },

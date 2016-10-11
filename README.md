@@ -33,7 +33,7 @@ Steps needed (nothing hard, just a lot of inital steps that you'll have to do on
     - },
     + "EntityFramework": "6.1.3",
     + "Migrator.EF6.Tools": {
-    +   "version": "1.0.6",
+    +   "version": "1.0.7",
     +   "type": "build"
     + },
     ```
@@ -44,7 +44,7 @@ Steps needed (nothing hard, just a lot of inital steps that you'll have to do on
     -    ...
     - }
     + "Migrator.EF6.Tools": {
-    +   "version": "1.0.6",
+    +   "version": "1.0.7",
     +   "imports": "portable-net45+win8+dnxcore50"
     + }
     ```
@@ -124,6 +124,9 @@ I'm aware that I should have aligned the version of `Migrator.EF6.Tools` to the 
 ## Release notes
 
 The `1.0.*` releases align with .NET Core tooling `1.0.0-preview2`.
+
+#### `1.0.7`
+- Fixed: Embed the "Source" resource when it's available. [#30](https://github.com/mrahhal/Migrator.EF6/issues/30)
 
 #### `1.0.6`
 - Support overriding the connection string from the command line through the `-cs` option. This way you won't have to hard code the string inside the `DbContext`. [#28](https://github.com/mrahhal/Migrator.EF6/issues/28)
