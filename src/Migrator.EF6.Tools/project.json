@@ -1,6 +1,6 @@
 {
   "version": "1.0.0-*",
-  "description": "A .NetCore CLI tool to enable EF6 migrations in an Asp.Net Core app",
+  "description": "A .NetCore CLI tool to enable EF6 migrations in an Asp.Net Core app.",
   "authors": [ "Mohammad Rahhal" ],
 
   "packOptions": {
@@ -18,14 +18,14 @@
   },
 
   "dependencies": {
-    "Microsoft.AspNetCore.Hosting.Abstractions": "1.0.0",
+    "Microsoft.AspNetCore.Hosting.Abstractions": "1.1.0",
     "Microsoft.DotNet.Cli.Utils": "1.0.0-preview2-003121",
-    "Microsoft.Extensions.CommandLineUtils": "1.0.0",
+    "Microsoft.Extensions.CommandLineUtils": "1.1.0",
     "Microsoft.Extensions.DotnetToolDispatcher.Sources": {
       "type": "build",
       "version": "1.0.0-*"
     },
-    "Microsoft.Extensions.PlatformAbstractions": "1.0.0"
+    "Microsoft.Extensions.PlatformAbstractions": "1.1.0"
   },
 
   "frameworks": {
@@ -34,7 +34,7 @@
       "dependencies": {
         "Microsoft.NETCore.App": {
           "type": "platform",
-          "version": "1.0.0"
+          "version": "1.1.0"
         }
       }
     },

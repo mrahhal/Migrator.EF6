@@ -125,6 +125,9 @@ I'm aware that I should have aligned the version of `Migrator.EF6.Tools` to the 
 
 The `1.0.*` releases align with .NET Core tooling `1.0.0-preview2`.
 
+#### `1.0.8`
+This release is for .Net Core 1.1.0
+
 #### `1.0.7`
 - Fixed: Embed the "Source" resource when it's available. [#30](https://github.com/mrahhal/Migrator.EF6/issues/30)
 
