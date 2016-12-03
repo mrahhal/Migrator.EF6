@@ -19,7 +19,7 @@
 
   "dependencies": {
     "Microsoft.AspNetCore.Hosting.Abstractions": "1.1.0",
-    "Microsoft.DotNet.Cli.Utils": "1.0.0-preview2-003121",
+    "Microsoft.DotNet.Cli.Utils": "1.0.0-preview2-1-003177",
     "Microsoft.Extensions.CommandLineUtils": "1.1.0",
     "Microsoft.Extensions.DotnetToolDispatcher.Sources": {
       "type": "build",

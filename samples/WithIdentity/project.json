@@ -1,5 +1,5 @@
 {
-  "userSecretsId": "aspnet5-WithIdentity-8167e428-d8a7-4cae-931f-6899730e0ae8",
+  "userSecretsId": "WithIdentity-8167e428-d8a7-4cae-931f-6899730e0ae8",
   "version": "1.0.0-*",
 
   "dependencies": {
@@ -8,7 +8,7 @@
     "Microsoft.AspNetCore.Diagnostics": "1.1.0",
     "Microsoft.AspNetCore.Mvc": "1.1.0",
     "Microsoft.AspNetCore.Razor.Tools": {
-      "version": "1.0.0-preview2-final",
+      "version": "1.1.0-preview4-final",
       "type": "build"
     },
     "Microsoft.AspNetCore.Server.IISIntegration": "1.1.0",
@@ -22,11 +22,11 @@
     "Microsoft.Extensions.Logging.Debug": "1.1.0",
     "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.1.0",
     "Microsoft.VisualStudio.Web.CodeGeneration.Tools": {
-      "version": "1.0.0-preview2-final",
+      "version": "1.1.0-preview4-final",
       "type": "build"
     },
     "Microsoft.VisualStudio.Web.CodeGenerators.Mvc": {
-      "version": "1.0.0-preview2-final",
+      "version": "1.1.0-preview4-final",
       "type": "build"
     },
     "Migrator.EF6.Tools": {
@@ -39,19 +39,19 @@
 
   "tools": {
     "Microsoft.AspNetCore.Razor.Tools": {
-      "version": "1.0.0-preview2-final",
+      "version": "1.1.0-preview4-final",
       "imports": "portable-net45+win8+dnxcore50"
     },
     "Microsoft.AspNetCore.Server.IISIntegration.Tools": {
-      "version": "1.0.0-preview2-final",
+      "version": "1.1.0-preview4-final",
       "imports": "portable-net45+win8+dnxcore50"
     },
     "Microsoft.Extensions.SecretManager.Tools": {
-      "version": "1.0.0-preview2-final",
+      "version": "1.1.0-preview4-final",
       "imports": "portable-net45+win8+dnxcore50"
     },
     "Microsoft.VisualStudio.Web.CodeGeneration.Tools": {
-      "version": "1.0.0-preview2-final",
+      "version": "1.1.0-preview4-final",
       "imports": [
         "portable-net45+win8+dnxcore50",
         "portable-net45+win8"
