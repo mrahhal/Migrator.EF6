@@ -8,9 +8,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{68E0FEEF-69D5-42D7-A7AE-0ECF6DE7F8A5}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
 		appveyor.yml = appveyor.yml
-		build\Build.proj = build\Build.proj
-		deploy_local.csx = deploy_local.csx
 		global.json = global.json
 		NuGet.config = NuGet.config
 		README.md = README.md
@@ -23,6 +23,17 @@ EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Migrator.EF6.Tools", "src\Migrator.EF6.Tools\Migrator.EF6.Tools.xproj", "{FCBB50C2-5DDB-4B3B-AC67-9DB287243A0F}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "BasicConsoleApp", "samples\BasicConsoleApp\BasicConsoleApp.xproj", "{AB5CFD8D-AA45-4B5B-AFFB-CE39622C0EBA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{9015AAB4-BBBA-486B-B2B0-0FF455B518ED}"
+	ProjectSection(SolutionItems) = preProject
+		build.cake = build.cake
+		build.ps1 = build.ps1
+		deploy_local.csx = deploy_local.csx
+		build\index.cake = build\index.cake
+		build\util.cake = build\util.cake
+		build\version.cake = build\version.cake
+		build\version.json = build\version.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

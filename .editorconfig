@@ -1,6 +1,6 @@
 root = true
 
-[*.{cs,js}]
+[*.{cs,js,cake}]
 indent_style = tab
 indent_size = 4
 trim_trailing_whitespace = true

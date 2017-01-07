@@ -1,8 +1,8 @@
 version: '{build}'
 os: Visual Studio 2015
-build:
-  project: build/Build.proj
-  verbosity: normal
+build: off
+build_script:
+- ps: ./build.ps1
 test: off
 artifacts:
 - path: artifacts/packages/*.nupkg
