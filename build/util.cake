@@ -33,7 +33,7 @@ public class Util
 	public void PrintInfo()
 	{
 		Context.Information($@"
-Version:	   {Build.FullVersion()}
+Version:       {Build.FullVersion()}
 Configuration: {Build.Configuration}
 ");
 	}
