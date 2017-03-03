@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Microsoft.DotNet.ProjectModel;
 using Microsoft.Extensions.Internal;
 using NuGet.Frameworks;
 
@@ -47,9 +46,8 @@ namespace Migrator.EF6.Tools
 		private static void Dispatch(string[] args)
 		{
 			var projectFile = ProjectReader.GetProject(string.Empty);
-			var targetFrameworks = projectFile
-				.GetTargetFrameworks()
-				.Select(frameworkInformation => frameworkInformation.FrameworkName);
+			var targetFrameworks = projectFile.TargetFrameworks;
+
 			var framework = default(NuGetFramework);
 			if (!TryResolveFramework(targetFrameworks, out framework))
 			{

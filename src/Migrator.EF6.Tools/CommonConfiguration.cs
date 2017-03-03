@@ -1,4 +1,4 @@
-﻿#if NET451
+﻿#if NET462
 
 using Microsoft.Extensions.CommandLineUtils;
 using Migrator.EF6.Tools.Extensions;

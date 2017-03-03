@@ -1,4 +1,4 @@
-#if NET451
+#if NET462
 
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,6 @@ using System.Data.Entity.Migrations.Infrastructure;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Microsoft.DotNet.ProjectModel;
 using Migrator.EF6.Tools.Extensions;
 
 namespace Migrator.EF6.Tools
@@ -28,8 +27,7 @@ namespace Migrator.EF6.Tools
 
 		public Executor(string connectionString, string providerName, string context)
 		{
-			var projectFile = Path.Combine(Directory.GetCurrentDirectory(), Project.FileName);
-			var project = ProjectReader.GetProject(projectFile);
+			var project = ProjectReader.GetProject(string.Empty);
 
 			_connectionString = connectionString;
 			_providerName = providerName ?? "System.Data.SqlClient";
