@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "Migrator.EF6.Tools": {
+      "commandName": "Project"
+    }
+  }
+}
