@@ -37,8 +37,8 @@ public class BuildParameters
 	{
 		Projects = Context.GetDirectories("./src/*");
 		TestProjects = Context.GetDirectories("./test/*");
-		ProjectFiles = Context.GetFiles("./src/*/project.json");
-		TestProjectFiles = Context.GetFiles("./test/*/project.json");
+		ProjectFiles = Context.GetFiles("./src/*/*.csproj");
+		TestProjectFiles = Context.GetFiles("./test/*/*.csproj");
 
 		var buildSystem = Context.BuildSystem();
 		if (!buildSystem.IsLocalBuild)

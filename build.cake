@@ -32,6 +32,7 @@ Task("Build")
 		Configuration = build.Configuration,
 		VersionSuffix = build.Version.Suffix
 	};
+
 	foreach (var project in build.ProjectFiles)
 	{
 		DotNetCoreBuild(project.FullPath, settings);
@@ -82,12 +83,6 @@ Task("Print")
 	.Does(() =>
 {
 	util.PrintInfo();
-});
-
-Task("Patch")
-	.Does(() =>
-{
-	util.PatchProjectFileVersions();
 });
 
 RunTarget(target);
