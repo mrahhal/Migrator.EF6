@@ -1,4 +1,4 @@
-﻿#if NET451
+﻿#if NET46
 
 using Microsoft.Extensions.CommandLineUtils;
 
