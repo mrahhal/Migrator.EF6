@@ -1,7 +1,7 @@
-﻿using NuGet.Frameworks;
+﻿using Microsoft.DotNet.Cli.Utils;
+using NuGet.Frameworks;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
@@ -67,14 +67,20 @@ namespace Migrator.EF6.Tools
   </Project>");
 
 			var tmpFile = Path.GetTempFileName();
-			var psi = new ProcessStartInfo
+
+			var args = new List<string>()
 			{
-				FileName = "dotnet",
-				Arguments = $"msbuild \"{project.ProjectFileName}\" /t:_GetDotNetNames /nologo \"/p:_DotNetNamesFile={tmpFile}\""
+				project.ProjectFileName,
+				"/t:_GetDotNetNames",
+				"/nologo",
+				$"/p:_DotNetNamesFile={tmpFile}\""
 			};
-			var process = Process.Start(psi);
-			process.WaitForExit();
-			if (process.ExitCode != 0)
+
+			var msbuildCommand = Command.CreateDotNet(
+				"msbuild",
+				args);
+			var result = msbuildCommand.Execute();
+			if (result.ExitCode != 0)
 			{
 				Console.Error.WriteLine("Invoking MSBuild target failed");
 				throw new Exception();
