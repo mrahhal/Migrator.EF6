@@ -6,48 +6,23 @@
 
 .NET Core CLI tool to enable EF6 migrations in an Asp.Net Core app (RC2 and onwards).
 
-## Looking for the Dnx version?
-Checkout the [dnx](https://github.com/mrahhal/Migrator.EF6/tree/dnx) tree version of this repository.
+## Looking for the project.json version?
+Checkout the [preview2](https://github.com/mrahhal/Migrator.EF6/tree/preview2) tree version of this repository.
 
 ## Getting EF6 migrations to work
 
-**Make sure to update both entries inside `dependencies` and `tools` to the latest version.**
-
-**It's important to note** that the only required steps to get EF6 migrations to work are the ones concerning the addition of `Migrator.EF6.Tools` to your `project.json`. All other steps are there to help you get rid of EF Core from the default template.
-
 You can read the release notes at the end of this file.
 
-Steps needed (nothing hard, just a lot of inital steps that you'll have to do one time):
+- Inside your csproj:
 
-- Inside `project.json`:
-    - Remove `netcoreapp1.0` from the target `frameworks` and add `net451`.
-    - Remove everything `EF Core` and add `Migrator.EF6.Tools` + `EF6` to your `dependencies`.
-    In your `dependencies` section:
-    ```diff
-    - "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "1.0.0",
-    - "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "1.0.0",
-    - "Microsoft.EntityFrameworkCore.SqlServer": "1.0.0",
-    - "Microsoft.EntityFrameworkCoMre.Tools": {
-    -   "version": "1.0.0-preview2-final",
-    -   "type": "build"
-    - },
-    + "EntityFramework": "6.1.3",
-    + "Migrator.EF6.Tools": {
-    +   "version": "1.0.7",
-    +   "type": "build"
-    + },
-    ```
+```
+<PackageReference Include="Migrator.EF6.Tools" Version="1.1.0">
+  <PrivateAssets>All</PrivateAssets>
+</PackageReference>
 
-    In your `tools` section:
-    ```diff
-    - "Microsoft.EntityFrameworkCore.Tools": {
-    -    ...
-    - }
-    + "Migrator.EF6.Tools": {
-    +   "version": "1.0.7",
-    +   "imports": "portable-net45+win8+dnxcore50"
-    + }
-    ```
+<DotNetCliToolReference Include="Migrator.EF6.Tools" Version="1.1.0" />
+```
+
 - Inside `Startup.cs`:
     - Remove everything EF Core related.
     - Simply add your db context to services:
@@ -122,6 +97,13 @@ A sample using `Migrator.EF6` and [`MR.AspNet.Identity.EntityFramework6`](https:
 I'm aware that I should have aligned the version of `Migrator.EF6.Tools` to the dotnet tooling instead of aligning it to the runtime release cycle (I kinda did that without thinking about the whole thing). But, what's done is done and I doubt that the tooling will change that much from now on so all is good for now.
 
 ## Release notes
+
+The `1.1.*` releases align with .NET Core tooling `1.0`.
+
+#### `1.1.0`
+This release is for tooling `1.0` and VS 2017 support.
+
+---
 
 The `1.0.*` releases align with .NET Core tooling `1.0.0-preview2`.
 
