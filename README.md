@@ -15,10 +15,8 @@ You can read the release notes at the end of this file.
 
 - Inside your csproj:
 
-```
-<PackageReference Include="Migrator.EF6.Tools" Version="1.1.0">
-  <PrivateAssets>All</PrivateAssets>
-</PackageReference>
+```xml
+<PackageReference Include="Migrator.EF6.Tools" Version="1.1.0" PrivateAssets="All" />
 
 <DotNetCliToolReference Include="Migrator.EF6.Tools" Version="1.1.0" />
 ```
