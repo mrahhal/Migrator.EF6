@@ -212,7 +212,16 @@ namespace Migrator.EF6.Tools
 			else
 			{
 				configType = configTypes
-					.First(t => t.BaseType.GenericTypeArguments[0].Name == _context);
+					.FirstOrDefault(t => t.BaseType.GenericTypeArguments[0].Name == _context);
+
+				if (configType == null)
+				{
+					var available = configTypes
+						.Select(t => t.BaseType.GenericTypeArguments[0].Name)
+						.Aggregate((t1, t2) => t1 + ", " + t2);
+					throw new OperationException(
+						$"Could not find DbContext of name '{_context}'. Available contexts: {available}.");
+				}
 			}
 			var dbMigrationsConfiguration = Activator.CreateInstance(configType) as DbMigrationsConfiguration;
 			if (_connectionString != null)
