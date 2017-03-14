@@ -1,29 +1,27 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net46</TargetFramework>
-    <AssemblyName>BasicConsoleApp</AssemblyName>
-    <OutputType>Exe</OutputType>
-    <PackageId>BasicConsoleApp</PackageId>
-    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
-    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
-    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net46</TargetFramework>
+		<AssemblyName>BasicConsoleApp</AssemblyName>
+		<OutputType>Exe</OutputType>
+		<PackageId>BasicConsoleApp</PackageId>
+		<GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+		<GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+		<GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="EntityFramework" Version="6.1.3" />
-    <PackageReference Include="Migrator.EF6.Tools" Version="1.1.0">
-      <PrivateAssets>All</PrivateAssets>
-    </PackageReference>
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="EntityFramework" Version="6.1.3" />
+		<PackageReference Include="Migrator.EF6.Tools" Version="1.1.0" PrivateAssets="All" />
+	</ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
+	<ItemGroup>
+		<DotNetCliToolReference Include="Migrator.EF6.Tools" Version="1.1.0" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <DotNetCliToolReference Include="Migrator.EF6.Tools" Version="1.1.0" />
-  </ItemGroup>
+	<ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
+		<Reference Include="System" />
+		<Reference Include="Microsoft.CSharp" />
+	</ItemGroup>
 
 </Project>
