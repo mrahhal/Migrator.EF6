@@ -59,12 +59,13 @@ namespace Microsoft.Extensions.Internal
 				projectDirectory);
 
 			var dispatcherVersionArgumentValue = ResolveDispatcherVersionArgumentValue(DispatcherName);
-			var dispatchArgsList = new List<string>(dispatchArgs);
-			dispatchArgsList.Add(DispatcherVersionArgumentName);
-			dispatchArgsList.Add(dispatcherVersionArgumentValue);
+			var dispatchArgsList = new List<string>(dispatchArgs)
+			{
+				DispatcherVersionArgumentName,
+				dispatcherVersionArgumentValue
+			};
 
-			var command = commandFactory.Create(toolName, dispatchArgsList, framework, configuration);
-			return command;
+			return commandFactory.Create(toolName, dispatchArgsList, framework, configuration);
 		}
 
 		public static bool IsDispatcher(string[] programArgs) =>
