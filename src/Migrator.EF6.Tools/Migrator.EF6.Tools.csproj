@@ -12,7 +12,6 @@
 		<PackageTags>aspnetcore;aspnet5;ef6;migrations;dotnet</PackageTags>
 		<PackageProjectUrl>https://github.com/mrahhal/Migrator.EF6</PackageProjectUrl>
 		<PackageLicenseUrl>https://github.com/mrahhal/Migrator.EF6/blob/master/LICENSE.txt</PackageLicenseUrl>
-		<RuntimeFrameworkVersion Condition=" '$(TargetFramework)' == 'netcoreapp1.0' ">1.1.1</RuntimeFrameworkVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
