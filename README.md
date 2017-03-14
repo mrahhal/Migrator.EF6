@@ -13,6 +13,12 @@ Checkout the [preview2](https://github.com/mrahhal/Migrator.EF6/tree/preview2) t
 
 You can read the release notes at the end of this file.
 
+**IMPORTANT**: it's highly recommended that you put your models and migrations in a pure class library project that has no dependnecies on anything aspnetcore related. Apart from being a better design, there's actually a current problem that prevents the tool from working with projects that depend on aspnetcore. And the new tooling in v0.1 fully supports that. For more info check [this issue](https://github.com/mrahhal/Migrator.EF6/issues/37#issuecomment-286384922).
+
+---
+
+Steps:
+
 - Inside your csproj:
 
 ```xml
