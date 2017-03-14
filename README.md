@@ -104,6 +104,12 @@ I'm aware that I should have aligned the version of `Migrator.EF6.Tools` to the 
 
 The `1.1.*` releases align with .NET Core tooling `1.0`.
 
+#### `1.1.1`
+- Better error reporting when mistyping context names. [#38](https://github.com/mrahhal/Migrator.EF6/issues/3)
+- Only handle exceptions we know about. Let others bubble up.
+- Remove unrelated exception messages about "project.json".
+- Samples: move models and migrations to separate class library.
+
 #### `1.1.0`
 This release is for tooling `1.0` and VS 2017 support.
 
