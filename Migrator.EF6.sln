@@ -34,6 +34,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Migrator.EF6.Tools", "src\M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BasicConsoleApp", "samples\BasicConsoleApp\BasicConsoleApp.csproj", "{AB5CFD8D-AA45-4B5B-AFFB-CE39622C0EBA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WithIdentity.Models", "samples\WithIdentity.Models\WithIdentity.Models.csproj", "{C90D978A-72AC-49B0-8611-15EFEA6A2368}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -52,6 +54,10 @@ Global
 		{AB5CFD8D-AA45-4B5B-AFFB-CE39622C0EBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB5CFD8D-AA45-4B5B-AFFB-CE39622C0EBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB5CFD8D-AA45-4B5B-AFFB-CE39622C0EBA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C90D978A-72AC-49B0-8611-15EFEA6A2368}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C90D978A-72AC-49B0-8611-15EFEA6A2368}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C90D978A-72AC-49B0-8611-15EFEA6A2368}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C90D978A-72AC-49B0-8611-15EFEA6A2368}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,5 +66,6 @@ Global
 		{1CD6EDAC-2651-4B30-9308-F358C1ED8889} = {D8F02EBA-BD94-4201-85B2-2D5F88C911FB}
 		{FCBB50C2-5DDB-4B3B-AC67-9DB287243A0F} = {2BC6C968-62B5-4B96-AA10-240A3E1220C8}
 		{AB5CFD8D-AA45-4B5B-AFFB-CE39622C0EBA} = {D8F02EBA-BD94-4201-85B2-2D5F88C911FB}
+		{C90D978A-72AC-49B0-8611-15EFEA6A2368} = {D8F02EBA-BD94-4201-85B2-2D5F88C911FB}
 	EndGlobalSection
 EndGlobal
