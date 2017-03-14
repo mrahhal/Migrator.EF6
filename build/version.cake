@@ -74,8 +74,6 @@ public class BuildParameters
 		var versionQuality = doc.DocumentElement.SelectSingleNode("/Project/PropertyGroup/VersionQuality").InnerText;
 		versionQuality = string.IsNullOrWhiteSpace(versionQuality) ? null : versionQuality;
 
-		Context.Information(versionMajor);
-
 		var suffix = versionQuality;
 		if (!IsTagged)
 		{
