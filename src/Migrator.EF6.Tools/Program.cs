@@ -30,16 +30,6 @@ namespace Migrator.EF6.Tools
 					Console.WriteLine(ex.Message);
 					return 1;
 				}
-				catch (Exception ex)
-				{
-					if (ex is TargetInvocationException)
-					{
-						ex = ex.InnerException;
-					}
-
-					Console.WriteLine(ex.Message);
-					return 1;
-				}
 			}
 		}
 
