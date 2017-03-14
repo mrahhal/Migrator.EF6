@@ -92,7 +92,7 @@ namespace Microsoft.Extensions.Internal
 				var dispatcherVersionArgumentValue = ResolveDispatcherVersionArgumentValue(toolName);
 				if (string.Equals(dispatcherVersion, dispatcherVersionArgumentValue, StringComparison.Ordinal))
 				{
-					// Remove dispatcher arguments from
+					// Remove dispatcher arguments.
 					var preDispatcherArgument = programArgs.Take(dispatcherArgumentIndex);
 					var postDispatcherArgument = programArgs.Skip(dispatcherArgumentIndex + 2);
 					var newProgramArguments = preDispatcherArgument.Concat(postDispatcherArgument);
@@ -101,13 +101,11 @@ namespace Microsoft.Extensions.Internal
 				}
 			}
 
-			// Could not validate the dispatchers version.
-			throw new InvalidOperationException(
-				$"Could not invoke tool {toolName}. Ensure it has matching versions in the project.json's 'dependencies' and 'tools' sections.");
+			// Could not validate the dispatcher's version.
+			throw new InvalidOperationException($"Could not invoke tool {toolName}.");
 		}
 
-		// Internal for testing
-		internal static string ResolveDispatcherVersionArgumentValue(string toolName)
+		private static string ResolveDispatcherVersionArgumentValue(string toolName)
 		{
 			var toolAssembly = Assembly.Load(new AssemblyName(toolName));
 
