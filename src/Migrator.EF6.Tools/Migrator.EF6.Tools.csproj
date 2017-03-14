@@ -1,8 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+	<Import Project="../../build/version.props" />
+
 	<PropertyGroup>
 		<Description>A .NetCore CLI tool to enable EF6 migrations in an Asp.Net Core app.</Description>
-		<VersionPrefix>1.1.0</VersionPrefix>
 		<Authors>Mohammad Rahhal</Authors>
 		<TargetFrameworks>netcoreapp1.0;net46</TargetFrameworks>
 		<AssemblyName>dotnet-ef</AssemblyName>

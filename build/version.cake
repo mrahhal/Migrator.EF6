@@ -1,3 +1,5 @@
+using System.Xml;
+
 public class BuildParameters
 {
 	public BuildParameters(ICakeContext context)
@@ -37,8 +39,8 @@ public class BuildParameters
 	{
 		Projects = Context.GetDirectories("./src/*");
 		TestProjects = Context.GetDirectories("./test/*");
-		ProjectFiles = Context.GetFiles("./src/*/project.json");
-		TestProjectFiles = Context.GetFiles("./test/*/project.json");
+		ProjectFiles = Context.GetFiles("./src/*/*.csproj");
+		TestProjectFiles = Context.GetFiles("./test/*/*.csproj");
 
 		var buildSystem = Context.BuildSystem();
 		if (!buildSystem.IsLocalBuild)
@@ -60,14 +62,29 @@ public class BuildParameters
 
 	private void InitializeVersion()
 	{
-		var versionFile = Context.File("./build/version.json");
+		var versionFile = Context.File("./build/version.props");
 		var content = System.IO.File.ReadAllText(versionFile.Path.FullPath);
-		Version = Newtonsoft.Json.JsonConvert.DeserializeObject<BuildVersion>(content);
-		var suffix = default(string);
+
+		XmlDocument doc = new XmlDocument();
+		doc.LoadXml(content);
+
+		var versionMajor = doc.DocumentElement.SelectSingleNode("/Project/PropertyGroup/VersionMajor").InnerText;
+		var versionMinor = doc.DocumentElement.SelectSingleNode("/Project/PropertyGroup/VersionMinor").InnerText;
+		var versionPatch = doc.DocumentElement.SelectSingleNode("/Project/PropertyGroup/VersionPatch").InnerText;
+		var versionQuality = doc.DocumentElement.SelectSingleNode("/Project/PropertyGroup/VersionQuality").InnerText;
+		versionQuality = string.IsNullOrWhiteSpace(versionQuality) ? null : versionQuality;
+
+		Context.Information(versionMajor);
+
+		var suffix = versionQuality;
 		if (!IsTagged)
 		{
-			suffix = (IsCI ? "ci-" : "dv-") + Util.CreateStamp();
+			suffix += (IsCI ? "ci-" : "dv-") + Util.CreateStamp();
 		}
+		suffix = string.IsNullOrWhiteSpace(suffix) ? null : suffix;
+
+		Version =
+			new BuildVersion(int.Parse(versionMajor), int.Parse(versionMinor), int.Parse(versionPatch), versionQuality);
 		Version.Suffix = suffix;
 	}
 }

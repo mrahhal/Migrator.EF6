@@ -84,10 +84,4 @@ Task("Print")
 	util.PrintInfo();
 });
 
-Task("Patch")
-	.Does(() =>
-{
-	util.PatchProjectFileVersions();
-});
-
 RunTarget(target);

@@ -25,7 +25,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{9015AAB4
 		build\index.cake = build\index.cake
 		build\util.cake = build\util.cake
 		build\version.cake = build\version.cake
-		build\version.json = build\version.json
+		build\version.props = build\version.props
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WithIdentity", "samples\WithIdentity\WithIdentity.csproj", "{1CD6EDAC-2651-4B30-9308-F358C1ED8889}"
