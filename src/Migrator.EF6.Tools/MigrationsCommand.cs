@@ -29,7 +29,8 @@ namespace Migrator.EF6.Tools
 						"-o|--output-dir <path>",
 						"The directory (and sub-namespace) to use. If omitted, \"Migrations\" is used. Relative paths are relative the directory in which the command is executed.");
 
-					var common = Common(enable);
+					var common = Common(enable)
+						.AddContextOption();
 
 					enable.OnExecute(() =>
 					{

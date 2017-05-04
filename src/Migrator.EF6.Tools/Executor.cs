@@ -57,6 +57,7 @@ namespace Migrator.EF6.Tools
 
 			// Write Configuration.cs file.
 			fileContent = fileContent.Replace("_RootNamespace_", _rootNamespace);
+			fileContent = fileContent.Replace("_MigrationsNamespace_", GetMigrationsNamespaceFromPath(outputDir));
 
 			if (appDbContextTypeName != null)
 			{
@@ -234,6 +235,11 @@ namespace Migrator.EF6.Tools
 
 		private string FindAppDbContextTypeName()
 		{
+			if (_context != null)
+			{
+				return _context;
+			}
+
 			var dbContextType = GetConstructablesOfType<DbContext>(_types).FirstOrDefault();
 			return dbContextType?.Name;
 		}
@@ -246,6 +252,16 @@ namespace Migrator.EF6.Tools
 
 		private string GetMigrationsDir(string outputDir)
 			=> Path.Combine(_projectDir, outputDir ?? "Migrations");
+
+		private string GetMigrationsNamespaceFromPath(string outputDir)
+		{
+			if (outputDir == null)
+			{
+				return "Migrations";
+			}
+
+			return outputDir.Replace('/', '.');
+		}
 
 		private string Combine(params string[] paths) => Path.Combine(paths);
 	}
