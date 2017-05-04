@@ -18,15 +18,15 @@ var nugetToolsProjectDirectory = Path.Combine(nugetToolsDirectory, projectName);
 var regexFolder = new Regex(@"(.\..\..)-(.+)");
 var regexFile = new Regex($@"{projectName}\.(.\..\..)-(.+).nupkg");
 
-RemoveDevPackageFilesIn(deploymentFolder);
-RemoveDevPackagesIn(nugetProjectDirectory);
-RemoveDevPackagesIn(nugetToolsProjectDirectory);
-
 if (!Pack())
 {
 	Console.WriteLine("A problem occurred while packing.");
 	return;
 }
+
+RemoveDevPackageFilesIn(deploymentFolder);
+RemoveDevPackagesIn(nugetProjectDirectory);
+RemoveDevPackagesIn(nugetToolsProjectDirectory);
 
 var package = GetPackagePath();
 if (package == null)
