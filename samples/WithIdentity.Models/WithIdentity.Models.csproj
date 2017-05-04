@@ -6,8 +6,8 @@
 
 	<ItemGroup>
 		<PackageReference Include="MR.AspNet.Identity.EntityFramework6" Version="2.0.0" />
-		<PackageReference Include="Migrator.EF6.Tools" Version="1.1.2" PrivateAssets="All" />
-		<DotNetCliToolReference Include="Migrator.EF6.Tools" Version="1.1.2" />
+		<PackageReference Include="Migrator.EF6.Tools" Version="1.1.*" PrivateAssets="All" />
+		<DotNetCliToolReference Include="Migrator.EF6.Tools" Version="1.1.*" />
 	</ItemGroup>
 
 </Project>
