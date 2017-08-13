@@ -9,6 +9,13 @@ namespace Migrator.EF6.Tools
 {
 	public class ProjectReader
 	{
+		private static Dictionary<string, string> _targetFrameworkMonikerPrefixes = new Dictionary<string, string>()
+		{
+			{ "netcoreapp", ".NETCoreApp" },
+			{ "netstandard", ".NETStandard" },
+			{ "net", ".NETFramework" }
+		};
+
 		public static Project GetProject(string projectPath)
 		{
 			projectPath = NormalizeProjectFilePath(projectPath);
@@ -125,26 +132,15 @@ namespace Migrator.EF6.Tools
 
 		public static NuGetFramework GetTargetFramework(string frameworkString)
 		{
-			if (frameworkString.StartsWith("netcoreapp", StringComparison.OrdinalIgnoreCase))
+			bool flag = false;
+			var targetFrameworkMonikerPrefix = _targetFrameworkMonikerPrefixes.FirstOrDefault(t => frameworkString.StartsWith(t.Key, StringComparison.OrdinalIgnoreCase) && (flag = true));
+			if (flag == false)
 			{
-				var versionText = frameworkString.Substring("netcoreapp".Length);
-
-				return new NuGetFramework(".NETCoreApp", FrameworkNameHelpers.GetVersion(versionText));
-			}
-			else if (frameworkString.StartsWith("netstandard", StringComparison.OrdinalIgnoreCase))
-			{
-				var versionText = frameworkString.Substring("netstandard".Length);
-
-				return new NuGetFramework(".NETStandard", FrameworkNameHelpers.GetVersion(versionText));
-			}
-			else if (frameworkString.StartsWith("net", StringComparison.OrdinalIgnoreCase))
-			{
-				var versionText = frameworkString.Substring("net".Length);
-
-				return new NuGetFramework(".NETFramework", FrameworkNameHelpers.GetVersion(versionText));
+				return new NuGetFramework(frameworkString);
 			}
 
-			return new NuGetFramework(frameworkString);
+			var versionText = frameworkString.Substring(targetFrameworkMonikerPrefix.Key.Length);
+			return new NuGetFramework(targetFrameworkMonikerPrefix.Value, FrameworkNameHelpers.GetVersion(versionText));
 		}
 	}
 }
