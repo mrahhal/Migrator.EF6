@@ -123,55 +123,28 @@ namespace Migrator.EF6.Tools
 			return project;
 		}
 
-		public static NuGetFramework GetTargetFramework(string framework)
+		public static NuGetFramework GetTargetFramework(string frameworkString)
 		{
-			switch (framework)
+			if (frameworkString.StartsWith("netcoreapp", StringComparison.OrdinalIgnoreCase))
 			{
-				case "net45":
-					return new NuGetFramework(".NETFramework", new Version("4.5"));
+				var versionText = frameworkString.Substring("netcoreapp".Length);
 
-				case "net451":
-					return new NuGetFramework(".NETFramework", new Version("4.5.1"));
-
-				case "net452":
-					return new NuGetFramework(".NETFramework", new Version("4.5.2"));
-
-				case "net46":
-					return new NuGetFramework(".NETFramework", new Version("4.6"));
-
-				case "net461":
-					return new NuGetFramework(".NETFramework", new Version("4.6.1"));
-
-				case "net462":
-					return new NuGetFramework(".NETFramework", new Version("4.6.2"));
-
-				case "netstandard1.0":
-					return new NuGetFramework(".NETStandard", new Version("1.0"));
-
-				case "netstandard1.1":
-					return new NuGetFramework(".NETStandard", new Version("1.1"));
-
-				case "netstandard1.2":
-					return new NuGetFramework(".NETStandard", new Version("1.2"));
-
-				case "netstandard1.3":
-					return new NuGetFramework(".NETStandard", new Version("1.3"));
-
-				case "netstandard1.4":
-					return new NuGetFramework(".NETStandard", new Version("1.4"));
-
-				case "netstandard1.5":
-					return new NuGetFramework(".NETStandard", new Version("1.5"));
-
-				case "netstandard1.6":
-					return new NuGetFramework(".NETStandard", new Version("1.6"));
-
-				case "netcoreapp1.0":
-					return new NuGetFramework(".NETStandard", new Version("1.6"));
-
-				default:
-					return new NuGetFramework(framework);
+				return new NuGetFramework(".NETCoreApp", FrameworkNameHelpers.GetVersion(versionText));
 			}
+			else if (frameworkString.StartsWith("netstandard", StringComparison.OrdinalIgnoreCase))
+			{
+				var versionText = frameworkString.Substring("netstandard".Length);
+
+				return new NuGetFramework(".NETStandard", FrameworkNameHelpers.GetVersion(versionText));
+			}
+			else if (frameworkString.StartsWith("net", StringComparison.OrdinalIgnoreCase))
+			{
+				var versionText = frameworkString.Substring("net".Length);
+
+				return new NuGetFramework(".NETFramework", FrameworkNameHelpers.GetVersion(versionText));
+			}
+
+			return new NuGetFramework(frameworkString);
 		}
 	}
 }
