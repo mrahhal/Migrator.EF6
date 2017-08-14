@@ -77,7 +77,7 @@ namespace Migrator.EF6.Tools
 
 			var args = new List<string>()
 			{
-				project.ProjectFileName,
+				project.ProjectFilePath,
 				"/t:_GetDotNetNames",
 				"/nologo",
 				$"/p:_DotNetNamesFile={tmpFile}\""
