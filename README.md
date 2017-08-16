@@ -22,9 +22,9 @@ Steps:
 - Inside your csproj:
 
 ```xml
-<PackageReference Include="Migrator.EF6.Tools" Version="1.1.3" PrivateAssets="All" />
+<PackageReference Include="Migrator.EF6.Tools" Version="1.1.4" PrivateAssets="All" />
 
-<DotNetCliToolReference Include="Migrator.EF6.Tools" Version="1.1.3" />
+<DotNetCliToolReference Include="Migrator.EF6.Tools" Version="1.1.4" />
 ```
 
 - Inside `Startup.cs`:
