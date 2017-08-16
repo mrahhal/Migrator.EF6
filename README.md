@@ -104,6 +104,9 @@ I'm aware that I should have aligned the version of `Migrator.EF6.Tools` to the 
 
 The `1.1.*` releases align with .NET Core tooling `1.0`.
 
+#### `1.1.4`
+- Make TFM selection more robust (fixes net47 support). [#45](https://github.com/mrahhal/Migrator.EF6/issues/45)
+
 #### `1.1.3`
 - Fix supporting multiple contexts. [#42](https://github.com/mrahhal/Migrator.EF6/issues/42)
 
