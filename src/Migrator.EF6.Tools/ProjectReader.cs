@@ -1,21 +1,28 @@
-﻿using Microsoft.DotNet.Cli.Utils;
-using NuGet.Frameworks;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Microsoft.DotNet.Cli.Utils;
+using NuGet.Frameworks;
 
 namespace Migrator.EF6.Tools
 {
 	public class ProjectReader
 	{
+		private static readonly Dictionary<string, string> _targetFrameworkMonikerPrefixes = new Dictionary<string, string>
+		{
+			{ "netcoreapp", ".NETCoreApp" },
+			{ "netstandard", ".NETStandard" },
+			{ "net", ".NETFramework" }
+		};
+
 		public static Project GetProject(string projectPath)
 		{
 			projectPath = NormalizeProjectFilePath(projectPath);
 			var fileName = Path.GetFileName(Path.GetDirectoryName(projectPath));
 
 			Project result;
-			using (FileStream fileStream = new FileStream(projectPath, FileMode.Open, FileAccess.Read, FileShare.Read))
+			using (var fileStream = new FileStream(projectPath, FileMode.Open, FileAccess.Read, FileShare.Read))
 			{
 				result = new ProjectReader().ReadProject(fileStream, fileName, projectPath);
 			}
@@ -68,9 +75,9 @@ namespace Migrator.EF6.Tools
 
 			var tmpFile = Path.GetTempFileName();
 
-			var args = new List<string>()
+			var args = new List<string>
 			{
-				project.ProjectFileName,
+				project.ProjectFilePath,
 				"/t:_GetDotNetNames",
 				"/nologo",
 				$"/p:_DotNetNamesFile={tmpFile}\""
@@ -123,55 +130,21 @@ namespace Migrator.EF6.Tools
 			return project;
 		}
 
-		public static NuGetFramework GetTargetFramework(string framework)
+		public static NuGetFramework GetTargetFramework(string frameworkString)
 		{
-			switch (framework)
+			var flag = false;
+			var targetFrameworkMonikerPrefix = _targetFrameworkMonikerPrefixes
+				.FirstOrDefault(t =>
+					frameworkString.StartsWith(t.Key, StringComparison.OrdinalIgnoreCase) &&
+					(flag = true));
+
+			if (!flag)
 			{
-				case "net45":
-					return new NuGetFramework(".NETFramework", new Version("4.5"));
-
-				case "net451":
-					return new NuGetFramework(".NETFramework", new Version("4.5.1"));
-
-				case "net452":
-					return new NuGetFramework(".NETFramework", new Version("4.5.2"));
-
-				case "net46":
-					return new NuGetFramework(".NETFramework", new Version("4.6"));
-
-				case "net461":
-					return new NuGetFramework(".NETFramework", new Version("4.6.1"));
-
-				case "net462":
-					return new NuGetFramework(".NETFramework", new Version("4.6.2"));
-
-				case "netstandard1.0":
-					return new NuGetFramework(".NETStandard", new Version("1.0"));
-
-				case "netstandard1.1":
-					return new NuGetFramework(".NETStandard", new Version("1.1"));
-
-				case "netstandard1.2":
-					return new NuGetFramework(".NETStandard", new Version("1.2"));
-
-				case "netstandard1.3":
-					return new NuGetFramework(".NETStandard", new Version("1.3"));
-
-				case "netstandard1.4":
-					return new NuGetFramework(".NETStandard", new Version("1.4"));
-
-				case "netstandard1.5":
-					return new NuGetFramework(".NETStandard", new Version("1.5"));
-
-				case "netstandard1.6":
-					return new NuGetFramework(".NETStandard", new Version("1.6"));
-
-				case "netcoreapp1.0":
-					return new NuGetFramework(".NETStandard", new Version("1.6"));
-
-				default:
-					return new NuGetFramework(framework);
+				return new NuGetFramework(frameworkString);
 			}
+
+			var versionText = frameworkString.Substring(targetFrameworkMonikerPrefix.Key.Length);
+			return new NuGetFramework(targetFrameworkMonikerPrefix.Value, FrameworkNameHelpers.GetVersion(versionText));
 		}
 	}
 }
