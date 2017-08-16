@@ -1,15 +1,15 @@
-﻿using Microsoft.DotNet.Cli.Utils;
-using NuGet.Frameworks;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Microsoft.DotNet.Cli.Utils;
+using NuGet.Frameworks;
 
 namespace Migrator.EF6.Tools
 {
 	public class ProjectReader
 	{
-		private static Dictionary<string, string> _targetFrameworkMonikerPrefixes = new Dictionary<string, string>()
+		private static readonly Dictionary<string, string> _targetFrameworkMonikerPrefixes = new Dictionary<string, string>
 		{
 			{ "netcoreapp", ".NETCoreApp" },
 			{ "netstandard", ".NETStandard" },
@@ -22,7 +22,7 @@ namespace Migrator.EF6.Tools
 			var fileName = Path.GetFileName(Path.GetDirectoryName(projectPath));
 
 			Project result;
-			using (FileStream fileStream = new FileStream(projectPath, FileMode.Open, FileAccess.Read, FileShare.Read))
+			using (var fileStream = new FileStream(projectPath, FileMode.Open, FileAccess.Read, FileShare.Read))
 			{
 				result = new ProjectReader().ReadProject(fileStream, fileName, projectPath);
 			}
@@ -75,7 +75,7 @@ namespace Migrator.EF6.Tools
 
 			var tmpFile = Path.GetTempFileName();
 
-			var args = new List<string>()
+			var args = new List<string>
 			{
 				project.ProjectFilePath,
 				"/t:_GetDotNetNames",
@@ -132,9 +132,13 @@ namespace Migrator.EF6.Tools
 
 		public static NuGetFramework GetTargetFramework(string frameworkString)
 		{
-			bool flag = false;
-			var targetFrameworkMonikerPrefix = _targetFrameworkMonikerPrefixes.FirstOrDefault(t => frameworkString.StartsWith(t.Key, StringComparison.OrdinalIgnoreCase) && (flag = true));
-			if (flag == false)
+			var flag = false;
+			var targetFrameworkMonikerPrefix = _targetFrameworkMonikerPrefixes
+				.FirstOrDefault(t =>
+					frameworkString.StartsWith(t.Key, StringComparison.OrdinalIgnoreCase) &&
+					(flag = true));
+
+			if (!flag)
 			{
 				return new NuGetFramework(frameworkString);
 			}
