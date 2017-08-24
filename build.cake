@@ -20,7 +20,10 @@ Task("Restore")
 	.IsDependentOn("Clean")
 	.Does(() =>
 {
-	DotNetCoreRestore();
+	foreach (var project in build.ProjectFiles)
+	{
+		DotNetCoreRestore(project.FullPath);
+	}
 });
 
 Task("Build")
