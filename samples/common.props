@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <MigratorVersion>1.1.*</MigratorVersion>
+  </PropertyGroup>
+</Project>

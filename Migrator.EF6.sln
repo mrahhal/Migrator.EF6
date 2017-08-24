@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.4
+VisualStudioVersion = 15.0.26730.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2BC6C968-62B5-4B96-AA10-240A3E1220C8}"
 EndProject
@@ -16,6 +16,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{D8F02EBA-BD94-4201-85B2-2D5F88C911FB}"
+	ProjectSection(SolutionItems) = preProject
+		samples\common.props = samples\common.props
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{9015AAB4-BBBA-486B-B2B0-0FF455B518ED}"
 	ProjectSection(SolutionItems) = preProject
@@ -34,7 +37,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Migrator.EF6.Tools", "src\M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BasicConsoleApp", "samples\BasicConsoleApp\BasicConsoleApp.csproj", "{AB5CFD8D-AA45-4B5B-AFFB-CE39622C0EBA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WithIdentity.Models", "samples\WithIdentity.Models\WithIdentity.Models.csproj", "{C90D978A-72AC-49B0-8611-15EFEA6A2368}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WithIdentity.Models", "samples\WithIdentity.Models\WithIdentity.Models.csproj", "{C90D978A-72AC-49B0-8611-15EFEA6A2368}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -67,5 +70,8 @@ Global
 		{FCBB50C2-5DDB-4B3B-AC67-9DB287243A0F} = {2BC6C968-62B5-4B96-AA10-240A3E1220C8}
 		{AB5CFD8D-AA45-4B5B-AFFB-CE39622C0EBA} = {D8F02EBA-BD94-4201-85B2-2D5F88C911FB}
 		{C90D978A-72AC-49B0-8611-15EFEA6A2368} = {D8F02EBA-BD94-4201-85B2-2D5F88C911FB}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E01E5209-CA09-47AD-9D69-13DFB32C1659}
 	EndGlobalSection
 EndGlobal
