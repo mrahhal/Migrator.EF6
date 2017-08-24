@@ -27,7 +27,7 @@ Steps:
 <DotNetCliToolReference Include="Migrator.EF6.Tools" Version="2.0.0" />
 ```
 
-> Note: If you're on 1.0 of dotnet sdk, you might want to use version "1.1.4".
+> Note: If you're on 1.0 of dotnet sdk, you might want to use version "1.1.x".
 
 - Inside `Startup.cs`:
     - Remove everything EF Core related.
