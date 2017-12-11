@@ -2,9 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using Microsoft.Extensions.Internal;
-using NuGet.Frameworks;
 
 namespace Migrator.EF6.Tools
 {
@@ -38,7 +36,7 @@ namespace Migrator.EF6.Tools
 			var projectFile = ProjectReader.GetProject(string.Empty);
 			var targetFrameworks = projectFile.TargetFrameworks;
 
-			if (!TryResolveFramework(targetFrameworks, out NuGetFramework framework))
+			if (!TryResolveFramework(targetFrameworks, out var framework))
 			{
 				return;
 			}
@@ -47,7 +45,7 @@ namespace Migrator.EF6.Tools
 			var buildCommand = BuildCommandFactory.Create(
 				projectFile.ProjectFilePath,
 				"Debug",
-				framework,
+				framework.Framework,
 				null,
 				null);
 			var buildExitCode = buildCommand
@@ -61,13 +59,15 @@ namespace Migrator.EF6.Tools
 			}
 			Console.WriteLine();
 
+			var toolPath = Path.Combine(projectFile.ProjectDirectory, "bin", "Debug", framework.TFM, "dotnet-ef.exe");
+			var assemblyPath = Path.Combine(projectFile.ProjectDirectory, "bin", "Debug", framework.TFM, projectFile.Name + ".exe");
+
 			var dispatchCommand = DotnetToolDispatcher.CreateDispatchCommand(
+				toolPath,
 				args,
-				framework,
+				framework.Framework,
 				"Debug",
-				outputPath: null,
-				buildBasePath: null,
-				projectDirectory: projectFile.ProjectDirectory);
+				assemblyPath);
 
 			using (var errorWriter = new StringWriter())
 			{
@@ -87,10 +87,10 @@ namespace Migrator.EF6.Tools
 		}
 
 		private static bool TryResolveFramework(
-			IEnumerable<NuGetFramework> availableFrameworks,
-			out NuGetFramework resolvedFramework)
+			IEnumerable<TargetNuGetFramework> availableFrameworks,
+			out TargetNuGetFramework resolvedFramework)
 		{
-			NuGetFramework framework;
+			TargetNuGetFramework framework;
 			framework = availableFrameworks.First();
 
 			resolvedFramework = framework;
