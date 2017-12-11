@@ -110,7 +110,7 @@ namespace Migrator.EF6.Tools
 			project.Name = properties["AssemblyName"] ?? properties["RootNamespace"] ?? projectName;
 
 			// TargetFrameworks
-			var targetFrameworks = new List<NuGetFramework>();
+			var targetFrameworks = new List<TargetNuGetFramework>();
 			if (properties.TryGetValue("TargetFramework", out var framework)
 				&& !string.IsNullOrEmpty(framework))
 			{
@@ -130,7 +130,7 @@ namespace Migrator.EF6.Tools
 			return project;
 		}
 
-		public static NuGetFramework GetTargetFramework(string frameworkString)
+		public static TargetNuGetFramework GetTargetFramework(string frameworkString)
 		{
 			var flag = false;
 			var targetFrameworkMonikerPrefix = _targetFrameworkMonikerPrefixes
@@ -140,11 +140,11 @@ namespace Migrator.EF6.Tools
 
 			if (!flag)
 			{
-				return new NuGetFramework(frameworkString);
+				return new TargetNuGetFramework(frameworkString);
 			}
 
 			var versionText = frameworkString.Substring(targetFrameworkMonikerPrefix.Key.Length);
-			return new NuGetFramework(targetFrameworkMonikerPrefix.Value, FrameworkNameHelpers.GetVersion(versionText));
+			return new TargetNuGetFramework(frameworkString, new NuGetFramework(targetFrameworkMonikerPrefix.Value, FrameworkNameHelpers.GetVersion(versionText)));
 		}
 	}
 }

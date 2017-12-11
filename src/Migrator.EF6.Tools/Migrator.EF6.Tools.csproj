@@ -5,7 +5,7 @@
 	<PropertyGroup>
 		<Description>A .NetCore CLI tool to enable EF6 migrations in an Asp.Net Core app.</Description>
 		<Authors>Mohammad Rahhal @mrahhal</Authors>
-		<TargetFrameworks>netcoreapp1.0;net46</TargetFrameworks>
+		<TargetFrameworks>netcoreapp1.1;net46</TargetFrameworks>
 		<AssemblyName>dotnet-ef</AssemblyName>
 		<OutputType>Exe</OutputType>
 		<PackageId>Migrator.EF6.Tools</PackageId>
@@ -21,7 +21,7 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.DotNet.Cli.Utils" Version="2.0.0" />
 		<PackageReference Include="Microsoft.Extensions.CommandLineUtils" Version="1.1.1" />
-		<PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
+		<PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
 	</ItemGroup>
 
 	<ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
