@@ -22,9 +22,9 @@ Steps:
 - Inside your csproj:
 
 ```xml
-<PackageReference Include="Migrator.EF6.Tools" Version="2.0.0" PrivateAssets="All" />
+<PackageReference Include="Migrator.EF6.Tools" Version="2.0.1" PrivateAssets="All" />
 
-<DotNetCliToolReference Include="Migrator.EF6.Tools" Version="2.0.0" />
+<DotNetCliToolReference Include="Migrator.EF6.Tools" Version="2.0.1" />
 ```
 
 > Note: If you're on 1.0 of dotnet sdk, you might want to use version "1.1.x".
