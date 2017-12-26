@@ -17,6 +17,7 @@ namespace Migrator.EF6.Tools
 		public CommandOption ConnectionString { get; set; }
 		public CommandOption ProviderName { get; set; }
 		public CommandOption Context { get; set; }
+		public CommandOption Runtime { get; set; }
 
 		public CommonConfiguration AddConnectionStringOption()
 		{
@@ -34,11 +35,26 @@ namespace Migrator.EF6.Tools
 			return this;
 		}
 
+		public CommonConfiguration AddContextAndRuntimeOptions()
+		{
+			return
+				AddContextOption()
+				.AddRuntimeOption();
+		}
+
 		public CommonConfiguration AddContextOption()
 		{
 			Context = _command.Option(
 				"-c|--context <context>",
 				"The DbContext to use. If omitted, the default DbContext is used");
+			return this;
+		}
+
+		public CommonConfiguration AddRuntimeOption()
+		{
+			Runtime = _command.Option(
+				"-r|--runtime <runtime>",
+				"The runtime to use.");
 			return this;
 		}
 

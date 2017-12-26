@@ -59,8 +59,9 @@ namespace Migrator.EF6.Tools
 			}
 			Console.WriteLine();
 
-			var toolPath = Path.Combine(projectFile.ProjectDirectory, "bin", "Debug", framework.TFM, "dotnet-ef.exe");
-			var assemblyPath = Path.Combine(projectFile.ProjectDirectory, "bin", "Debug", framework.TFM, projectFile.Name + ".exe");
+			var runtime = GetRuntimeOption(args) ?? string.Empty;
+			var toolPath = Path.Combine(projectFile.ProjectDirectory, "bin", "Debug", framework.TFM, runtime, "dotnet-ef.exe");
+			var assemblyPath = Path.Combine(projectFile.ProjectDirectory, "bin", "Debug", framework.TFM, runtime, projectFile.Name + ".exe");
 
 			var dispatchCommand = DotnetToolDispatcher.CreateDispatchCommand(
 				toolPath,
@@ -84,6 +85,23 @@ namespace Migrator.EF6.Tools
 
 				return;
 			}
+		}
+
+		private static string GetRuntimeOption(string[] args)
+		{
+			var argsList = args.ToList();
+			var index = argsList.IndexOf("--runtime");
+			if (index < 0)
+			{
+				index = argsList.IndexOf("-r");
+			}
+
+			if (index < 0 || index + 1 >= args.Length)
+			{
+				return null;
+			}
+
+			return args[index + 1];
 		}
 
 		private static bool TryResolveFramework(

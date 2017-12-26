@@ -32,7 +32,7 @@ namespace Migrator.EF6.Tools
 					var common = Common(update)
 						.AddConnectionStringOption()
 						.AddProviderNameOption()
-						.AddContextOption();
+						.AddContextAndRuntimeOptions();
 
 					var force = update.Option(
 						"--force",
@@ -55,7 +55,7 @@ namespace Migrator.EF6.Tools
 					var common = Common(truncate)
 						.AddConnectionStringOption()
 						.AddProviderNameOption()
-						.AddContextOption();
+						.AddContextAndRuntimeOptions();
 
 					truncate.OnExecute(() =>
 					{
@@ -73,7 +73,7 @@ namespace Migrator.EF6.Tools
 					var common = Common(recreate)
 						.AddConnectionStringOption()
 						.AddProviderNameOption()
-						.AddContextOption();
+						.AddContextAndRuntimeOptions();
 
 					recreate.OnExecute(() =>
 					{

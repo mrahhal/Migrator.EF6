@@ -30,7 +30,7 @@ namespace Migrator.EF6.Tools
 						"The directory (and sub-namespace) to use. If omitted, \"Migrations\" is used. Relative paths are relative the directory in which the command is executed.");
 
 					var common = Common(enable)
-						.AddContextOption();
+						.AddContextAndRuntimeOptions();
 
 					enable.OnExecute(() =>
 					{
@@ -52,7 +52,7 @@ namespace Migrator.EF6.Tools
 					var common = Common(add)
 						.AddConnectionStringOption()
 						.AddProviderNameOption()
-						.AddContextOption();
+						.AddContextAndRuntimeOptions();
 
 					var outputDir = add.Option(
 						"-o|--output-dir <path>",
@@ -96,7 +96,7 @@ namespace Migrator.EF6.Tools
 					var common = Common(script)
 						.AddConnectionStringOption()
 						.AddProviderNameOption()
-						.AddContextOption();
+						.AddContextAndRuntimeOptions();
 
 					var output = script.Option(
 						"-o|--output <file>",
@@ -127,7 +127,7 @@ namespace Migrator.EF6.Tools
 				   var common = Common(list)
 						.AddConnectionStringOption()
 						.AddProviderNameOption()
-						.AddContextOption();
+						.AddContextAndRuntimeOptions();
 
 				   list.OnExecute(() =>
 				   {
