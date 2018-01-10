@@ -22,9 +22,9 @@ Steps:
 - Inside your csproj:
 
 ```xml
-<PackageReference Include="Migrator.EF6.Tools" Version="2.0.1" PrivateAssets="All" />
+<PackageReference Include="Migrator.EF6.Tools" Version="2.0.2" PrivateAssets="All" />
 
-<DotNetCliToolReference Include="Migrator.EF6.Tools" Version="2.0.1" />
+<DotNetCliToolReference Include="Migrator.EF6.Tools" Version="2.0.2" />
 ```
 
 > Note: If you're on 1.0 of dotnet sdk, you might want to use version "1.1.x".
@@ -102,6 +102,9 @@ A sample using `Migrator.EF6` and [`MR.AspNet.Identity.EntityFramework6`](https:
 ## Release notes
 
 The `2.*` releases align with .NET Core SDK `2.0`.
+
+#### `2.0.2`
+- Add runtime option. [#54](https://github.com/mrahhal/Migrator.EF6/pull/54)
 
 #### `2.0.1`
 - Fix problem with latest .net core sdk. [#52](https://github.com/mrahhal/Migrator.EF6/issues/52)
