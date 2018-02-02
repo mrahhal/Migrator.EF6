@@ -10,6 +10,7 @@ using System.Data.Entity.Migrations.Infrastructure;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Resources;
 using Migrator.EF6.Tools.Extensions;
 
 namespace Migrator.EF6.Tools
@@ -80,21 +81,27 @@ namespace Migrator.EF6.Tools
 			// Write the user code file.
 			File.WriteAllText(Combine(migrationsDir, migration.MigrationId + ".cs"), migration.UserCode);
 
-			// Write needed resource values directly inside the designer code file.
-			// It'll be a pain to ask the users to embed the resources from project.json.
-			var targetValue = migration.Resources["Target"];
+			var ns = $"{_rootNamespace}.{GetMigrationsNamespaceFromPath(outputDir)}";
 			var designerCode = migration.DesignerCode
-				.Replace("Resources.GetString(\"Target\")", $"\"{targetValue}\"");
-
-			if (migration.Resources.TryGetValue("Source", out object sourceObject))
-			{
-				var sourceValue = sourceObject as string;
-				designerCode = designerCode
-					.Replace("Resources.GetString(\"Source\")", $"\"{sourceValue}\"");
-			}
+				.Replace($"typeof({name})", $"\"{ns}.{migration.MigrationId}\", typeof({name}).Assembly");
 
 			// Write the designer code file.
 			File.WriteAllText(Path.Combine(migrationsDir, migration.MigrationId + ".Designer.cs"), designerCode);
+
+			// Write resources file.
+			var resourcesPath = Combine(migrationsDir, migration.MigrationId + ".resx");
+			WriteResources(resourcesPath, migration.Resources);
+		}
+
+		private void WriteResources(string resourcesPath, IDictionary<string, object> resources)
+		{
+			using (var writer = new ResXResourceWriter(resourcesPath))
+			{
+				foreach (var r in resources)
+				{
+					writer.AddResource(r.Key, r.Value);
+				}
+			}
 		}
 
 		public void ScriptMigration(string from, string to, string output)
