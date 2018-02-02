@@ -103,6 +103,9 @@ A sample using `Migrator.EF6` and [`MR.AspNet.Identity.EntityFramework6`](https:
 
 The `2.*` releases align with .NET Core SDK `2.0`.
 
+#### `2.0.3`
+- Generate a resx file to store migration metadata. [#56](https://github.com/mrahhal/Migrator.EF6/pull/56)
+
 #### `2.0.2`
 - Add runtime option. [#54](https://github.com/mrahhal/Migrator.EF6/pull/54)
 
