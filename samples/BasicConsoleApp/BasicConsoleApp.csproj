@@ -4,6 +4,7 @@
 
   <PropertyGroup>
     <TargetFramework>net46</TargetFramework>
+    <OutputType>Exe</OutputType>
   </PropertyGroup>
 
   <ItemGroup>
