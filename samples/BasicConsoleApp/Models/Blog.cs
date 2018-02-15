@@ -12,5 +12,7 @@ namespace BasicConsoleApp.Models
 		public int Some { get; set; }
 
 		public string Description { get; set; }
+
+		public int Some2 { get; set; }
 	}
 }
