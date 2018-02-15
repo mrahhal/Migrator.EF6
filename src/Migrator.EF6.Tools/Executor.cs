@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Resources;
+using System.Text.RegularExpressions;
 using Migrator.EF6.Tools.Extensions;
 
 namespace Migrator.EF6.Tools
@@ -25,6 +26,8 @@ namespace Migrator.EF6.Tools
 		private string _connectionString;
 		private string _providerName;
 		private string _context;
+		private Regex _resourcesTypeRegex = new Regex(@"typeof\((.+?)\)");
+		private Regex _classNameRegex = new Regex("class (.+) :");
 
 		public Executor(string connectionString, string providerName, string context)
 		{
@@ -81,9 +84,11 @@ namespace Migrator.EF6.Tools
 			// Write the user code file.
 			File.WriteAllText(Combine(migrationsDir, migration.MigrationId + ".cs"), migration.UserCode);
 
+			var className = GetClassNameFromDesignerFile(migration.DesignerCode);
 			var ns = $"{_rootNamespace}.{GetMigrationsNamespaceFromPath(outputDir)}";
-			var designerCode = migration.DesignerCode
-				.Replace($"typeof({name})", $"\"{ns}.{migration.MigrationId}\", typeof({name}).Assembly");
+			var designerCode = _resourcesTypeRegex.Replace(
+				migration.DesignerCode,
+				$"\"{ns}.{migration.MigrationId}\", typeof({className}).Assembly");
 
 			// Write the designer code file.
 			File.WriteAllText(Path.Combine(migrationsDir, migration.MigrationId + ".Designer.cs"), designerCode);
@@ -91,6 +96,13 @@ namespace Migrator.EF6.Tools
 			// Write resources file.
 			var resourcesPath = Combine(migrationsDir, migration.MigrationId + ".resx");
 			WriteResources(resourcesPath, migration.Resources);
+		}
+
+		private string GetClassNameFromDesignerFile(string designerCode)
+		{
+			return _classNameRegex.Match(designerCode)
+				.Groups[1]
+				.Value;
 		}
 
 		private void WriteResources(string resourcesPath, IDictionary<string, object> resources)
