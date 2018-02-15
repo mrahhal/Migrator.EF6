@@ -25,6 +25,10 @@ namespace Migrator.EF6.Tools
 
 		public string ProjectFileName => Path.GetFileName(ProjectFilePath);
 
+		public string AssemblyName { get; set; }
+
+		public string RootNamespace { get; set; }
+
 		public string Name { get; set; }
 
 		public IEnumerable<TargetNuGetFramework> TargetFrameworks { get; set; }

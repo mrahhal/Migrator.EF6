@@ -21,7 +21,6 @@ namespace Migrator.EF6.Tools
 		private string _projectDir;
 		private string _rootNamespace;
 		private Assembly _startupAssembly;
-		private string _targetName;
 		private Type[] _types;
 		private string _connectionString;
 		private string _providerName;
@@ -38,10 +37,9 @@ namespace Migrator.EF6.Tools
 			_connectionString = connectionString;
 			_providerName = providerName ?? "System.Data.SqlClient";
 			_context = context;
-			_targetName = project.Name;
 			_projectDir = project.ProjectDirectory;
-			_startupAssembly = Assembly.Load(new AssemblyName(_targetName));
-			_rootNamespace = project.Name;
+			_startupAssembly = Assembly.Load(new AssemblyName(project.AssemblyName));
+			_rootNamespace = project.RootNamespace;
 			_types = _startupAssembly.GetTypes();
 		}
 

@@ -110,8 +110,13 @@ namespace Migrator.EF6.Tools
 			LogVerbose($"[ProjectReader] RootNamespace: {properties["RootNamespace"]}");
 			LogVerbose($"[ProjectReader] projectName: {projectName}");
 
-			// ProjectName
-			project.Name = properties["AssemblyName"] ?? properties["RootNamespace"] ?? projectName;
+			project.AssemblyName = properties["AssemblyName"] ?? projectName;
+			project.Name = project.AssemblyName ?? properties["RootNamespace"];
+			project.RootNamespace = properties["RootNamespace"] ?? project.AssemblyName;
+
+			LogVerbose($"[ProjectReader] Resolved assembly name: {project.AssemblyName}");
+			LogVerbose($"[ProjectReader] Resolved project name: {project.Name}");
+			LogVerbose($"[ProjectReader] Resolved project root namespace: {project.RootNamespace}");
 
 			// TargetFrameworks
 			var targetFrameworks = new List<TargetNuGetFramework>();
