@@ -4,6 +4,7 @@
 
   <PropertyGroup>
     <TargetFramework>net46</TargetFramework>
+    <RootNamespace>WithIdentity</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
