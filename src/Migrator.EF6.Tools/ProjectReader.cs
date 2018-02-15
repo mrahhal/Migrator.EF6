@@ -106,6 +106,10 @@ namespace Migrator.EF6.Tools
 				properties.Add(name, value);
 			}
 
+			LogVerbose($"[ProjectReader] AssemblyName: {properties["AssemblyName"]}");
+			LogVerbose($"[ProjectReader] RootNamespace: {properties["RootNamespace"]}");
+			LogVerbose($"[ProjectReader] projectName: {projectName}");
+
 			// ProjectName
 			project.Name = properties["AssemblyName"] ?? properties["RootNamespace"] ?? projectName;
 
@@ -146,5 +150,7 @@ namespace Migrator.EF6.Tools
 			var versionText = frameworkString.Substring(targetFrameworkMonikerPrefix.Key.Length);
 			return new TargetNuGetFramework(frameworkString, new NuGetFramework(targetFrameworkMonikerPrefix.Value, FrameworkNameHelpers.GetVersion(versionText)));
 		}
+
+		private void LogVerbose(string message) => Program.LogVerbose(message);
 	}
 }

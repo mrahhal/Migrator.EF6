@@ -14,10 +14,20 @@ namespace Migrator.EF6.Tools
 			_command = command;
 		}
 
+		public CommandOption Verbose { get; set; }
 		public CommandOption ConnectionString { get; set; }
 		public CommandOption ProviderName { get; set; }
 		public CommandOption Context { get; set; }
 		public CommandOption Runtime { get; set; }
+
+		public CommonConfiguration AddCommonOptions()
+		{
+			Verbose = _command.Option(
+				"-v|--verbose",
+				"Run in verbose mode",
+				CommandOptionType.NoValue);
+			return this;
+		}
 
 		public CommonConfiguration AddConnectionStringOption()
 		{
@@ -61,6 +71,7 @@ namespace Migrator.EF6.Tools
 		public Executor CreateExecutor()
 		{
 			return new Executor(
+				Verbose.HasValue(),
 				ConnectionString?.Value(),
 				ProviderName?.Value(),
 				Context?.Value());

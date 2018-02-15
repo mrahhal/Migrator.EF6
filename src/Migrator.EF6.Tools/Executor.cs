@@ -29,8 +29,10 @@ namespace Migrator.EF6.Tools
 		private Regex _resourcesTypeRegex = new Regex(@"typeof\((.+?)\)");
 		private Regex _classNameRegex = new Regex("class (.+) :");
 
-		public Executor(string connectionString, string providerName, string context)
+		public Executor(bool verbose, string connectionString, string providerName, string context)
 		{
+			Program.Verbose = verbose;
+
 			var project = ProjectReader.GetProject(string.Empty);
 
 			_connectionString = connectionString;
@@ -283,6 +285,8 @@ namespace Migrator.EF6.Tools
 		}
 
 		private string Combine(params string[] paths) => Path.Combine(paths);
+
+		private void LogVerbose(string message) => Program.LogVerbose(message);
 	}
 }
 

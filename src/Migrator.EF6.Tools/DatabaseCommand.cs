@@ -30,6 +30,7 @@ namespace Migrator.EF6.Tools
 						"The target migration. If '0', all migrations will be reverted. If omitted, all pending migrations will be applied");
 
 					var common = Common(update)
+						.AddCommonOptions()
 						.AddConnectionStringOption()
 						.AddProviderNameOption()
 						.AddContextAndRuntimeOptions();
@@ -53,6 +54,7 @@ namespace Migrator.EF6.Tools
 					truncate.HelpOption();
 
 					var common = Common(truncate)
+						.AddCommonOptions()
 						.AddConnectionStringOption()
 						.AddProviderNameOption()
 						.AddContextAndRuntimeOptions();
@@ -71,6 +73,7 @@ namespace Migrator.EF6.Tools
 					recreate.HelpOption();
 
 					var common = Common(recreate)
+						.AddCommonOptions()
 						.AddConnectionStringOption()
 						.AddProviderNameOption()
 						.AddContextAndRuntimeOptions();

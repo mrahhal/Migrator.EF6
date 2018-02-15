@@ -8,6 +8,8 @@ namespace Migrator.EF6.Tools
 {
 	public class Program
 	{
+		public static bool Verbose { get; set; }
+
 		public static int Main(string[] args)
 		{
 			if (DotnetToolDispatcher.IsDispatcher(args))
@@ -113,6 +115,14 @@ namespace Migrator.EF6.Tools
 
 			resolvedFramework = framework;
 			return true;
+		}
+
+		public static void LogVerbose(string message)
+		{
+			if (Verbose)
+			{
+				Console.WriteLine(message);
+			}
 		}
 	}
 }

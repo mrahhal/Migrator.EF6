@@ -30,6 +30,7 @@ namespace Migrator.EF6.Tools
 						"The directory (and sub-namespace) to use. If omitted, \"Migrations\" is used. Relative paths are relative the directory in which the command is executed.");
 
 					var common = Common(enable)
+						.AddCommonOptions()
 						.AddContextAndRuntimeOptions();
 
 					enable.OnExecute(() =>
@@ -50,6 +51,7 @@ namespace Migrator.EF6.Tools
 						"The name of the migration");
 
 					var common = Common(add)
+						.AddCommonOptions()
 						.AddConnectionStringOption()
 						.AddProviderNameOption()
 						.AddContextAndRuntimeOptions();
@@ -94,6 +96,7 @@ namespace Migrator.EF6.Tools
 						"The ending migration. If omitted, the last migration is used");
 
 					var common = Common(script)
+						.AddCommonOptions()
 						.AddConnectionStringOption()
 						.AddProviderNameOption()
 						.AddContextAndRuntimeOptions();
@@ -125,6 +128,7 @@ namespace Migrator.EF6.Tools
 				   list.HelpOption();
 
 				   var common = Common(list)
+						.AddCommonOptions()
 						.AddConnectionStringOption()
 						.AddProviderNameOption()
 						.AddContextAndRuntimeOptions();
