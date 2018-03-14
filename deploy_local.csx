@@ -8,7 +8,7 @@ var cd = Environment.CurrentDirectory;
 var projectName = "Migrator.EF6.Tools";
 var userName = Environment.UserName;
 var userProfileDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-var deploymentFolder = Environment.GetEnvironmentVariable("MIGRATOR_EF6_LOCAL_PACKAGES_FEED_PATH") ?? $@"C:\D\dev\src\Local Packages";
+var deploymentFolder = Environment.GetEnvironmentVariable("MIGRATOR_EF6_LOCAL_PACKAGES_FEED_PATH") ?? $@"C:\dev\LocalPackages";
 Directory.CreateDirectory(deploymentFolder);
 var nugetDirectory = Path.Combine(userProfileDirectory, ".nuget/packages");
 var nugetToolsDirectory = Path.Combine(nugetDirectory, ".tools");
@@ -71,7 +71,7 @@ void RemoveDevPackageFilesIn(string directory)
 
 bool Pack()
 {
-	var process = Process.Start("powershell", "build.ps1");
+	var process = Process.Start("powershell", "./build.ps1");
 	process.WaitForExit();
 	var exitCode = process.ExitCode;
 	return exitCode == 0;
