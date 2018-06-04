@@ -6,7 +6,7 @@
 		<Description>A .NetCore CLI tool to enable EF6 migrations in an Asp.Net Core app.</Description>
 		<Authors>Mohammad Rahhal @mrahhal</Authors>
 		<TargetFrameworks>netcoreapp1.1;net46</TargetFrameworks>
-		<AssemblyName>dotnet-ef</AssemblyName>
+		<AssemblyName>dotnet-ef6</AssemblyName>
 		<OutputType>Exe</OutputType>
 		<PackageId>Migrator.EF6.Tools</PackageId>
 		<PackageTags>aspnetcore;aspnet5;ef6;migrations;dotnet</PackageTags>

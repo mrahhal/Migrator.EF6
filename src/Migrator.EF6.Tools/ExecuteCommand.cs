@@ -12,7 +12,7 @@ namespace Migrator.EF6.Tools
 		{
 			var app = new CommandLineApplication()
 			{
-				Name = "dotnet ef",
+				Name = "dotnet ef6",
 				FullName = "Entity Framework 6 .NET Core CLI Commands"
 			};
 

@@ -40,9 +40,9 @@ Steps:
 - Finally:
 
     ```
-    dotnet ef migrations enable
-    dotnet ef migrations add InitialCreate
-    dotnet ef database update
+    dotnet ef6 migrations enable
+    dotnet ef6 migrations add InitialCreate
+    dotnet ef6 database update
     ```
 
 The tool will automatically build your project but if something goes wrong make sure to build manually with `dotnet build`.
@@ -101,7 +101,12 @@ A sample using `Migrator.EF6` and [`MR.AspNet.Identity.EntityFramework6`](https:
 
 ## Release notes
 
-The `2.*` releases align with .NET Core SDK `2.0`.
+The `2.1.*` releases align with .NET Core SDK `2.1`.
+
+#### `2.1.0`
+- Changed the name to `dotnet ef6` because `dotnet ef` is now included SDK 2.1.
+
+The `2.0.*` releases align with .NET Core SDK `2.0`.
 
 #### `2.0.4`
 - Fix resx generated resource name.
