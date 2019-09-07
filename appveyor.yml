@@ -1,7 +1,7 @@
 version: '{build}'
 image: Visual Studio 2019 Preview
 build_script:
-# - ps: ./dotnet-install.ps1 -version 2.0.0
+- ps: ./dotnet-install.ps1 -version 3.0.100-preview9-014004
 - ps: dotnet --info
 - ps: ./build.ps1
 test: off
