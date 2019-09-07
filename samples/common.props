@@ -1,5 +1,5 @@
 <Project>
   <PropertyGroup>
-    <MigratorVersion>2.1.0-*</MigratorVersion>
+    <MigratorVersion>3.0.0-*</MigratorVersion>
   </PropertyGroup>
 </Project>
