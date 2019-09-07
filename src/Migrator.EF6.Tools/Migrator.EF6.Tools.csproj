@@ -5,28 +5,28 @@
 	<PropertyGroup>
 		<Description>A .NetCore CLI tool to enable EF6 migrations in an Asp.Net Core app.</Description>
 		<Authors>Mohammad Rahhal @mrahhal</Authors>
-		<TargetFrameworks>netcoreapp1.1;net46</TargetFrameworks>
+		<TargetFrameworks>netcoreapp3.0</TargetFrameworks>
 		<AssemblyName>dotnet-ef6</AssemblyName>
 		<OutputType>Exe</OutputType>
 		<PackageId>Migrator.EF6.Tools</PackageId>
 		<PackageTags>aspnetcore;aspnet5;ef6;migrations;dotnet</PackageTags>
 		<PackageProjectUrl>https://github.com/mrahhal/Migrator.EF6</PackageProjectUrl>
 		<PackageLicenseUrl>https://github.com/mrahhal/Migrator.EF6/blob/master/LICENSE.txt</PackageLicenseUrl>
+    <PackageType>DotnetTool</PackageType>
+    <PackAsTool>true</PackAsTool>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<EmbeddedResource Include="ConfigurationTemplate.txt" Exclude="bin\**;obj\**;**\*.xproj;packages\**;@(EmbeddedResource)" />
+	  <None Remove="ResourceTemplate.txt" />
+		<EmbeddedResource Include="ConfigurationTemplate.txt" />
+		<EmbeddedResource Include="ResourceTemplate.txt" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.DotNet.Cli.Utils" Version="2.0.0" />
 		<PackageReference Include="Microsoft.Extensions.CommandLineUtils" Version="1.1.1" />
 		<PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
-	</ItemGroup>
-
-	<ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
-	  <Reference Include="System.Windows.Forms" />
-		<PackageReference Include="EntityFramework" Version="6.1.3" />
-	</ItemGroup>
+    <PackageReference Include="EntityFramework" Version="6.3.0-preview9-19423-04" />
+  </ItemGroup>
 
 </Project>

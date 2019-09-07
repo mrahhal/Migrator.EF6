@@ -1,6 +1,4 @@
-﻿#if NET46
-
-using Microsoft.Extensions.CommandLineUtils;
+﻿using Microsoft.Extensions.CommandLineUtils;
 using Migrator.EF6.Tools.Extensions;
 
 namespace Migrator.EF6.Tools
@@ -78,5 +76,3 @@ namespace Migrator.EF6.Tools
 		}
 	}
 }
-
-#endif

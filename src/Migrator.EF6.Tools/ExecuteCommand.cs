@@ -1,5 +1,3 @@
-#if NET46
-
 using System.Reflection;
 using Microsoft.Extensions.CommandLineUtils;
 using Migrator.EF6.Tools.Extensions;
@@ -35,5 +33,3 @@ namespace Migrator.EF6.Tools
 			   .InformationalVersion;
 	}
 }
-
-#endif
