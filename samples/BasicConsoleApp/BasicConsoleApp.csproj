@@ -3,19 +3,24 @@
   <Import Project="../common.props" />
 
   <PropertyGroup>
-    <TargetFramework>net46</TargetFramework>
     <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EntityFramework" Version="6.1.3" />
-    <PackageReference Include="Migrator.EF6.Tools" Version="$(MigratorVersion)" PrivateAssets="All" />
-    <DotNetCliToolReference Include="Migrator.EF6.Tools" Version="$(MigratorVersion)" />
+    <PackageReference Include="EntityFramework" Version="6.3.0-preview9-19423-04" />  
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
+  <ItemGroup>
+    <EmbeddedResource Update="Migrations\201802020835421_add_Some.resx">
+      <DependentUpon>201802020835421_add_Some.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Migrations\201802152032477_add_Blog.Some2.resx">
+      <DependentUpon>201802152032477_add_Blog.Some2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Migrations2\201802152034142_add_Foo.Some.resx">
+      <DependentUpon>201802152034142_add_Foo.Some.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>

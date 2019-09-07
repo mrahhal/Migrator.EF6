@@ -9,7 +9,7 @@ namespace BasicConsoleApp.Migrations
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
     public sealed partial class add_Some : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager("BasicConsoleApp.Migrations.201802020835421_add_Some", typeof(add_Some).Assembly);
+        private readonly ResourceManager Resources = new ResourceManager("BasicConsoleApp.Migrations.add_Some", typeof(add_Some).Assembly);
 
         string IMigrationMetadata.Id
         {
