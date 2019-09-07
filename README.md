@@ -19,15 +19,13 @@ You can read the release notes at the end of this file.
 
 Steps:
 
-- Inside your csproj:
+- Install the tool globally:
 
-```xml
-<PackageReference Include="Migrator.EF6.Tools" Version="2.1.0" PrivateAssets="All" />
-
-<DotNetCliToolReference Include="Migrator.EF6.Tools" Version="2.1.0" />
+```
+$ dotnet tool install --global Migrator.EF6.Tools --version 3.0.0-*
 ```
 
-> Note: If you're on 1.0 of dotnet sdk, you might want to use version "1.1.x".
+> Note: If you're using .NET Core SDK less than 3.0, checkout [this branch](...);
 
 - Inside `Startup.cs`:
     - Remove everything EF Core related.
@@ -100,6 +98,11 @@ A basic sample that shows how to add `Migrator.EF6.Tools` to your `project.json`
 A sample using `Migrator.EF6` and [`MR.AspNet.Identity.EntityFramework6`](https://github.com/mrahhal/MR.AspNet.Identity.EntityFramework6) to enable EF6 + migrations + Identity 3.0 in your Asp.Net Core app.
 
 ## Release notes
+
+The `3.0.*` releases align with .NET Core SDK `3.0`.
+
+#### `3.0.0`
+This release supports .NET Core SDK `3.0`.
 
 The `2.1.*` releases align with .NET Core SDK `2.1`.
 
