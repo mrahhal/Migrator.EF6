@@ -25,7 +25,7 @@ Steps:
 $ dotnet tool install --global Migrator.EF6.Tools --version 3.0.0-*
 ```
 
-> Note: If you're using .NET Core SDK less than 3.0, checkout [this branch](...);
+> Note: If you're using .NET Core SDK less than 3.0, [check the branch netcore2](https://github.com/mrahhal/Migrator.EF6/tree/netcore2);
 
 - Inside `Startup.cs`:
     - Remove everything EF Core related.
