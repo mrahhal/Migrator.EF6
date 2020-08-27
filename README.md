@@ -6,6 +6,10 @@
 
 .NET Core CLI tool to enable EF6 migrations in an Asp.Net Core app (RC2 and onwards).
 
+## Looking for .net core 3 support?
+
+Check [this comment](https://github.com/mrahhal/Migrator.EF6/issues/67#issuecomment-681712044). This tool is now invalid for .net core 3.0 projects and above. You'll want to use the [official ef6.exe](https://github.com/dotnet/ef6/tree/master/src/ef6) instead.
+
 ## Looking for the project.json version?
 Checkout the [preview2](https://github.com/mrahhal/Migrator.EF6/tree/preview2) tree version of this repository.
 
